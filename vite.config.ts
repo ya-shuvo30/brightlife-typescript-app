@@ -8,33 +8,17 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-    sourcemap: false, // Disable for production
-    minify: 'terser', // Better minification for TypeScript
+    sourcemap: false,
     rollupOptions: {
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
-          utils: ['zustand', 'immer'],
-          // Separate TypeScript utilities
-          typescript: ['@types/node']
-        },
-        // Optimize file naming for caching
-        chunkFileNames: 'assets/js/[name]-[hash].js',
-        entryFileNames: 'assets/js/[name]-[hash].js',
-        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]'
+          utils: ['zustand', 'immer']
+        }
       }
-    },
-    // TypeScript specific optimizations
-    target: 'es2020',
-    chunkSizeWarningLimit: 1000
+    }
   },
-  // Better development experience for TypeScript
-  server: {
-    port: 3000,
-    open: true,
-    hmr: true
-  },
-  // TypeScript path resolution
+  // Path resolution
   resolve: {
     alias: {
       '@': '/src',
