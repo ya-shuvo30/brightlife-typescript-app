@@ -1,0 +1,333 @@
+    /* Import custom animation keyframes */
+    @import './assets/css/animations.css';
+
+    /* Define CSS variables (Custom Properties) for the color palette */
+    :root {
+        --emerald-start: #059669;
+        --emerald-mid: #047857;
+        --emerald-end: #6ee7b7;
+        --gold-start: #f59e0b;
+        --gold-end: #fcd34d;
+        --neutral-bg: #f8fafc;
+        --neutral-text: #4b5563;
+    }
+
+    /* Base body styles */
+    body {
+        font-family: 'Source Sans Pro', sans-serif;
+        background-color: var(--neutral-bg);
+        color: var(--neutral-text);
+        scroll-behavior: smooth;
+    }
+
+    /* Base heading styles */
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+    }
+
+    /* Tailwind Directives */
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+
+    /* Global Fix for Fixed Navbar Overlap */
+    section[id] {
+        scroll-margin-top: 100px; /* Adjust this value if navbar height changes */
+    }
+
+    /* Custom utility classes that use our CSS variables and animations */
+    .font-heading { font-family: 'Inter', sans-serif; }
+    .font-body { font-family: 'Source Sans Pro', sans-serif; }
+
+    .animated-gradient {
+        background: linear-gradient(135deg, var(--emerald-start), var(--emerald-mid), #065f46, var(--emerald-end));
+        background-size: 400% 400%;
+        animation: gradient-animation 15s ease infinite;
+    }
+
+    .btn-gold-gradient {
+        background-image: linear-gradient(to right, var(--gold-start), var(--gold-end));
+        transition: all 0.3s ease;
+    }
+    .btn-gold-gradient:hover {
+        box-shadow: 0 10px 20px -10px #f59e0b;
+        transform: translateY(-2px);
+    }
+
+    .logo-animation {
+        animation: float-animation 6s ease-in-out infinite;
+    }
+
+    .team-card {
+        transform-style: preserve-3d;
+        transition: transform 0.5s;
+    }
+    .team-card-inner {
+         transform: translateZ(20px);
+    }
+
+    .partner-carousel .carousel-track {
+        display: flex;
+        animation: scroll 30s linear infinite;
+    }
+    .partner-carousel:hover .carousel-track {
+        animation-play-state: paused;
+    }
+
+    .partner-logo {
+        filter: grayscale(100%);
+        opacity: 0.6;
+        transition: all 0.3s ease;
+    }
+    .partner-logo:hover {
+        filter: grayscale(0%);
+        opacity: 1;
+        transform: scale(1.1);
+    }
+
+    .pricing-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .pricing-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    }
+
+    .form-input {
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .form-input:focus {
+        border-color: var(--emerald-start);
+        box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2);
+        outline: none;
+    }
+
+    /* Custom utility class for perspective */
+    .perspective-1000 {
+        perspective: 1000px;
+    }
+
+    /* Skeleton component dynamic dimensions */
+    .skeleton-dimensions {
+        width: var(--skeleton-width, 100%);
+        height: var(--skeleton-height, 1rem);
+    }
+
+    /* Animation utility classes */
+    .animate-slide-in-right {
+        animation: slide-in-right 0.3s ease-out;
+    }
+
+    .animate-slide-out-right {
+        animation: slide-out-right 0.3s ease-in;
+    }
+
+    .animate-modal-in {
+        animation: modal-in 0.3s ease-out;
+    }
+
+    .animate-modal-out {
+        animation: modal-out 0.3s ease-in;
+    }
+
+    .animate-bounce-in {
+        animation: bounce-in 0.5s ease-out;
+    }
+
+    .animate-shake {
+        animation: shake 0.5s ease-in-out;
+    }
+
+    .animate-pulse-subtle {
+        animation: pulse-subtle 2s ease-in-out infinite;
+    }
+
+    /* Interactive hover effects */
+    .hover-lift {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .hover-lift:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .hover-scale {
+        transition: transform 0.2s ease;
+    }
+
+    .hover-scale:hover {
+        transform: scale(1.05);
+    }
+
+    .hover-glow {
+        transition: box-shadow 0.3s ease;
+    }
+
+    .hover-glow:hover {
+        box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+    }
+
+    /* Focus states */
+    .focus-ring {
+        transition: box-shadow 0.15s ease-in-out;
+    }
+
+    .focus-ring:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3);
+    }
+
+    /* Button enhancements */
+    .btn-enhanced {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .btn-enhanced::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    .btn-enhanced:hover::before {
+        left: 100%;
+    }
+
+    /* Card hover effects */
+    .card-interactive {
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .card-interactive:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Loading states */
+    .loading-shimmer {
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+    }
+
+/* === Enhanced UI/UX Utility Classes === */
+
+/* Responsive Design Utilities */
+.container-responsive {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.grid-responsive {
+    @apply grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+}
+
+.text-responsive {
+    @apply text-sm sm:text-base lg:text-lg;
+}
+
+/* Enhanced Focus States for Accessibility */
+.focus-visible-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500;
+}
+
+/* Animation Delays for Staggered Effects */
+.animate-delay-100 { animation-delay: 100ms; }
+.animate-delay-200 { animation-delay: 200ms; }
+.animate-delay-300 { animation-delay: 300ms; }
+.animate-delay-500 { animation-delay: 500ms; }
+
+/* Accessibility Enhancements */
+.sr-only {
+    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+    clip: rect(0, 0, 0, 0);
+}
+
+.not-sr-only {
+    @apply static w-auto h-auto p-0 m-0 overflow-visible whitespace-normal;
+    clip: auto;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .focus-ring, .focus-visible-ring {
+        @apply focus:ring-4 focus:ring-offset-4;
+    }
+    
+    .btn-enhanced {
+        @apply border-2;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .hover-scale,
+    .hover-lift,
+    .hover-glow,
+    .btn-enhanced,
+    .card-interactive {
+        transition: none !important;
+    }
+    
+    .slide-in,
+    .fade-in,
+    .modal-overlay,
+    .modal-content {
+        animation: none !important;
+    }
+}
+
+/* Dark Mode Enhancements */
+@media (prefers-color-scheme: dark) {
+    .hover-glow:hover {
+        box-shadow: 0 20px 25px -5px rgba(255, 255, 255, 0.1), 0 10px 10px -5px rgba(255, 255, 255, 0.04), 0 0 0 1px rgba(96, 165, 250, 0.2);
+    }
+}
+
+/* Print Styles */
+@media print {
+    .no-print {
+        @apply hidden;
+    }
+    
+    .print-friendly {
+        @apply shadow-none bg-white text-black;
+    }
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(156, 163, 175, 0.5);
+    border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(156, 163, 175, 0.7);
+}
+    
