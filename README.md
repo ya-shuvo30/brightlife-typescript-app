@@ -1,69 +1,77 @@
-# React + TypeScript + Vite
+# BrightLife TypeScript App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React TypeScript application with comprehensive features including virtual scrolling, performance optimizations, and GitHub Pages deployment.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React 19** with TypeScript for type-safe development
+- **Vite** for fast development and optimized builds
+- **Virtual Scrolling** components for large datasets
+- **Performance Optimizations** with memoization and lazy loading
+- **GitHub Pages Deployment** with automated CI/CD
+- **Modern UI Components** with accessibility support
+- **State Management** with Zustand
+- **Comprehensive Testing** setup
 
-## Expanding the ESLint configuration
+## 🛠️ Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React 19.1.1
+- TypeScript 5.8.3
+- Vite 7.1.2
+- Zustand for state management
+- Tailwind CSS for styling
+- ESLint 9.33.0 for code quality
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 📦 Installation
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+```bash
+# Clone the repository
+git clone https://github.com/ya-shuvo30/brightlife-typescript-app.git
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Navigate to project directory
+cd brightlife-typescript-app
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🔧 Available Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run lint` - Run ESLint
+- `npm run preview` - Preview production build
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🌐 Deployment
+
+This project is configured for automatic deployment to GitHub Pages using GitHub Actions. Every push to the main branch triggers a deployment.
+
+### Custom Domain Setup
+
+1. Update the `public/CNAME` file with your domain
+2. Configure DNS in Cloudflare:
+   - Add CNAME record pointing to `ya-shuvo30.github.io`
+3. Enable GitHub Pages in repository settings
+
+## 📁 Project Structure
+
 ```
+src/
+├── components/          # React components
+│   ├── ui/             # Reusable UI components
+│   ├── sections/       # Page sections
+│   ├── shared/         # Shared components
+│   └── forms/          # Form components
+├── utils/              # Utility functions
+├── hooks/              # Custom React hooks
+├── types/              # TypeScript type definitions
+├── store/              # State management
+└── assets/             # Static assets
+```
+
+## 📝 License
+
+This project is licensed under the MIT License.
