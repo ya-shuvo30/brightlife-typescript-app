@@ -1,0 +1,1 @@
+# brightlife-typescript-app
