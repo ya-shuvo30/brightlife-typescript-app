@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy TypeScript React App to GitHub Pages
 
 on:
   push:
@@ -32,11 +32,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
         
+      - name: TypeScript type checking
+        run: npx tsc --noEmit
+        
       - name: Lint code
         run: npm run lint
         
-      - name: Build application
+      - name: Build TypeScript application
         run: npm run build
+        env:
+          NODE_ENV: production
         
       - name: Setup Pages
         uses: actions/configure-pages@v4
