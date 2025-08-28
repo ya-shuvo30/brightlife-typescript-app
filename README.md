@@ -76,4 +76,4 @@ src/
 
 Copyright © 2024 Bright Life Bangladesh Ltd. (IT & Tech Department). All Rights Reserved.
 
-This project is proprietary and confidential. Unauthorized copying, distribution, or use of this software, via any medium, is strictly prohibited.
+This project is proprietary and confidential. Unauthorized copying, distribution, or use of this software, via any medium, is strictly prohibited.So,don't use it  directly for your work
