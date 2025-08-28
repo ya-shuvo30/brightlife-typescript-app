@@ -48,7 +48,7 @@ const AboutUs: React.FC = () => {
             <div className="py-24 bg-gray-50">
                 <div className="container mx-auto px-6 text-center">
                     <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4 font-heading tracking-tight">Who We Are</h2>
-                    <p className="max-w-3xl mx-auto text-lg text-gray-600 leading-relaxed font-body">Bright Life is dedicated to making a healthier, more affordable lifestyle accessible to everyone in Bangladesh.</p>
+                    <p className="max-w-3xl mx-auto text-lg text-gray-600 leading-relaxed font-body">Bright Life Bangladesh offers premier health coverage and exclusive discounts to ensure your peace of mind.</p>
                 </div>
                 <div className="container mx-auto px-6 mt-16 grid md:grid-cols-2 gap-8 max-w-5xl">
                     <div className="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-emerald-500">
@@ -71,7 +71,7 @@ const AboutUs: React.FC = () => {
                             Trusted by thousands of members with comprehensive healthcare solutions and lifestyle benefits across our network.
                         </p>
                     </div>
-                    <div className="grid md:grid-cols-5 gap-8 max-w-5xl mx-auto mb-20">
+                    <div className="grid md:grid-cols-4 gap-8 max-w-4xl mx-auto mb-20">
                         <div className="text-center">
                             <StatCounter value="10000" label="Members Served" suffix="+" />
                         </div>
@@ -80,9 +80,6 @@ const AboutUs: React.FC = () => {
                         </div>
                         <div className="text-center">
                             <StatCounter value="200" label="Lifestyle Brands" suffix="+" />
-                        </div>
-                        <div className="text-center">
-                            <StatCounter value="90" label="Satisfied Rate" suffix="%" />
                         </div>
                         <div className="text-center">
                             <StatCounter value="24" label="Support" suffix="/7" />

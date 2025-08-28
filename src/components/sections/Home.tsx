@@ -64,8 +64,11 @@ const Home: React.FC<HomeProps> = ({ navigateTo }) => {
                 />
             </div>
             
-            {/* Overlay gradient for better text readability */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent z-10"></div>
+            {/* Lighter overlay gradient for brighter appearance */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-black/20 to-transparent z-10"></div>
+            
+            {/* Additional bright overlay for enhanced brightness */}
+            <div className="absolute inset-0 bg-white/10 z-10"></div>
             
             {/* Content overlay */}
             <div className="relative z-20 h-full flex items-center">
@@ -73,9 +76,6 @@ const Home: React.FC<HomeProps> = ({ navigateTo }) => {
                     <div className="grid lg:grid-cols-2 gap-12 items-center">
                         {/* Left side - Main content */}
                         <div className="text-white">
-                            <p className="text-lg md:text-xl text-gray-200 mb-8 font-body leading-relaxed max-w-2xl">
-                                Bright Life Bangladesh offers premier health coverage and exclusive discounts to ensure your peace of mind.
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -92,7 +92,7 @@ const Home: React.FC<HomeProps> = ({ navigateTo }) => {
                     </button>
                     <button 
                         onClick={() => navigateTo('About Us')} 
-                        className="bg-white/20 backdrop-blur-sm border border-white/30 text-white font-bold py-4 px-8 rounded-full text-lg hover:bg-white/30 transition-all duration-300"
+                        className="bg-white/40 backdrop-blur-sm border border-white/50 text-white font-bold py-4 px-8 rounded-full text-lg hover:bg-white/60 hover:text-gray-800 shadow-lg hover:shadow-xl transition-all duration-300"
                     >
                         Learn More
                     </button>
