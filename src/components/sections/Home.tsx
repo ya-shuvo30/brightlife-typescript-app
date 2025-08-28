@@ -1,12 +1,12 @@
 import React from 'react';
-import logo from '../../assets/images/logo.png';
 import ImageCarousel from '../shared/ImageCarousel';
 
-// Import the new carousel images
+// Import the carousel images
 import coverpage from '../../assets/images/coverpage.jpg';
-import transport from '../../assets/images/transport.jpg';
-import bright2 from '../../assets/images/bright2.jpg';
-import bright3 from '../../assets/images/bright3.jpg';
+// Commented out unused images for now
+// import transport from '../../assets/images/transport.jpg';
+// import bright2 from '../../assets/images/bright2.jpg';
+// import bright3 from '../../assets/images/bright3.jpg';
 
 // Define the types for the component's props
 interface HomeProps {
@@ -15,32 +15,33 @@ interface HomeProps {
 
 const Home: React.FC<HomeProps> = ({ navigateTo }) => {
     // Define carousel images with descriptions
-    // Note: coverpage.jpg is set as the default home image (first in array)
+    // Note: Using only coverpage.jpg as the static background image
     const carouselImages = [
         {
             src: coverpage,
             alt: "Bright Life Bangladesh Cover Page",
             title: "Your Health, Our Priority",
             description: "Comprehensive healthcare coverage for you and your family"
-        },
-        {
-            src: transport,
-            alt: "Transportation Services",
-            title: "Emergency Transportation",
-            description: "24/7 ambulance and medical transport services"
-        },
-        {
-            src: bright2,
-            alt: "Bright Life Services",
-            title: "Quality Healthcare",
-            description: "Access to premium medical facilities and specialists"
-        },
-        {
-            src: bright3,
-            alt: "Bright Life Community",
-            title: "Community Care",
-            description: "Building healthier communities together"
         }
+        // Other images commented out (transport, bright2, bright3)
+        // {
+        //     src: transport,
+        //     alt: "Transportation Services",
+        //     title: "Emergency Transportation",
+        //     description: "24/7 ambulance and medical transport services"
+        // },
+        // {
+        //     src: bright2,
+        //     alt: "Bright Life Services",
+        //     title: "Quality Healthcare",
+        //     description: "Access to premium medical facilities and specialists"
+        // },
+        // {
+        //     src: bright3,
+        //     alt: "Bright Life Community",
+        //     title: "Community Care",
+        //     description: "Building healthier communities together"
+        // }
     ];
 
     return (
@@ -49,14 +50,14 @@ const Home: React.FC<HomeProps> = ({ navigateTo }) => {
             <div className="absolute inset-0">
                 <ImageCarousel 
                     images={carouselImages}
-                    autoSlide={true}
+                    autoSlide={false} // Disabled since only one image
                     autoSlideInterval={6000}
-                    showDots={true}
-                    showArrows={true}
-                    showThumbnails={true}
-                    showPlayPause={true}
-                    enableSwipe={true}
-                    enableKeyboard={true}
+                    showDots={false} // Disabled since only one image
+                    showArrows={false} // Disabled since only one image
+                    showThumbnails={false} // Disabled since only one image
+                    showPlayPause={false} // Disabled since only one image
+                    enableSwipe={false} // Disabled since only one image
+                    enableKeyboard={false} // Disabled since only one image
                     initialIndex={0} // Explicitly set coverpage.jpg as default
                     height="h-full"
                     className="h-full"
@@ -72,47 +73,29 @@ const Home: React.FC<HomeProps> = ({ navigateTo }) => {
                     <div className="grid lg:grid-cols-2 gap-12 items-center">
                         {/* Left side - Main content */}
                         <div className="text-white">
-                            <div className="flex items-center mb-8">
-                                <img 
-                                    src={logo} 
-                                    alt="Bright Life Bangladesh Logo" 
-                                    className="h-20 w-20 md:h-24 md:w-24 rounded-full shadow-2xl bg-white/20 p-2 logo-animation mr-6"
-                                />
-                                <div>
-                                    <h1 className="text-4xl md:text-6xl font-extrabold tracking-tighter font-heading">
-                                        Bright Life <span className="text-red-400">Bangladesh Ltd.</span>
-                                    </h1>
-                                </div>
-                            </div>
-                            
                             <p className="text-lg md:text-xl text-gray-200 mb-8 font-body leading-relaxed max-w-2xl">
                                 Bright Life Bangladesh offers premier health coverage and exclusive discounts to ensure your peace of mind.
                             </p>
-                            
-                            <div className="flex flex-col sm:flex-row gap-4">
-                                <button 
-                                    onClick={() => navigateTo('Registration')} 
-                                    className="btn-gold-gradient text-green-900 font-bold py-4 px-8 rounded-full text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
-                                >
-                                    Become a Member
-                                </button>
-                                <button 
-                                    onClick={() => navigateTo('About Us')} 
-                                    className="bg-white/20 backdrop-blur-sm border border-white/30 text-white font-bold py-4 px-8 rounded-full text-lg hover:bg-white/30 transition-all duration-300"
-                                >
-                                    Learn More
-                                </button>
-                            </div>
-                        </div>
-                        
-                        {/* Right side - Feature highlights */}
-                        <div className="text-white space-y-6 lg:pl-8">
-                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-                                <h3 className="text-xl font-bold mb-3 text-red-400">🏥 Hospital Network</h3>
-                                <p className="text-gray-200">Access to 129+ premium hospitals nationwide</p>
-                            </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            
+            {/* Buttons positioned at bottom-right */}
+            <div className="absolute bottom-8 right-8 z-30 space-y-4">
+                <div className="flex flex-col gap-4">
+                    <button 
+                        onClick={() => navigateTo('Registration')} 
+                        className="btn-gold-gradient text-green-900 font-bold py-4 px-8 rounded-full text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+                    >
+                        Become a Member
+                    </button>
+                    <button 
+                        onClick={() => navigateTo('About Us')} 
+                        className="bg-white/20 backdrop-blur-sm border border-white/30 text-white font-bold py-4 px-8 rounded-full text-lg hover:bg-white/30 transition-all duration-300"
+                    >
+                        Learn More
+                    </button>
                 </div>
             </div>
         </section>

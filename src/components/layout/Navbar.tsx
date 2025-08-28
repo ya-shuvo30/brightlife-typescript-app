@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Icon from '../shared/Icon.tsx';
+import logo from '../../assets/images/logo.png';
 
 // Define the types for the component's props
 interface NavbarProps {
@@ -47,10 +48,23 @@ const Navbar: React.FC<NavbarProps> = ({ navigateTo }) => {
     return (
         <header className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${navClasses}`}>
             <nav className="container mx-auto px-6 py-4 flex items-center justify-between">
-                <a href="#" onClick={() => handleNavigate('Home')} className="text-2xl font-extrabold tracking-tight font-heading">
-                    <span className={logoColor1}>Bright</span>
-                    <span className={logoColor2}>Life</span>
-                </a>
+                {/* Enhanced Logo Section with Image and Text */}
+                <div className="flex items-center space-x-4">
+                    <img 
+                        src={logo} 
+                        alt="Bright Life Bangladesh Logo" 
+                        className={`h-12 w-12 rounded-full shadow-lg bg-white/20 p-1 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md' : 'bg-white/20'}`}
+                    />
+                    <div className="flex flex-col">
+                        <a href="#" onClick={() => handleNavigate('Home')} className="text-xl md:text-2xl font-extrabold tracking-tight font-heading">
+                            <span className={logoColor1}>Bright</span>
+                            <span className={logoColor2}>Life</span>
+                        </a>
+                        <span className={`text-xs md:text-sm font-medium ${isScrolled ? 'text-gray-600' : 'text-white/80'}`}>
+                            Bangladesh Ltd.
+                        </span>
+                    </div>
+                </div>
                 <div className={`hidden md:flex items-center space-x-6 font-medium ${textClasses}`}>
                     <a href="#" onClick={() => handleNavigate('Home')} className={`${hoverTextClasses} transition-colors`}>Home</a>
                     <div className="relative">

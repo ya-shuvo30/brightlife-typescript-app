@@ -61,21 +61,6 @@ function App(): React.ReactElement {
       <div className="min-h-screen bg-gray-50">
         <Navbar navigateTo={navigateTo} />
         
-        {/* Only Forms button shown for production */}
-        <div className="fixed top-20 right-4 z-50 space-y-2">
-          <button
-            onClick={() => {
-              const contactSection = document.getElementById('contact');
-              if (contactSection) {
-                contactSection.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
-            className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105"
-          >
-            📝 Forms
-          </button>
-        </div>
-        
         {/* Main application content */}
         <main className="relative">
           <Home navigateTo={navigateTo} />
