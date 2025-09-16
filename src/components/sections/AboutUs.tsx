@@ -8,9 +8,10 @@ interface TeamMemberCardProps {
   name: string;
   title: string;
   img: string;
+  quote?: string;
 }
 
-const TeamMemberCard: React.FC<TeamMemberCardProps> = ({ name, title, img }) => {
+const TeamMemberCard: React.FC<TeamMemberCardProps> = ({ name, title, img, quote }) => {
     const cardRef = useRef<HTMLDivElement>(null);
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -29,11 +30,23 @@ const TeamMemberCard: React.FC<TeamMemberCardProps> = ({ name, title, img }) => 
 
     return (
         <div className="perspective-1000" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
-            <div ref={cardRef} className="team-card bg-white p-6 rounded-2xl shadow-lg text-center transition-transform duration-300 ease-out">
+            <div ref={cardRef} className="team-card bg-white p-6 rounded-2xl shadow-lg text-center transition-transform duration-300 ease-out min-h-[420px] flex flex-col justify-between">
                 <div className="team-card-inner">
-                    <img src={img} alt={name} className="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-emerald-200 shadow-md"/>
-                    <h3 className="text-xl font-bold text-gray-800 font-heading">{name}</h3>
-                    <p className="text-emerald-700 font-medium">{title}</p>
+                    <img src={img} alt={name} className="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-emerald-200 shadow-md"/>
+                    <h3 className="text-xl font-bold text-gray-800 font-heading mb-1">{name}</h3>
+                    <p className="text-emerald-700 font-medium mb-4">{title}</p>
+                    {quote && (
+                        <div className="mt-4 px-2">
+                            <div className="flex justify-center mb-3">
+                                <svg className="w-6 h-6 text-emerald-400 quote-icon" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/>
+                                </svg>
+                            </div>
+                            <p className="text-gray-600 text-sm italic leading-relaxed quote-text">
+                                "{quote}"
+                            </p>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

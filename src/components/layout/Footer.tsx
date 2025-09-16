@@ -16,29 +16,29 @@ const Footer: React.FC<FooterProps> = ({ navigateTo }) => {
             <div className="container mx-auto px-6">
                 <div className="grid md:grid-cols-4 gap-8 mb-8">
                     <div>
-                        <h3 className="text-xl font-bold font-heading mb-4"><span className="text-white">Bright</span><span className="text-red-300">Life</span></h3>
+                        <h3 className="text-xl font-bold font-heading mb-4"><span className="text-white">Bright</span><span className="text-green-300">Life</span></h3>
                         <p className="text-gray-400">Your future, brighter.</p>
                     </div>
                     <div>
                         <h4 className="font-bold mb-4 text-lg">Quick Links</h4>
                         <ul className="space-y-2">
-                            <li><a href="#" onClick={() => navigateTo('Home')} className="text-gray-400 hover:text-white">Home</a></li>
-                            <li><a href="#" onClick={() => navigateTo('AboutUs')} className="text-gray-400 hover:text-white">About Us</a></li>
-                            <li><a href="#" onClick={() => navigateTo('OurServices')} className="text-gray-400 hover:text-white">Services</a></li>
-                            <li><a href="#" onClick={() => navigateTo('Contact')} className="text-gray-400 hover:text-white">Contact</a></li>
+                            <li><a href="#" onClick={() => navigateTo('Home')} className="text-gray-400 hover:text-green-300 transition-colors">Home</a></li>
+                            <li><a href="#" onClick={() => navigateTo('AboutUs')} className="text-gray-400 hover:text-green-300 transition-colors">About Us</a></li>
+                            <li><a href="#" onClick={() => navigateTo('OurServices')} className="text-gray-400 hover:text-green-300 transition-colors">Services</a></li>
+                            <li><a href="#" onClick={() => navigateTo('Contact')} className="text-gray-400 hover:text-green-300 transition-colors">Contact</a></li>
                         </ul>
                     </div>
                     <div>
                         <h4 className="font-bold mb-4 text-lg">Partners</h4>
                         <ul className="space-y-2">
-                            <li><a href="#" onClick={() => navigateTo('InsurancePartner')} className="text-gray-400 hover:text-white">Insurance Partner</a></li>
+                            <li><a href="#" onClick={() => navigateTo('InsurancePartner')} className="text-gray-400 hover:text-green-300 transition-colors">Insurance Partner</a></li>
                         </ul>
                     </div>
                     <div>
                         <h4 className="font-bold mb-4 text-lg">Follow Us</h4>
                         <div className="flex space-x-4">
                             {socialLinks.map(link => (
-                                <a key={link.name} href={link.href} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white" title={link.name}>
+                                <a key={link.name} href={link.href} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-green-300 transition-colors" title={link.name}>
                                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d={link.icon}></path></svg>
                                 </a>
                             ))}

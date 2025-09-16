@@ -32,18 +32,18 @@ const Navbar: React.FC<NavbarProps> = ({ navigateTo }) => {
         setIsMenuOpen(false);
     };
 
-    // Dynamic classes based on scroll state with red theme
+    // Dynamic classes based on scroll state with green theme
     const navClasses = isScrolled 
         ? 'bg-white shadow-lg' 
         : 'bg-transparent';
     const textClasses = isScrolled 
         ? 'text-gray-700' 
-        : 'text-white';
+        : 'text-white font-semibold drop-shadow-md';
     const hoverTextClasses = isScrolled 
-        ? 'hover:text-emerald-600' 
-        : 'hover:text-red-300';
-    const logoColor1 = isScrolled ? 'text-red-700' : 'text-white';
-    const logoColor2 = isScrolled ? 'text-red-500' : 'text-red-300';
+        ? 'hover:text-green-600' 
+        : 'hover:text-green-300';
+    const logoColor1 = isScrolled ? 'text-green-700' : 'text-white drop-shadow-md';
+    const logoColor2 = isScrolled ? 'text-green-500' : 'text-green-300';
 
     return (
         <header className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${navClasses}`}>
@@ -60,7 +60,7 @@ const Navbar: React.FC<NavbarProps> = ({ navigateTo }) => {
                             <span className={logoColor1}>Bright</span>
                             <span className={logoColor2}>Life</span>
                         </a>
-                        <span className={`text-xs md:text-sm font-medium ${isScrolled ? 'text-gray-600' : 'text-white/80'}`}>
+                        <span className={`text-xs md:text-sm font-medium ${isScrolled ? 'text-gray-600' : 'text-white/90 drop-shadow-md'}`}>
                             Bangladesh Ltd.
                         </span>
                     </div>
@@ -123,17 +123,17 @@ const Navbar: React.FC<NavbarProps> = ({ navigateTo }) => {
                 {isMenuOpen && (
                     <div className="absolute top-full left-0 right-0 bg-white shadow-lg md:hidden">
                         <div className="px-6 py-4 space-y-4">
-                            <a href="#" onClick={() => handleNavigate('Home')} className="text-2xl hover:text-red-300">Home</a>
-                            <a href="#" onClick={() => handleNavigate('AboutUs')} className="text-2xl hover:text-red-300">About Us</a>
-                            <a href="#" onClick={() => handleNavigate('OurServices')} className="text-2xl hover:text-red-300">Services</a>
-                            <a href="#" onClick={() => handleNavigate('Contact')} className="text-2xl hover:text-red-300">Contact</a>
+                            <a href="#" onClick={() => handleNavigate('Home')} className="text-2xl text-gray-700 hover:text-green-600 transition-colors">Home</a>
+                            <a href="#" onClick={() => handleNavigate('AboutUs')} className="text-2xl text-gray-700 hover:text-green-600 transition-colors">About Us</a>
+                            <a href="#" onClick={() => handleNavigate('OurServices')} className="text-2xl text-gray-700 hover:text-green-600 transition-colors">Services</a>
+                            <a href="#" onClick={() => handleNavigate('Contact')} className="text-2xl text-gray-700 hover:text-green-600 transition-colors">Contact</a>
                             <div className="pt-4 border-t border-gray-200 space-y-2">
-                                <a href="#" onClick={() => handleNavigate('ValuedMembers')} className="text-xl hover:text-red-300">Valued Members</a>
-                                <a href="#" onClick={() => handleNavigate('InsurancePartner')} className="text-xl hover:text-red-300">Insurance Partner</a>
-                                <a href="#" onClick={() => handleNavigate('CustomerSupport')} className="text-xl hover:text-red-300">Customer Support</a>
-                                <a href="#" onClick={() => handleNavigate('TermsAndConditions')} className="text-xl hover:text-red-300">Terms & Conditions</a>
-                                <a href="#" onClick={() => handleNavigate('PrivacyPolicy')} className="text-xl hover:text-red-300">Privacy Policy</a>
-                                <a href="#" onClick={() => handleNavigate('ReturnAndRefundPolicy')} className="text-xl hover:text-red-300">Return & Refund Policy</a>
+                                <a href="#" onClick={() => handleNavigate('ValuedMembers')} className="text-xl text-gray-600 hover:text-green-600 transition-colors">Valued Members</a>
+                                <a href="#" onClick={() => handleNavigate('InsurancePartner')} className="text-xl text-gray-600 hover:text-green-600 transition-colors">Insurance Partner</a>
+                                <a href="#" onClick={() => handleNavigate('CustomerSupport')} className="text-xl text-gray-600 hover:text-green-600 transition-colors">Customer Support</a>
+                                <a href="#" onClick={() => handleNavigate('TermsAndConditions')} className="text-xl text-gray-600 hover:text-green-600 transition-colors">Terms & Conditions</a>
+                                <a href="#" onClick={() => handleNavigate('PrivacyPolicy')} className="text-xl text-gray-600 hover:text-green-600 transition-colors">Privacy Policy</a>
+                                <a href="#" onClick={() => handleNavigate('ReturnAndRefundPolicy')} className="text-xl text-gray-600 hover:text-green-600 transition-colors">Return & Refund Policy</a>
                             </div>
                         </div>
                     </div>

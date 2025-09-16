@@ -1,6 +1,7 @@
 import React from 'react';
+import TopBar from './components/layout/TopBar.tsx';
 import Navbar from './components/layout/Navbar.tsx';
-import Home from './components/sections/Home.tsx';
+import SimpleCarousel from './components/carousel/SimpleCarousel.tsx';
 import AboutUs from './components/sections/AboutUs.tsx';
 import OurServices from './components/sections/OurServices.tsx';
 import NetworkHospital from './components/sections/NetworkHospital.tsx';
@@ -14,12 +15,23 @@ import CustomerSupport from './components/sections/CustomerSupport.tsx';
 import TermsAndConditions from './components/sections/TermsAndConditions.tsx';
 import PrivacyPolicy from './components/sections/PrivacyPolicy.tsx';
 import ReturnAndRefundPolicy from './components/sections/ReturnAndRefundPolicy.tsx';
+import CallbackCTA from './components/sections/CallbackCTA.tsx';
 import Footer from './components/layout/Footer.tsx';
 import { ErrorBoundary } from './components/shared/ErrorBoundary.tsx';
+import { carouselSlides } from './data/newCarouselData.ts';
 
 // TypeScript interface for navigation function
 interface NavigationFunction {
   (page: string): void;
+}
+
+// TypeScript interface for callback form data
+interface CallbackFormData {
+  name: string;
+  phone: string;
+  email: string;
+  preferredTime: string;
+  message: string;
 }
 
 /**
@@ -51,6 +63,13 @@ function App(): React.ReactElement {
     }
   }, []);
 
+  // Callback request handler
+  const handleCallbackRequest = React.useCallback((data: CallbackFormData) => {
+    console.log('Callback request received:', data);
+    // In production, you would send this to your backend API
+    // Example: await fetch('/api/callback-request', { method: 'POST', body: JSON.stringify(data) });
+  }, []);
+
   return (
     <ErrorBoundary
       onError={(error, errorInfo) => {
@@ -59,11 +78,28 @@ function App(): React.ReactElement {
       }}
     >
       <div className="min-h-screen bg-gray-50">
+        {/* Top Bar/Announcement Bar */}
+        <TopBar />
+        
         <Navbar navigateTo={navigateTo} />
         
         {/* Main application content */}
         <main className="relative">
-          <Home navigateTo={navigateTo} />
+          {/* New Hero Carousel - Natural image sizes without padding */}
+          <section id="home" className="relative">
+            <div className="w-full">
+              <SimpleCarousel
+                slides={carouselSlides}
+                autoplay={true}
+                autoplayDelay={6000}
+              />
+            </div>
+          </section>
+          
+          {/* Call-to-Action Section for Callback - Positioned after hero */}
+          <CallbackCTA onCallbackRequest={handleCallbackRequest} />
+          
+          {/* All original sections below remain unchanged */}
           <AboutUs />
           <OurServices />
           <NetworkHospital />

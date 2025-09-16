@@ -3,6 +3,7 @@ export interface TeamMember {
   name: string;
   title: string;
   img: string;
+  quote?: string;
 }
 
 // Defines the structure for a single partner object
@@ -12,10 +13,30 @@ export interface Partner {
 }
 
 export const teamMembers: TeamMember[] = [
-    { name: "Member One", title: "CEO & Founder", img: "https://placehold.co/400x400/E0E7FF/4338CA?text=M1" },
-    { name: "Member Two", title: "COO", img: "https://placehold.co/400x400/E0E7FF/4338CA?text=M2" },
-    { name: "Member Three", title: "Marketing Head", img: "https://placehold.co/400x400/E0E7FF/4338CA?text=M3" },
-    { name: "Member Four", title: "Lead Developer", img: "https://placehold.co/400x400/E0E7FF/4338CA?text=M4" },
+    { 
+        name: "Lion Muhammad Main Uddin", 
+        title: "CEO & Founder", 
+        img: "https://placehold.co/400x400/E0E7FF/4338CA?text=LM",
+        quote: "Healthcare is a right, not a privilege. We're building bridges to ensure every family has access to quality care and a brighter life."
+    },
+    { 
+        name: "S Abdul Motin", 
+        title: "Advisor", 
+        img: "https://placehold.co/400x400/E0E7FF/4338CA?text=SM",
+        quote: "Excellence in operations means excellence in care. Every process we optimize brings us closer to serving our members better."
+    },
+    { 
+        name: "Md Ahosan Ullah", 
+        title: "Manager (Hr,Admin)", 
+        img: "https://placehold.co/400x400/E0E7FF/4338CA?text=MA",
+        quote: "Our story is written by the lives we touch. Marketing isn't just about visibility—it's about connecting hearts with hope."
+    },
+    { 
+        name: "Member Four", 
+        title: "Lead Developer", 
+        img: "https://placehold.co/400x400/E0E7FF/4338CA?text=M4",
+        quote: "Technology should be invisible, but its impact should be undeniable. We code with compassion and innovate with purpose."
+    },
 ];
 
 export const partners: Partner[] = [
