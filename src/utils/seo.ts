@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 /**
  * SEO Utilities and Hooks
@@ -112,7 +112,7 @@ const updateStructuredData = (data: Record<string, unknown>) => {
 
 // Main SEO hook
 export const useSEO = (seoData: Partial<SEOData> = {}) => {
-  const finalSEO = { ...defaultSEO, ...seoData };
+  const finalSEO = useMemo(() => ({ ...defaultSEO, ...seoData }), [seoData]);
 
   useEffect(() => {
     // Update title

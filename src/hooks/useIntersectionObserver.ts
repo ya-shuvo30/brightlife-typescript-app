@@ -4,7 +4,7 @@ import type { IntersectionObserverOptions } from '@/types/carousel';
 
 interface UseIntersectionObserverResult {
   isIntersecting: boolean;
-  ref: React.RefObject<HTMLElement>;
+  ref: React.RefObject<HTMLElement | null>;
   entry: IntersectionObserverEntry | null;
 }
 
