@@ -20,7 +20,34 @@ export const carouselSlides = [
   },
   {
     id: 3,
-    image: '/coverpage.jpg',
+    image: '/Slide-03.png',
+    title: '',
+    subtitle: '',
+    description: '',
+    buttonText: '',
+    buttonLink: ''
+  },
+  {
+    id: 4,
+    image: '/Slide-04.png',
+    title: '',
+    subtitle: '',
+    description: '',
+    buttonText: '',
+    buttonLink: ''
+  },
+  {
+    id: 5,
+    image: '/Slide-05.png',
+    title: '',
+    subtitle: '',
+    description: '',
+    buttonText: '',
+    buttonLink: ''
+  },
+  {
+    id: 6,
+    image: '/Slide-06.jpg',
     title: '',
     subtitle: '',
     description: '',

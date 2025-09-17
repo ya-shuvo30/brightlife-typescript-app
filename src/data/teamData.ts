@@ -37,6 +37,30 @@ export const teamMembers: TeamMember[] = [
         img: "https://placehold.co/400x400/E0E7FF/4338CA?text=M4",
         quote: "Technology should be invisible, but its impact should be undeniable. We code with compassion and innovate with purpose."
     },
+    { 
+        name: "Member Five", 
+        title: "Chief Medical Officer", 
+        img: "https://placehold.co/400x400/E0E7FF/4338CA?text=M5",
+        quote: "Every decision we make should pass through the lens of compassion. Healthcare excellence begins with understanding our members' needs."
+    },
+    { 
+        name: "Member Six", 
+        title: "Chief Financial Officer", 
+        img: "https://placehold.co/400x400/E0E7FF/4338CA?text=M6",
+        quote: "Financial responsibility means ensuring every taka spent brings maximum value to our members' health and wellbeing."
+    },
+    { 
+        name: "Member Seven", 
+        title: "Director of Operations", 
+        img: "https://placehold.co/400x400/E0E7FF/4338CA?text=M7",
+        quote: "Seamless operations create seamless care. Behind every successful treatment is a well-coordinated team working in harmony."
+    },
+    { 
+        name: "Member Eight", 
+        title: "Head of Customer Relations", 
+        img: "https://placehold.co/400x400/E0E7FF/4338CA?text=M8",
+        quote: "Every voice matters, every concern deserves attention. We listen not just to respond, but to truly understand and serve better."
+    },
 ];
 
 export const partners: Partner[] = [

@@ -38,7 +38,7 @@ const Navbar: React.FC<NavbarProps> = ({ navigateTo }) => {
         : 'bg-transparent';
     const textClasses = isScrolled 
         ? 'text-gray-700' 
-        : 'text-white font-semibold drop-shadow-md';
+        : 'text-black font-semibold drop-shadow-md';
     const hoverTextClasses = isScrolled 
         ? 'hover:text-green-600' 
         : 'hover:text-green-300';
@@ -47,7 +47,7 @@ const Navbar: React.FC<NavbarProps> = ({ navigateTo }) => {
 
     return (
         <header className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${navClasses}`}>
-            <nav className="container mx-auto px-6 py-4 flex items-center justify-between">
+            <nav className="container mx-auto px-6 py-4 pt-6 flex items-center justify-between">
                 {/* Enhanced Logo Section with Image and Text */}
                 <div className="flex items-center space-x-4">
                     <img 
@@ -123,17 +123,17 @@ const Navbar: React.FC<NavbarProps> = ({ navigateTo }) => {
                 {isMenuOpen && (
                     <div className="absolute top-full left-0 right-0 bg-white shadow-lg md:hidden">
                         <div className="px-6 py-4 space-y-4">
-                            <a href="#" onClick={() => handleNavigate('Home')} className="text-2xl text-gray-700 hover:text-green-600 transition-colors">Home</a>
-                            <a href="#" onClick={() => handleNavigate('AboutUs')} className="text-2xl text-gray-700 hover:text-green-600 transition-colors">About Us</a>
-                            <a href="#" onClick={() => handleNavigate('OurServices')} className="text-2xl text-gray-700 hover:text-green-600 transition-colors">Services</a>
-                            <a href="#" onClick={() => handleNavigate('Contact')} className="text-2xl text-gray-700 hover:text-green-600 transition-colors">Contact</a>
+                            <a href="#" onClick={() => handleNavigate('Home')} className="block text-lg text-gray-700 hover:text-green-600 transition-colors">Home</a>
+                            <a href="#" onClick={() => handleNavigate('AboutUs')} className="block text-lg text-gray-700 hover:text-green-600 transition-colors">About Us</a>
+                            <a href="#" onClick={() => handleNavigate('OurServices')} className="block text-lg text-gray-700 hover:text-green-600 transition-colors">Services</a>
+                            <a href="#" onClick={() => handleNavigate('Contact')} className="block text-lg text-gray-700 hover:text-green-600 transition-colors">Contact</a>
                             <div className="pt-4 border-t border-gray-200 space-y-2">
-                                <a href="#" onClick={() => handleNavigate('ValuedMembers')} className="text-xl text-gray-600 hover:text-green-600 transition-colors">Valued Members</a>
-                                <a href="#" onClick={() => handleNavigate('InsurancePartner')} className="text-xl text-gray-600 hover:text-green-600 transition-colors">Insurance Partner</a>
-                                <a href="#" onClick={() => handleNavigate('CustomerSupport')} className="text-xl text-gray-600 hover:text-green-600 transition-colors">Customer Support</a>
-                                <a href="#" onClick={() => handleNavigate('TermsAndConditions')} className="text-xl text-gray-600 hover:text-green-600 transition-colors">Terms & Conditions</a>
-                                <a href="#" onClick={() => handleNavigate('PrivacyPolicy')} className="text-xl text-gray-600 hover:text-green-600 transition-colors">Privacy Policy</a>
-                                <a href="#" onClick={() => handleNavigate('ReturnAndRefundPolicy')} className="text-xl text-gray-600 hover:text-green-600 transition-colors">Return & Refund Policy</a>
+                                <a href="#" onClick={() => handleNavigate('ValuedMembers')} className="block text-base text-gray-600 hover:text-green-600 transition-colors">Valued Members</a>
+                                <a href="#" onClick={() => handleNavigate('InsurancePartner')} className="block text-base text-gray-600 hover:text-green-600 transition-colors">Insurance Partner</a>
+                                <a href="#" onClick={() => handleNavigate('CustomerSupport')} className="block text-base text-gray-600 hover:text-green-600 transition-colors">Customer Support</a>
+                                <a href="#" onClick={() => handleNavigate('TermsAndConditions')} className="block text-base text-gray-600 hover:text-green-600 transition-colors">Terms & Conditions</a>
+                                <a href="#" onClick={() => handleNavigate('PrivacyPolicy')} className="block text-base text-gray-600 hover:text-green-600 transition-colors">Privacy Policy</a>
+                                <a href="#" onClick={() => handleNavigate('ReturnAndRefundPolicy')} className="block text-base text-gray-600 hover:text-green-600 transition-colors">Return & Refund Policy</a>
                             </div>
                         </div>
                     </div>
