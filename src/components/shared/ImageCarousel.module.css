@@ -1,0 +1,7 @@
+/* Image Carousel Component Styles */
+
+.progressBar {
+  height: 100%;
+  background-color: #ef4444; /* red-500 */
+  transition: width linear;
+}

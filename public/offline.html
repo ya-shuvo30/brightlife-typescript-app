@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrightLife - Offline</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+        }
+
+        .offline-container {
+            text-align: center;
+            max-width: 500px;
+            padding: 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            margin: 1rem;
+        }
+
+        .offline-icon {
+            width: 80px;
+            height: 80px;
+            background: #059669;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .offline-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1f2937;
+        }
+
+        .offline-description {
+            font-size: 1rem;
+            color: #6b7280;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .retry-button {
+            background: #059669;
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-right: 1rem;
+        }
+
+        .retry-button:hover {
+            background: #047857;
+        }
+
+        .home-button {
+            background: transparent;
+            color: #059669;
+            border: 2px solid #059669;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .home-button:hover {
+            background: #059669;
+            color: white;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .status-offline {
+            background: #ef4444;
+        }
+
+        .status-online {
+            background: #10b981;
+        }
+
+        .network-status {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 8px;
+            font-size: 0.875rem;
+        }
+
+        .tips {
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .tips h3 {
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            color: #374151;
+        }
+
+        .tips ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tips li {
+            padding: 0.25rem 0;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .tips li:before {
+            content: "•";
+            color: #059669;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .action-buttons {
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 640px) {
+            .offline-container {
+                margin: 0.5rem;
+                padding: 1.5rem;
+            }
+
+            .offline-title {
+                font-size: 1.5rem;
+            }
+
+            .retry-button,
+            .home-button {
+                display: block;
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="offline-icon">
+            🌐
+        </div>
+        
+        <h1 class="offline-title">You're Offline</h1>
+        
+        <p class="offline-description">
+            It looks like you've lost your internet connection. Don't worry - some features of BrightLife may still be available while you're offline.
+        </p>
+
+        <div class="network-status">
+            <span class="status-indicator status-offline" id="status-indicator"></span>
+            <span id="status-text">No internet connection</span>
+        </div>
+
+        <div class="action-buttons">
+            <button class="retry-button" onclick="retryConnection()">
+                Try Again
+            </button>
+            <a href="/" class="home-button">
+                Go to Home
+            </a>
+        </div>
+
+        <div class="tips">
+            <h3>While you're offline, you can:</h3>
+            <ul>
+                <li>Browse previously viewed health information</li>
+                <li>Access cached wellness content</li>
+                <li>View your health data from local storage</li>
+                <li>Prepare actions that will sync when you're back online</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Network status monitoring
+        function updateNetworkStatus() {
+            const statusIndicator = document.getElementById('status-indicator');
+            const statusText = document.getElementById('status-text');
+            
+            if (navigator.onLine) {
+                statusIndicator.className = 'status-indicator status-online';
+                statusText.textContent = 'Connected to internet';
+                
+                // Auto-reload when back online
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            } else {
+                statusIndicator.className = 'status-indicator status-offline';
+                statusText.textContent = 'No internet connection';
+            }
+        }
+
+        // Retry connection
+        function retryConnection() {
+            const button = document.querySelector('.retry-button');
+            button.textContent = 'Checking...';
+            button.disabled = true;
+            
+            // Check connection by trying to fetch a small resource
+            fetch('/', { method: 'HEAD', cache: 'no-store' })
+                .then(() => {
+                    button.textContent = 'Connected!';
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 500);
+                })
+                .catch(() => {
+                    button.textContent = 'Still Offline';
+                    setTimeout(() => {
+                        button.textContent = 'Try Again';
+                        button.disabled = false;
+                    }, 2000);
+                });
+        }
+
+        // Listen for network status changes
+        window.addEventListener('online', updateNetworkStatus);
+        window.addEventListener('offline', updateNetworkStatus);
+
+        // Initial status check
+        updateNetworkStatus();
+
+        // Auto-retry every 10 seconds
+        setInterval(() => {
+            if (!navigator.onLine) {
+                retryConnection();
+            }
+        }, 10000);
+
+        // Service worker message handling
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.addEventListener('message', (event) => {
+                if (event.data.type === 'NETWORK_STATUS_CHANGE') {
+                    updateNetworkStatus();
+                }
+            });
+        }
+    </script>
+</body>
+</html>
