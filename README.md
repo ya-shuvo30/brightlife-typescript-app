@@ -51,10 +51,17 @@ This project is configured for automatic deployment to GitHub Pages using GitHub
 
 ### Custom Domain Setup
 
+To connect your custom domain to GitHub Pages, follow the comprehensive guide:
+
+📖 **[Complete Domain Setup Guide](./DOMAIN_SETUP.md)**
+
+Quick steps:
 1. Update the `public/CNAME` file with your domain
-2. Configure DNS in Cloudflare:
-   - Add CNAME record pointing to `ya-shuvo30.github.io`
-3. Enable GitHub Pages in repository settings
+2. Configure DNS records (CNAME for subdomain or A records for apex domain)
+3. Enable custom domain in GitHub Pages repository settings
+4. Enable HTTPS enforcement
+
+For detailed instructions, troubleshooting, and DNS configuration examples, see the [DOMAIN_SETUP.md](./DOMAIN_SETUP.md) guide.
 
 ## 📁 Project Structure
 
