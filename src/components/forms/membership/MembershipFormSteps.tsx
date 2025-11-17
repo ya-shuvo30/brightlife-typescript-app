@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useMembershipForm } from '@/hooks/useMembershipForm';
+import type { MembershipSubmissionResponse } from '@/types/membership';
 import PersonalInfoStep from './PersonalInfoStep';
 import AddressStep from './AddressStep';
 import NomineeStep from './NomineeStep';
@@ -55,7 +56,8 @@ const MembershipFormSteps: React.FC = () => {
     console.log('📡 API Response:', result);
     
     if (result.success) {
-      const proposalNo = result.data?.proposalNo || 'BLBD-' + Date.now();
+      const submissionData = result.data as MembershipSubmissionResponse | undefined;
+      const proposalNo = submissionData?.proposalNo || 'BLBD-' + Date.now();
       console.log('✨ Setting proposal number:', proposalNo);
       setProposalNumber(proposalNo);
       console.log('🎉 Showing success modal');

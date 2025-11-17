@@ -76,6 +76,14 @@ export interface ValidationErrors {
   [key: string]: string;
 }
 
+// Membership Submission Response Data
+export interface MembershipSubmissionResponse {
+  proposalNo: string;
+  id?: string;
+  status?: string;
+  submittedAt?: string;
+}
+
 // API Response
 export interface ApiResponse<T = unknown> {
   success: boolean;

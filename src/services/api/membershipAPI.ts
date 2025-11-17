@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { MembershipFormData, ApiResponse } from '@/types/membership';
+import type { MembershipFormData, ApiResponse, MembershipSubmissionResponse } from '@/types/membership';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
 // Enable mock mode when backend is not available (set to false when backend is ready)
@@ -18,7 +18,7 @@ const apiClient = axios.create({
  * Mock API submission - simulates backend without actual server
  * Remove or set USE_MOCK_API=false when real backend is ready
  */
-const mockSubmitMembershipForm = async (formData: MembershipFormData): Promise<ApiResponse> => {
+const mockSubmitMembershipForm = async (formData: MembershipFormData): Promise<ApiResponse<MembershipSubmissionResponse>> => {
   // Simulate network delay
   await new Promise(resolve => setTimeout(resolve, 1500));
 
@@ -44,7 +44,7 @@ const mockSubmitMembershipForm = async (formData: MembershipFormData): Promise<A
 };
 
 // Submit membership form
-export const submitMembershipForm = async (formData: MembershipFormData): Promise<ApiResponse> => {
+export const submitMembershipForm = async (formData: MembershipFormData): Promise<ApiResponse<MembershipSubmissionResponse>> => {
   // Use mock API if enabled (for development without backend)
   if (USE_MOCK_API) {
     console.log('🔧 Using Mock API (no backend required)');
