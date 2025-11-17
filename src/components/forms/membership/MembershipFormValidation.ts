@@ -60,7 +60,6 @@ export const validateStep = (formData: MembershipFormData, step: number): Valida
 
       break;
     }
-    }
 
     case 3: { // Nominees
       const filledNominees = formData.nominees.filter(n => 
