@@ -45,7 +45,7 @@ export const validateStep = (formData: MembershipFormData, step: number): Valida
 
       break;
 
-    case 2: // Address
+    case 2: { // Address
       if (!formData.presentAddress.trim()) {
         errors.presentAddress = 'Present address is required';
       } else if (formData.presentAddress.length < 10) {
@@ -59,8 +59,10 @@ export const validateStep = (formData: MembershipFormData, step: number): Valida
       }
 
       break;
+    }
+    }
 
-    case 3: // Nominees
+    case 3: { // Nominees
       const filledNominees = formData.nominees.filter(n => 
         n.name.trim() || n.relation.trim() || n.share > 0 || n.age > 0
       );
@@ -96,6 +98,7 @@ export const validateStep = (formData: MembershipFormData, step: number): Valida
       }
 
       break;
+    }
 
     case 4: // Physical Measurement
       if (!formData.weight.trim()) {
