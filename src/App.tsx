@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import TopBar from './components/layout/TopBar.tsx';
 import Navbar from './components/layout/Navbar.tsx';
 import SimpleCarousel from './components/carousel/SimpleCarousel.tsx';
@@ -19,6 +20,7 @@ import CallbackCTA from './components/sections/CallbackCTA.tsx';
 import Footer from './components/layout/Footer.tsx';
 import { ErrorBoundary } from './components/shared/ErrorBoundary.tsx';
 import { carouselSlides } from './data/newCarouselData.ts';
+import MembershipFormSteps from './components/forms/membership/MembershipFormSteps.tsx';
 
 // TypeScript interface for navigation function
 interface NavigationFunction {
@@ -71,53 +73,63 @@ function App(): React.ReactElement {
   }, []);
 
   return (
-    <ErrorBoundary
-      onError={(error, errorInfo) => {
-        // In production, you would log this to an error reporting service
-        console.error('App Error:', error, errorInfo);
-      }}
-    >
-      <div className="min-h-screen bg-gray-50">
-        {/* Top Bar/Announcement Bar */}
-        <TopBar />
-        
-        <Navbar navigateTo={navigateTo} />
-        
-        {/* Main application content */}
-        <main className="relative">
-          {/* New Hero Carousel - Natural image sizes without padding */}
-          <section id="home" className="relative">
-            <div className="w-full">
-              <SimpleCarousel
-                slides={carouselSlides}
-                autoplay={true}
-                autoplayDelay={6000}
-              />
+    <BrowserRouter>
+      <ErrorBoundary
+        onError={(error, errorInfo) => {
+          // In production, you would log this to an error reporting service
+          console.error('App Error:', error, errorInfo);
+        }}
+      >
+        <Routes>
+          {/* Membership Form Route */}
+          <Route path="/membership-form" element={<MembershipFormSteps />} />
+          
+          {/* Main Application Route */}
+          <Route path="/" element={
+            <div className="min-h-screen bg-gray-50">
+              {/* Top Bar/Announcement Bar */}
+              <TopBar />
+              
+              <Navbar navigateTo={navigateTo} />
+              
+              {/* Main application content */}
+              <main className="relative">
+                {/* New Hero Carousel - Natural image sizes without padding */}
+                <section id="home" className="relative">
+                  <div className="w-full">
+                    <SimpleCarousel
+                      slides={carouselSlides}
+                      autoplay={true}
+                      autoplayDelay={6000}
+                    />
+                  </div>
+                </section>
+                
+                {/* Call-to-Action Section for Callback - Positioned after hero */}
+                <CallbackCTA onCallbackRequest={handleCallbackRequest} />
+                
+                {/* All original sections below remain unchanged */}
+                <AboutUs />
+                <OurServices />
+                <NetworkHospital />
+                <SuperShop />
+                <Transportation />
+                <ValuedMembers />
+                <Registration />
+                <Contact />
+                <InsurancePartner />
+                <CustomerSupport />
+                <TermsAndConditions />
+                <PrivacyPolicy />
+                <ReturnAndRefundPolicy />
+              </main>
+              
+              <Footer navigateTo={navigateTo} />
             </div>
-          </section>
-          
-          {/* Call-to-Action Section for Callback - Positioned after hero */}
-          <CallbackCTA onCallbackRequest={handleCallbackRequest} />
-          
-          {/* All original sections below remain unchanged */}
-          <AboutUs />
-          <OurServices />
-          <NetworkHospital />
-          <SuperShop />
-          <Transportation />
-          <ValuedMembers />
-          <Registration />
-          <Contact />
-          <InsurancePartner />
-          <CustomerSupport />
-          <TermsAndConditions />
-          <PrivacyPolicy />
-          <ReturnAndRefundPolicy />
-        </main>
-        
-        <Footer navigateTo={navigateTo} />
-      </div>
-    </ErrorBoundary>
+          } />
+        </Routes>
+      </ErrorBoundary>
+    </BrowserRouter>
   );
 }
 

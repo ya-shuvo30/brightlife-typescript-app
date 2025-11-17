@@ -215,7 +215,35 @@ import { carouselSlides } from '@/data/carouselData';     // ❌ Deprecated
 5. **Base URL**: GitHub Pages requires `base: '/'` in Vite config (custom domain setup)
 6. **Project references**: If path resolution breaks, restart TS server
 
-## Backend Integration
+### Backend Integration
+
+#### Architecture Overview
+**Full-stack setup** with Django REST API backend:
+- `brightlife-typescript-app/` - React frontend (this repo)
+- `Brightlife-Django-Backend/` - Django REST API (sibling directory)
+- **Database**: PostgreSQL with Django ORM
+- **API**: Django REST Framework with CORS enabled
+
+**Current State**: Frontend configured to connect to Django backend at `http://localhost:8000/api`
+
+#### API Configuration (`src/services/api/membershipAPI.ts`)
+```typescript
+// Environment-driven API setup
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
+const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API !== 'false'; // Set to false for real API
+```
+
+**Environment Variables** (`.env.local`):
+```env
+VITE_API_BASE_URL=http://localhost:8000/api
+VITE_USE_MOCK_API=false  # Use real Django backend
+```
+
+**Mock vs Real API**:
+- **Development with Django**: `USE_MOCK_API=false` (connects to Django backend)
+- **Frontend-only dev**: `USE_MOCK_API=true` (no backend required, 1.5s simulated delay)
+
+### Backend Integration
 
 ### Architecture Overview
 **Monorepo structure** with separate frontend/backend codebases:
