@@ -1,8 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Icon from '../shared/Icon.tsx';
 import { plans, coreServices } from '../../data/plansData.ts';
 
 const OurServices: React.FC = () => {
+    const navigate = useNavigate();
     return (
         <section id="ourservices" className="py-24 bg-gray-50">
             <div className="container mx-auto px-6">
@@ -37,7 +39,12 @@ const OurServices: React.FC = () => {
                                     </li>
                                 ))}
                             </ul>
-                            <button className={`w-full mt-auto font-bold py-3 px-6 rounded-lg transition-colors ${plan.featured ? 'btn-gold-gradient text-green-900' : 'bg-emerald-500 text-white hover:bg-emerald-600'}`}>Choose Plan</button>
+                            <button 
+                                onClick={() => navigate('/membership-form')}
+                                className={`w-full mt-auto font-bold py-3 px-6 rounded-lg transition-colors ${plan.featured ? 'btn-gold-gradient text-green-900' : 'bg-emerald-500 text-white hover:bg-emerald-600'}`}
+                            >
+                                Choose Plan
+                            </button>
                         </div>
                     ))}
                 </div>

@@ -236,12 +236,12 @@ const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API !== 'false'; // Set to fa
 **Environment Variables** (`.env.local`):
 ```env
 VITE_API_BASE_URL=http://localhost:8000/api
-VITE_USE_MOCK_API=false  # Use real Django backend
+VITE_USE_MOCK_API=false  # Real backend by default
 ```
 
 **Mock vs Real API**:
-- **Development with Django**: `USE_MOCK_API=false` (connects to Django backend)
-- **Frontend-only dev**: `USE_MOCK_API=true` (no backend required, 1.5s simulated delay)
+- **Production/Development** (default): `USE_MOCK_API=false` (connects to Django backend)
+- **Frontend-only testing**: `USE_MOCK_API=true` (mock mode, no backend required, 1.5s simulated delay)
 
 ### Backend Integration
 
@@ -250,18 +250,18 @@ VITE_USE_MOCK_API=false  # Use real Django backend
 - `brightlife-typescript-app/` - React frontend (this repo)
 - `brightlife-django-backend/` - Django REST API (sibling directory)
 
-**Current State**: Frontend operates in **mock mode** by default. Backend exists but integration is incomplete.
+**Current State**: Frontend connects to **real Django backend by default**. Mock API available for testing.
 
 ### API Configuration (`src/services/api/membershipAPI.ts`)
 ```typescript
 // Environment-driven API setup
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
-const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API !== 'false'; // Default: true
+const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API === 'true'; // Default: false (real backend)
 ```
 
 **Mock vs Real API**:
-- **Development**: `USE_MOCK_API=true` (no backend required, 1.5s simulated delay)
-- **Production**: Set `VITE_USE_MOCK_API=false` in `.env` to connect to Django backend
+- **Production/Development** (default): `USE_MOCK_API=false` (connects to Django backend)
+- **Frontend-only testing**: `USE_MOCK_API=true` (mock mode, no backend required, 1.5s simulated delay)
 
 ### Backend API Structure (Django)
 **Base URL**: `http://localhost:8000/api/` (development)  

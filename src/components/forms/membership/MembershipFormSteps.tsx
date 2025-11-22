@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useMembershipForm } from '@/hooks/useMembershipForm';
-import type { MembershipSubmissionResponse } from '@/types/membership';
+import type { MembershipSubmissionResponse, FormStepProps } from '@/types/membership';
 import PersonalInfoStep from './PersonalInfoStep';
-import AddressStep from './AddressStep';
-import NomineeStep from './NomineeStep';
+import AddressNomineeStep from './AddressNomineeStep';
 import PhysicalMeasurementStep from './PhysicalMeasurementStep';
 import ReviewStep from './ReviewStep';
 import FormProgress from '../shared/FormProgress';
@@ -11,13 +11,18 @@ import SuccessModal from '../shared/SuccessModal';
 
 const STEPS = [
   { id: 1, title: 'Personal Information', component: PersonalInfoStep },
-  { id: 2, title: 'Address', component: AddressStep },
-  { id: 3, title: 'Nominee Details', component: NomineeStep },
-  { id: 4, title: 'Physical Measurement', component: PhysicalMeasurementStep },
-  { id: 5, title: 'Review & Submit', component: ReviewStep },
+  { id: 2, title: 'Address & Nominee', component: AddressNomineeStep },
+  { id: 3, title: 'Physical & Review', component: (props: FormStepProps) => (
+    <div className="space-y-8">
+      <PhysicalMeasurementStep {...props} />
+      <div className="border-t-2 border-gray-200 my-8"></div>
+      <ReviewStep {...props} />
+    </div>
+  )},
 ];
 
 const MembershipFormSteps: React.FC = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [showSuccess, setShowSuccess] = useState(false);
   const [proposalNumber, setProposalNumber] = useState('');
@@ -62,6 +67,19 @@ const MembershipFormSteps: React.FC = () => {
       setProposalNumber(proposalNo);
       console.log('🎉 Showing success modal');
       setShowSuccess(true);
+      
+      // Navigate to payment section after 2 seconds
+      setTimeout(() => {
+        setShowSuccess(false);
+        navigate('/', { replace: true });
+        // Wait for navigation then scroll to payment section
+        setTimeout(() => {
+          const paymentSection = document.getElementById('payment');
+          if (paymentSection) {
+            paymentSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+      }, 2000);
     } else {
       console.error('❌ Submission failed:', result.message);
       alert(`Submission failed: ${result.message || 'Please try again'}`);

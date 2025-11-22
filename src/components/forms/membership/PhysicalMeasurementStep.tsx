@@ -12,10 +12,12 @@ const PhysicalMeasurementStep: React.FC<FormStepProps> = ({ formData, updateForm
       {/* Weight, Height, Blood Group */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="weight" className="block text-sm font-medium text-gray-700 mb-2">
             Weight (kg) <span className="text-red-600">*</span>
           </label>
           <input
+            id="weight"
+            name="weight"
             type="number"
             step="0.1"
             value={formData.weight}
@@ -28,10 +30,12 @@ const PhysicalMeasurementStep: React.FC<FormStepProps> = ({ formData, updateForm
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="height" className="block text-sm font-medium text-gray-700 mb-2">
             Height (ft) <span className="text-red-600">*</span>
           </label>
           <input
+            id="height"
+            name="height"
             type="text"
             value={formData.height}
             onChange={(e) => updateFormData({ height: e.target.value })}
@@ -43,10 +47,12 @@ const PhysicalMeasurementStep: React.FC<FormStepProps> = ({ formData, updateForm
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="bloodGroup" className="block text-sm font-medium text-gray-700 mb-2">
             Blood Group <span className="text-red-600">*</span>
           </label>
           <select
+            id="bloodGroup"
+            name="bloodGroup"
             value={formData.bloodGroup}
             onChange={(e) => updateFormData({ bloodGroup: e.target.value })}
             className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-500
@@ -63,8 +69,10 @@ const PhysicalMeasurementStep: React.FC<FormStepProps> = ({ formData, updateForm
 
       {/* Chest Measurement */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">Chest Measurement (inches)</label>
+        <label htmlFor="chest" className="block text-sm font-medium text-gray-700 mb-2">Chest Measurement (inches)</label>
         <input
+          id="chest"
+          name="chest"
           type="text"
           value={formData.chest}
           onChange={(e) => updateFormData({ chest: e.target.value })}
@@ -75,10 +83,12 @@ const PhysicalMeasurementStep: React.FC<FormStepProps> = ({ formData, updateForm
 
       {/* Surgery Details */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="surgeryDetails" className="block text-sm font-medium text-gray-700 mb-2">
           Surgery/Medical History Details
         </label>
         <textarea
+          id="surgeryDetails"
+          name="surgeryDetails"
           value={formData.surgeryDetails}
           onChange={(e) => updateFormData({ surgeryDetails: e.target.value })}
           rows={4}

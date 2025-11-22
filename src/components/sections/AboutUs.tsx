@@ -104,7 +104,7 @@ const AboutUs: React.FC = () => {
                 <div className="container mx-auto px-6 text-center">
                     <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-16 font-heading tracking-tight">Meet Our Leadership</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {teamMembers.map((member, index) => <TeamMemberCard key={index} {...member} />)}
+                        {teamMembers.slice(0, 4).map((member, index) => <TeamMemberCard key={index} {...member} />)}
                     </div>
                 </div>
             </div>

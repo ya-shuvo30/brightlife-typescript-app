@@ -6,7 +6,7 @@ const NetworkHospital: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedArea, setSelectedArea] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const hospitalsPerPage = 50;
+    const hospitalsPerPage = 10;
 
     // Get unique areas for filter
     const uniqueAreas = useMemo(() => {

@@ -464,4 +464,126 @@
         filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.12));
     }
 }
+
+/* Print Styles for Payment Receipt */
+@media print {
+    /* Page setup */
+    @page {
+        margin: 1cm;
+        size: A4 portrait;
+    }
+
+    /* Force exact color printing */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* Reset body and html */
+    html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+        width: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    /* Hide everything with print:hidden class */
+    .print\:hidden {
+        display: none !important;
+    }
+
+    /* Show the print content */
+    .print-content {
+        display: block !important;
+        position: static !important;
+        width: 100% !important;
+        margin: 0 auto !important;
+        padding: 1rem !important;
+        background: white !important;
+        max-width: 100% !important;
+    }
+
+    /* Ensure proper display for common elements */
+    .print-content table {
+        display: table !important;
+        width: 100% !important;
+        border-collapse: collapse !important;
+    }
+
+    .print-content thead {
+        display: table-header-group !important;
+    }
+
+    .print-content tbody {
+        display: table-row-group !important;
+    }
+
+    .print-content tr {
+        display: table-row !important;
+        page-break-inside: avoid !important;
+    }
+
+    .print-content td,
+    .print-content th {
+        display: table-cell !important;
+        padding: 0.75rem 0.5rem !important;
+        page-break-inside: avoid !important;
+    }
+
+    .print-content h1,
+    .print-content h2,
+    .print-content h3,
+    .print-content h4,
+    .print-content h5,
+    .print-content h6 {
+        display: block !important;
+        page-break-after: avoid !important;
+    }
+
+    .print-content p {
+        display: block !important;
+    }
+
+    .print-content ul,
+    .print-content ol {
+        display: block !important;
+    }
+
+    .print-content li {
+        display: list-item !important;
+    }
+
+    .print-content img {
+        display: block !important;
+        max-width: 100px !important;
+        height: auto !important;
+        page-break-inside: avoid !important;
+    }
+
+    .print-content div {
+        display: block !important;
+    }
+
+    /* Remove shadows and effects for cleaner print */
+    * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    /* Ensure borders are visible */
+    .print-content .border,
+    .print-content [class*="border-"] {
+        border-color: #333 !important;
+    }
+
+    /* Hide background colors except specific ones */
+    .print-content .bg-blue-50,
+    .print-content .bg-green-50,
+    .print-content .bg-yellow-100,
+    .print-content .bg-red-100 {
+        background-color: transparent !important;
+    }
+}
     

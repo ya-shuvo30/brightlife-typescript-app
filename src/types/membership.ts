@@ -32,6 +32,7 @@ export interface MembershipFormData {
   motherName: string;
   spouseName: string;
   mobile: string;
+  email: string;
   photo: File | null;
   
   // Additional Personal Info

@@ -168,8 +168,10 @@ const ReviewStep: React.FC<FormStepProps> = ({ formData, updateFormData, errors 
           I agree to abide by all terms, conditions, and rules of Bright Life Bangladesh Ltd.
         </p>
         
-        <label className="flex items-start space-x-3 cursor-pointer">
+        <label htmlFor="acceptTerms" className="flex items-start space-x-3 cursor-pointer">
           <input
+            id="acceptTerms"
+            name="acceptTerms"
             type="checkbox"
             checked={formData.acceptTerms}
             onChange={(e) => updateFormData({ acceptTerms: e.target.checked })}

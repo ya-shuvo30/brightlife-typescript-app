@@ -37,15 +37,79 @@ const PersonalInfoStep: React.FC<FormStepProps> = ({ formData, updateFormData, e
     }
   };
 
+  const generateProposalNo = () => {
+    const timestamp = Date.now();
+    const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+    const proposalNo = `BLBD-${timestamp}-${random}`;
+    updateFormData({ proposalNo });
+  };
+
   return (
     <div className="space-y-8">
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">1. Personal Information</h2>
+      {/* Proposal Information Section */}
+      <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Proposal Information</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="lg:col-span-1">
+            <label htmlFor="proposalNo" className="block text-sm font-medium text-gray-700 mb-2">
+              Proposal No
+            </label>
+            <input
+              id="proposalNo"
+              name="proposalNo"
+              type="text"
+              value={formData.proposalNo}
+              onChange={(e) => updateFormData({ proposalNo: e.target.value })}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 bg-white"
+              placeholder="Click generate button"
+              readOnly
+            />
+            <button
+              type="button"
+              onClick={generateProposalNo}
+              className="mt-2 w-full px-6 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-200 shadow-sm hover:shadow-md"
+            >
+              Generate
+            </button>
+          </div>
+          <div>
+            <label htmlFor="foCode" className="block text-sm font-medium text-gray-700 mb-2">
+              FO Code
+            </label>
+            <input
+              id="foCode"
+              name="foCode"
+              type="text"
+              value={formData.foCode}
+              onChange={(e) => updateFormData({ foCode: e.target.value })}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 bg-white"
+              placeholder="Field Officer Code"
+            />
+          </div>
+          <div>
+            <label htmlFor="foName" className="block text-sm font-medium text-gray-700 mb-2">
+              FO Name
+            </label>
+            <input
+              id="foName"
+              name="foName"
+              type="text"
+              value={formData.foName}
+              onChange={(e) => updateFormData({ foName: e.target.value })}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 bg-white"
+              placeholder="Field Officer Name"
+            />
+          </div>
+        </div>
+      </div>
+
+      <h2 className="text-2xl font-bold text-gray-900 mb-6">1. Membership Information</h2>
 
       {/* Membership Type */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-3">
+        <div className="block text-sm font-medium text-gray-700 mb-3">
           Select Membership Type <span className="text-red-600">*</span>
-        </label>
+        </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {membershipTypes.map((type) => (
             <button
@@ -64,9 +128,9 @@ const PersonalInfoStep: React.FC<FormStepProps> = ({ formData, updateFormData, e
 
       {/* Gender */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <div className="block text-sm font-medium text-gray-700 mb-2">
           Gender <span className="text-red-600">*</span>
-        </label>
+        </div>
         <div className="flex gap-4">
           {(['male', 'female'] as Gender[]).map((gender) => (
             <label key={gender} className="flex items-center space-x-2 cursor-pointer">
@@ -87,8 +151,10 @@ const PersonalInfoStep: React.FC<FormStepProps> = ({ formData, updateFormData, e
       {/* Names */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Name in Bangla</label>
+          <label htmlFor="nameBangla" className="block text-sm font-medium text-gray-700 mb-2">Name in Bangla</label>
           <input
+            id="nameBangla"
+            name="nameBangla"
             type="text"
             value={formData.nameBangla}
             onChange={(e) => updateFormData({ nameBangla: e.target.value })}
@@ -97,10 +163,12 @@ const PersonalInfoStep: React.FC<FormStepProps> = ({ formData, updateFormData, e
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="nameEnglish" className="block text-sm font-medium text-gray-700 mb-2">
             Name in English <span className="text-red-600">*</span>
           </label>
           <input
+            id="nameEnglish"
+            name="nameEnglish"
             type="text"
             value={formData.nameEnglish}
             onChange={(e) => updateFormData({ nameEnglish: e.target.value })}
@@ -115,50 +183,62 @@ const PersonalInfoStep: React.FC<FormStepProps> = ({ formData, updateFormData, e
       {/* Family Names */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="fatherName" className="block text-sm font-medium text-gray-700 mb-2">
             Father's Name <span className="text-red-600">*</span>
           </label>
           <input
+            id="fatherName"
+            name="fatherName"
             type="text"
             value={formData.fatherName}
             onChange={(e) => updateFormData({ fatherName: e.target.value })}
             className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-500
               ${errors?.fatherName ? 'border-red-500' : 'border-gray-300'}`}
+            placeholder="Father's Name"
           />
           {errors?.fatherName && <p className="mt-1 text-sm text-red-600">{errors.fatherName}</p>}
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="motherName" className="block text-sm font-medium text-gray-700 mb-2">
             Mother's Name <span className="text-red-600">*</span>
           </label>
           <input
+            id="motherName"
+            name="motherName"
             type="text"
             value={formData.motherName}
             onChange={(e) => updateFormData({ motherName: e.target.value })}
             className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-500
               ${errors?.motherName ? 'border-red-500' : 'border-gray-300'}`}
+            placeholder="Mother's Name"
           />
           {errors?.motherName && <p className="mt-1 text-sm text-red-600">{errors.motherName}</p>}
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Spouse's Name</label>
+          <label htmlFor="spouseName" className="block text-sm font-medium text-gray-700 mb-2">Spouse's Name</label>
           <input
+            id="spouseName"
+            name="spouseName"
             type="text"
             value={formData.spouseName}
             onChange={(e) => updateFormData({ spouseName: e.target.value })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
+            placeholder="Spouse's Name (if married)"
           />
         </div>
       </div>
 
-      {/* Mobile & Photo */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* Mobile, Email & Photo */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="mobile" className="block text-sm font-medium text-gray-700 mb-2">
             Mobile/Bkash Number <span className="text-red-600">*</span>
           </label>
           <input
+            id="mobile"
+            name="mobile"
             type="tel"
+            autoComplete="tel"
             value={formData.mobile}
             onChange={(e) => updateFormData({ mobile: e.target.value })}
             className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-500
@@ -166,6 +246,23 @@ const PersonalInfoStep: React.FC<FormStepProps> = ({ formData, updateFormData, e
             placeholder="+880 1XXX-XXXXXX"
           />
           {errors?.mobile && <p className="mt-1 text-sm text-red-600">{errors.mobile}</p>}
+        </div>
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+            Email Address
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            value={formData.email}
+            onChange={(e) => updateFormData({ email: e.target.value })}
+            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-500
+              ${errors?.email ? 'border-red-500' : 'border-gray-300'}`}
+            placeholder="example@email.com"
+          />
+          {errors?.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
         </div>
         <div>
           <FileUpload
@@ -184,11 +281,14 @@ const PersonalInfoStep: React.FC<FormStepProps> = ({ formData, updateFormData, e
       {/* DOB & Age */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="dob" className="block text-sm font-medium text-gray-700 mb-2">
             Date of Birth <span className="text-red-600">*</span>
           </label>
           <input
+            id="dob"
+            name="dob"
             type="date"
+            autoComplete="bday"
             value={formData.dob}
             onChange={(e) => handleDobChange(e.target.value)}
             max={new Date().toISOString().split('T')[0]}
@@ -198,33 +298,40 @@ const PersonalInfoStep: React.FC<FormStepProps> = ({ formData, updateFormData, e
           {errors?.dob && <p className="mt-1 text-sm text-red-600">{errors.dob}</p>}
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Age</label>
+          <label htmlFor="age" className="block text-sm font-medium text-gray-700 mb-2">Age</label>
           <input
+            id="age"
+            name="age"
             type="number"
             value={formData.age || ''}
             readOnly
             className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50"
             placeholder="Auto-calculated"
+            title="Age (auto-calculated)"
           />
         </div>
       </div>
 
       {/* Nationality */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">Nationality</label>
+        <label htmlFor="nationality" className="block text-sm font-medium text-gray-700 mb-2">Nationality</label>
         <input
+          id="nationality"
+          name="nationality"
           type="text"
+          autoComplete="country-name"
           value={formData.nationality}
           onChange={(e) => updateFormData({ nationality: e.target.value })}
           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
+          placeholder="e.g., Bangladeshi"
         />
       </div>
 
       {/* Age Proof */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <div className="block text-sm font-medium text-gray-700 mb-2">
           Age Proof Documents <span className="text-red-600">*</span>
-        </label>
+        </div>
         <div className="space-y-2">
           {ageProofOptions.map((option) => (
             <label key={option} className="flex items-center space-x-2 cursor-pointer">
@@ -256,7 +363,7 @@ const PersonalInfoStep: React.FC<FormStepProps> = ({ formData, updateFormData, e
 
       {/* Driving License */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">Do you have a driving license?</label>
+        <div className="block text-sm font-medium text-gray-700 mb-2">Do you have a driving license?</div>
         <div className="flex gap-4 mb-3">
           {['yes', 'no'].map((option) => (
             <label key={option} className="flex items-center space-x-2 cursor-pointer">
@@ -285,7 +392,7 @@ const PersonalInfoStep: React.FC<FormStepProps> = ({ formData, updateFormData, e
 
       {/* Marital Status */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">Marital Status</label>
+        <div className="block text-sm font-medium text-gray-700 mb-2">Marital Status</div>
         <div className="flex flex-wrap gap-4">
           {(['married', 'unmarried', 'divorced', 'others'] as MaritalStatus[]).map((status) => (
             <label key={status} className="flex items-center space-x-2 cursor-pointer">
@@ -306,8 +413,10 @@ const PersonalInfoStep: React.FC<FormStepProps> = ({ formData, updateFormData, e
       {/* Education */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Education</label>
+          <label htmlFor="education" className="block text-sm font-medium text-gray-700 mb-2">Education</label>
           <input
+            id="education"
+            name="education"
             type="text"
             value={formData.education}
             onChange={(e) => updateFormData({ education: e.target.value })}
@@ -316,8 +425,10 @@ const PersonalInfoStep: React.FC<FormStepProps> = ({ formData, updateFormData, e
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Professional Qualifications</label>
+          <label htmlFor="professionalQualifications" className="block text-sm font-medium text-gray-700 mb-2">Professional Qualifications</label>
           <input
+            id="professionalQualifications"
+            name="professionalQualifications"
             type="text"
             value={formData.professionalQualifications}
             onChange={(e) => updateFormData({ professionalQualifications: e.target.value })}
@@ -329,7 +440,7 @@ const PersonalInfoStep: React.FC<FormStepProps> = ({ formData, updateFormData, e
 
       {/* Occupation */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">Occupation Type</label>
+        <div className="block text-sm font-medium text-gray-700 mb-2">Occupation Type</div>
         <div className="flex flex-wrap gap-4">
           {(['service', 'business', 'farmer', 'others'] as OccupationType[]).map((occupation) => (
             <label key={occupation} className="flex items-center space-x-2 cursor-pointer">
@@ -349,8 +460,11 @@ const PersonalInfoStep: React.FC<FormStepProps> = ({ formData, updateFormData, e
 
       {/* Organization Details */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">Organization/Business Details</label>
+        <label htmlFor="organizationDetails" className="block text-sm font-medium text-gray-700 mb-2">Organization/Business Details</label>
         <textarea
+          id="organizationDetails"
+          name="organizationDetails"
+          autoComplete="organization"
           value={formData.organizationDetails}
           onChange={(e) => updateFormData({ organizationDetails: e.target.value })}
           rows={3}
@@ -362,17 +476,22 @@ const PersonalInfoStep: React.FC<FormStepProps> = ({ formData, updateFormData, e
       {/* Daily Work, Income */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Daily Work Type</label>
+          <label htmlFor="dailyWork" className="block text-sm font-medium text-gray-700 mb-2">Daily Work Type</label>
           <input
+            id="dailyWork"
+            name="dailyWork"
             type="text"
             value={formData.dailyWork}
             onChange={(e) => updateFormData({ dailyWork: e.target.value })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
+            placeholder="e.g., Office work, Field work"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Annual Income</label>
+          <label htmlFor="annualIncome" className="block text-sm font-medium text-gray-700 mb-2">Annual Income</label>
           <input
+            id="annualIncome"
+            name="annualIncome"
             type="text"
             value={formData.annualIncome}
             onChange={(e) => updateFormData({ annualIncome: e.target.value })}
@@ -381,12 +500,15 @@ const PersonalInfoStep: React.FC<FormStepProps> = ({ formData, updateFormData, e
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Income Source</label>
+          <label htmlFor="incomeSource" className="block text-sm font-medium text-gray-700 mb-2">Income Source</label>
           <input
+            id="incomeSource"
+            name="incomeSource"
             type="text"
             value={formData.incomeSource}
             onChange={(e) => updateFormData({ incomeSource: e.target.value })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500"
+            placeholder="e.g., Salary, Business, Investment"
           />
         </div>
       </div>

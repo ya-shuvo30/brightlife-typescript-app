@@ -32,35 +32,35 @@ const Navbar: React.FC<NavbarProps> = ({ navigateTo }) => {
         setIsMenuOpen(false);
     };
 
-    // Dynamic classes based on scroll state with green theme
+    // Dynamic classes based on scroll state with custom green theme
     const navClasses = isScrolled 
         ? 'bg-white shadow-lg' 
-        : 'bg-transparent';
+        : 'bg-[#B0CE88] backdrop-blur-sm';
     const textClasses = isScrolled 
         ? 'text-gray-700' 
-        : 'text-black font-semibold drop-shadow-md';
+        : 'text-white font-semibold';
     const hoverTextClasses = isScrolled 
         ? 'hover:text-green-600' 
-        : 'hover:text-green-300';
-    const logoColor1 = isScrolled ? 'text-green-700' : 'text-white drop-shadow-md';
-    const logoColor2 = isScrolled ? 'text-green-500' : 'text-green-300';
+        : 'hover:text-white/80';
+    const logoColor1 = isScrolled ? 'text-green-700' : 'text-white';
+    const logoColor2 = isScrolled ? 'text-green-500' : 'text-green-100';
 
     return (
-        <header className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${navClasses}`}>
-            <nav className="container mx-auto px-6 py-4 pt-6 flex items-center justify-between">
+        <header className={`fixed top-10 left-0 right-0 z-40 transition-colors duration-300 ${navClasses}`}>
+            <nav className="container mx-auto px-6 py-4 flex items-center justify-between">
                 {/* Enhanced Logo Section with Image and Text */}
                 <div className="flex items-center space-x-4">
                     <img 
                         src={logo} 
                         alt="Bright Life Bangladesh Logo" 
-                        className={`h-12 w-12 rounded-full shadow-lg bg-white/20 p-1 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md' : 'bg-white/20'}`}
+                        className={`h-12 w-12 rounded-full shadow-lg p-1 transition-all duration-300 ${isScrolled ? 'bg-green-50 border-2 border-green-600' : 'bg-white border-2 border-white/80'}`}
                     />
                     <div className="flex flex-col">
                         <a href="#" onClick={() => handleNavigate('Home')} className="text-xl md:text-2xl font-extrabold tracking-tight font-heading">
                             <span className={logoColor1}>Bright</span>
                             <span className={logoColor2}>Life</span>
                         </a>
-                        <span className={`text-xs md:text-sm font-medium ${isScrolled ? 'text-gray-600' : 'text-white/90 drop-shadow-md'}`}>
+                        <span className={`text-xs md:text-sm font-medium ${isScrolled ? 'text-gray-600' : 'text-white/95'}`}>
                             Bangladesh Ltd.
                         </span>
                     </div>
@@ -100,6 +100,8 @@ const Navbar: React.FC<NavbarProps> = ({ navigateTo }) => {
                         {isMoreDropdownOpen && (
                             <div className="absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-xl z-20">
                                 <a href="#" onClick={() => handleNavigate('ValuedMembers')} className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Valued Members</a>
+                                <a href="#" onClick={() => handleNavigate('Registration')} className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Registration</a>
+                                <a href="#" onClick={() => handleNavigate('Payment')} className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Payment</a>
                                 <a href="#" onClick={() => handleNavigate('InsurancePartner')} className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Insurance Partner</a>
                                 <a href="#" onClick={() => handleNavigate('CustomerSupport')} className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Customer Support</a>
                                 <a href="#" onClick={() => handleNavigate('TermsAndConditions')} className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Terms & Conditions</a>
@@ -129,6 +131,8 @@ const Navbar: React.FC<NavbarProps> = ({ navigateTo }) => {
                             <a href="#" onClick={() => handleNavigate('Contact')} className="block text-lg text-gray-700 hover:text-green-600 transition-colors">Contact</a>
                             <div className="pt-4 border-t border-gray-200 space-y-2">
                                 <a href="#" onClick={() => handleNavigate('ValuedMembers')} className="block text-base text-gray-600 hover:text-green-600 transition-colors">Valued Members</a>
+                                <a href="#" onClick={() => handleNavigate('Registration')} className="block text-base text-gray-600 hover:text-green-600 transition-colors">Registration</a>
+                                <a href="#" onClick={() => handleNavigate('Payment')} className="block text-base text-gray-600 hover:text-green-600 transition-colors">Payment</a>
                                 <a href="#" onClick={() => handleNavigate('InsurancePartner')} className="block text-base text-gray-600 hover:text-green-600 transition-colors">Insurance Partner</a>
                                 <a href="#" onClick={() => handleNavigate('CustomerSupport')} className="block text-base text-gray-600 hover:text-green-600 transition-colors">Customer Support</a>
                                 <a href="#" onClick={() => handleNavigate('TermsAndConditions')} className="block text-base text-gray-600 hover:text-green-600 transition-colors">Terms & Conditions</a>

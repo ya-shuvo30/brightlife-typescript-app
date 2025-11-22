@@ -2,8 +2,8 @@ import axios from 'axios';
 import type { MembershipFormData, ApiResponse, MembershipSubmissionResponse } from '@/types/membership';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
-// Enable mock mode when backend is not available (set to false when backend is ready)
-const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API !== 'false'; // Default to true
+// Use real backend API by default (set VITE_USE_MOCK_API=true to enable mock mode)
+const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API === 'true'; // Default to false
 
 // Create axios instance
 const apiClient = axios.create({
@@ -52,123 +52,157 @@ export const submitMembershipForm = async (formData: MembershipFormData): Promis
   try {
     const form = new FormData();
 
-    const nameParts = formData.nameEnglish.trim().split(' ');
-    const firstName = nameParts[0] || 'User';
-    const lastName = nameParts.slice(1).join(' ') || nameParts[0] || 'User';
+    // Proposal Information
+    if (formData.proposalNo) {
+      form.append('proposalNo', formData.proposalNo);
+    }
+    if (formData.foCode) {
+      form.append('foCode', formData.foCode);
+    }
+    if (formData.foName) {
+      form.append('foName', formData.foName);
+    }
 
-    // Map frontend membership types to backend values
-    const membershipTypeMap: Record<string, string> = {
-      'silver': 'individual',
-      'bronze': 'individual', 
-      'gold': 'family',
-      'executive': 'corporate'
-    };
-    form.append('membership_type', membershipTypeMap[formData.membershipType] || 'individual');
-    form.append('first_name', firstName);
-    form.append('last_name', lastName);
-    form.append('date_of_birth', formData.dob);
+    // Personal Information - use exact field names from backend spec
+    form.append('membershipType', formData.membershipType); // Backend will map this
     form.append('gender', formData.gender);
     
-    // Map marital status to backend values
-    const maritalStatusMap: Record<string, string> = {
-      'unmarried': 'single',
-      'married': 'married',
-      'divorced': 'divorced',
-      'others': 'widowed'
-    };
-    form.append('marital_status', maritalStatusMap[formData.maritalStatus] || 'single');
-    form.append('mobile_number', formData.mobile);
-    form.append('father_name', formData.fatherName);
-    form.append('mother_name', formData.motherName);
-    form.append('occupation', formData.occupation);
-    form.append('terms_accepted', 'true');
-
-    // Generate required fields
-    const email = `user${formData.mobile.replace(/[^0-9]/g, '')}@brightlife.com`;
-    form.append('email', email);
+    if (formData.nameBangla) {
+      form.append('nameBangla', formData.nameBangla);
+    }
+    form.append('nameEnglish', formData.nameEnglish);
+    form.append('fatherName', formData.fatherName);
+    form.append('motherName', formData.motherName);
     
-    const nidNumber = `TMP${formData.mobile.replace(/[^0-9]/g, '')}${Date.now().toString().slice(-4)}`;
-    form.append('nid_number', nidNumber);
-    
-    form.append('emergency_contact_name', formData.fatherName);
-    form.append('emergency_contact_number', formData.mobile);
-
     if (formData.spouseName) {
-      form.append('spouse_name', formData.spouseName);
+      form.append('spouseName', formData.spouseName);
     }
+    
+    form.append('mobile', formData.mobile);
+    
+    if (formData.email) {
+      form.append('email', formData.email);
+    }
+    
+    form.append('dob', formData.dob);
+    form.append('age', formData.age.toString());
+    
+    if (formData.nationality) {
+      form.append('nationality', formData.nationality);
+    }
+    
+    // Age proof as JSON string
+    if (formData.ageProof && Array.isArray(formData.ageProof)) {
+      form.append('ageProof', JSON.stringify(formData.ageProof));
+    }
+    
+    if (formData.drivingLicense) {
+      form.append('drivingLicense', formData.drivingLicense);
+    }
+    
+    if (formData.maritalStatus) {
+      form.append('maritalStatus', formData.maritalStatus); // Backend will map this
+    }
+    
+    if (formData.education) {
+      form.append('education', formData.education);
+    }
+    
+    if (formData.professionalQualifications) {
+      form.append('professionalQualifications', formData.professionalQualifications);
+    }
+    
+    if (formData.occupation) {
+      form.append('occupation', formData.occupation);
+    }
+    
     if (formData.organizationDetails) {
-      form.append('organization_name', formData.organizationDetails);
+      form.append('organizationDetails', formData.organizationDetails);
     }
+    
+    if (formData.dailyWork) {
+      form.append('dailyWork', formData.dailyWork);
+    }
+    
     if (formData.annualIncome) {
-      const annualIncomeNum = parseFloat(formData.annualIncome.replace(/[^0-9.]/g, ''));
-      if (!isNaN(annualIncomeNum) && annualIncomeNum > 0) {
-        const monthlyIncome = (annualIncomeNum / 12).toFixed(2);
-        form.append('monthly_income', monthlyIncome);
-      } else {
-        form.append('monthly_income', '0.00');
-      }
-    } else {
-      form.append('monthly_income', '0.00');
+      form.append('annualIncome', formData.annualIncome);
+    }
+    
+    if (formData.incomeSource) {
+      form.append('incomeSource', formData.incomeSource);
     }
 
-    // Map frontend relationship values to backend expected choices
-    const relationshipMap: Record<string, string> = {
-      'father': 'father',
-      'mother': 'mother',
-      'spouse': 'spouse',
-      'husband': 'spouse',
-      'wife': 'spouse',
-      'son': 'child',
-      'daughter': 'child',
-      'child': 'child',
-      'brother': 'sibling',
-      'sister': 'sibling',
-      'sibling': 'sibling',
-      'other': 'other'
-    };
+    // Address
+    if (formData.presentAddress) {
+      form.append('presentAddress', formData.presentAddress);
+    }
+    if (formData.permanentAddress) {
+      form.append('permanentAddress', formData.permanentAddress);
+    }
 
-    // Helper function to normalize relationship string to backend choice
-    const normalizeRelationship = (relation: string): string => {
-      const normalized = relation.toLowerCase().trim();
-      return relationshipMap[normalized] || 'other';
-    };
-
-    // NESTED NOMINEES - Send as nested data for Django REST Framework
-    // Only send nominees that have a name (filter out empty nominees)
+    // Nominees - Send as FormData array format
     const validNominees = formData.nominees.filter(n => n.name && n.name.trim());
     
     validNominees.forEach((nominee, index) => {
       form.append(`nominees[${index}]name`, nominee.name);
-      form.append(`nominees[${index}]relationship`, normalizeRelationship(nominee.relation));
-      form.append(`nominees[${index}]mobile_number`, formData.mobile);
-      form.append(`nominees[${index}]nid_number`, `NOM${Date.now()}${index}`);
-      // Calculate DOB from age
-      const dob = new Date(new Date().getFullYear() - (nominee.age || 18), 0, 1)
-        .toISOString()
-        .split('T')[0];
-      form.append(`nominees[${index}]date_of_birth`, dob);
-      form.append(`nominees[${index}]share_percentage`, nominee.share.toString());
+      form.append(`nominees[${index}]relation`, nominee.relation); // Backend will normalize
+      form.append(`nominees[${index}]share`, nominee.share.toString());
+      form.append(`nominees[${index}]age`, nominee.age.toString());
       
-      // Add nominee ID proof if available
-      if (formData.nomineeIdProof && formData.nomineeIdProof[index]) {
-        form.append(`nominees[${index}]id_proof`, formData.nomineeIdProof[index]);
-      } else if (nominee.photo) {
-        // Use nominee photo as ID proof if available
-        form.append(`nominees[${index}]id_proof`, nominee.photo);
+      // Add nominee photo if available
+      if (nominee.photo) {
+        form.append(`nominees[${index}]photo`, nominee.photo);
       }
     });
+    
+    // Nominee ID proofs (multiple files)
+    if (formData.nomineeIdProof) {
+      formData.nomineeIdProof.forEach((file, index) => {
+        if (file) {
+          form.append(`nomineeIdProof[${index}]`, file);
+        }
+      });
+    }
 
+    // Physical Measurements
+    if (formData.weight) {
+      form.append('weight', formData.weight);
+    }
+    if (formData.height) {
+      form.append('height', formData.height);
+    }
+    if (formData.bloodGroup) {
+      form.append('bloodGroup', formData.bloodGroup);
+    }
+    if (formData.chest) {
+      form.append('chest', formData.chest);
+    }
+    if (formData.surgeryDetails) {
+      form.append('surgeryDetails', formData.surgeryDetails);
+    }
+    
+    // Medical records (multiple files)
+    if (formData.medicalRecords) {
+      formData.medicalRecords.forEach((file, index) => {
+        form.append(`medicalRecords[${index}]`, file);
+      });
+    }
+
+    // Files
     if (formData.photo) {
       form.append('photo', formData.photo);
     }
     if (formData.ageProofDoc) {
-      form.append('age_proof', formData.ageProofDoc);
+      form.append('ageProofDoc', formData.ageProofDoc);
     }
     if (formData.licenseDoc) {
-      form.append('driving_license', formData.licenseDoc);
+      form.append('licenseDoc', formData.licenseDoc);
     }
+    
+    // Terms
+    form.append('acceptTerms', formData.acceptTerms ? 'true' : 'false');
 
-    const response = await apiClient.post('/membership/applications/', form);
+    const response = await apiClient.post('/v1/membership/applications/', form);
 
     return {
       success: true,
@@ -231,7 +265,7 @@ export const getMembershipTypes = async (): Promise<ApiResponse> => {
 
   // Real API call
   try {
-    const response = await apiClient.get('/membership/types');
+    const response = await apiClient.get('/v1/membership/types');
     return {
       success: true,
       message: 'Membership types fetched successfully',

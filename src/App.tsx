@@ -17,6 +17,7 @@ import TermsAndConditions from './components/sections/TermsAndConditions.tsx';
 import PrivacyPolicy from './components/sections/PrivacyPolicy.tsx';
 import ReturnAndRefundPolicy from './components/sections/ReturnAndRefundPolicy.tsx';
 import CallbackCTA from './components/sections/CallbackCTA.tsx';
+import Payment from './components/sections/Payment.tsx';
 import Footer from './components/layout/Footer.tsx';
 import { ErrorBoundary } from './components/shared/ErrorBoundary.tsx';
 import { carouselSlides } from './data/newCarouselData.ts';
@@ -93,7 +94,7 @@ function App(): React.ReactElement {
               <Navbar navigateTo={navigateTo} />
               
               {/* Main application content */}
-              <main className="relative">
+              <main className="relative pt-32">
                 {/* New Hero Carousel - Natural image sizes without padding */}
                 <section id="home" className="relative">
                   <div className="w-full">
@@ -116,6 +117,7 @@ function App(): React.ReactElement {
                 <Transportation />
                 <ValuedMembers />
                 <Registration />
+                <Payment />
                 <Contact />
                 <InsurancePartner />
                 <CustomerSupport />

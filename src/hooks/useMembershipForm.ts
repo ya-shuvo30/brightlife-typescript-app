@@ -18,6 +18,7 @@ const initialFormData: MembershipFormData = {
   motherName: '',
   spouseName: '',
   mobile: '',
+  email: '',
   photo: null,
   dob: '',
   age: 0,
