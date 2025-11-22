@@ -159,7 +159,6 @@ const MembershipFormSteps: React.FC = () => {
           proposalNumber={proposalNumber}
           formData={formData}
           onClose={() => {
-            console.log('🔴 Closing success modal and resetting form');
             setShowSuccess(false);
             resetForm();
             setCurrentStep(1);

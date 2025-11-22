@@ -81,22 +81,14 @@ export const useMembershipForm = () => {
     return true;
   }, [formData]);
 
-  // Submit form
   const submitForm = useCallback(async (): Promise<ApiResponse> => {
-    console.log('📤 useMembershipForm: Starting form submission');
     setIsSubmitting(true);
     try {
-      console.log('🔄 useMembershipForm: Calling API with form data');
       const response = await submitMembershipForm(formData);
-      console.log('📨 useMembershipForm: Received API response:', response);
       
       if (response.success) {
-        console.log('✅ useMembershipForm: Submission successful, NOT resetting form yet');
-        // Don't reset form immediately - let the parent component handle it
-        // setFormData(initialFormData);
         setErrors({});
       } else {
-        console.log('❌ useMembershipForm: Submission failed:', response.message);
         if (response.errors) {
           setErrors(response.errors);
         }
@@ -104,13 +96,12 @@ export const useMembershipForm = () => {
       
       return response;
     } catch (error) {
-      console.error('💥 useMembershipForm: Exception during submission:', error);
+      console.error('Submission error:', error);
       return {
         success: false,
         message: 'An error occurred. Please try again.',
       };
     } finally {
-      console.log('🏁 useMembershipForm: Submission process complete');
       setIsSubmitting(false);
     }
   }, [formData]);

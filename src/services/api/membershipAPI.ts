@@ -44,25 +44,19 @@ const mockSubmitMembershipForm = async (formData: MembershipFormData): Promise<A
 };
 
 // Submit membership form
-export const submitMembershipForm = async (formData: MembershipFormData): Promise<ApiResponse<MembershipSubmissionResponse>> => {
-  // Use mock API if enabled (for development without backend)
+export const submitMembershipForm = async (formData: MembershipFormData): Promise<ApiResponse> => {
   if (USE_MOCK_API) {
-    console.log('🔧 Using Mock API (no backend required)');
     return mockSubmitMembershipForm(formData);
   }
 
-  // Real API call (when backend is available)
   try {
-    // Create FormData for file uploads
     const form = new FormData();
 
-    // Parse name into first_name and last_name (backend expects separate fields)
     const nameParts = formData.nameEnglish.trim().split(' ');
     const firstName = nameParts[0] || 'User';
     const lastName = nameParts.slice(1).join(' ') || nameParts[0] || 'User';
 
-    // REQUIRED FIELDS - Map frontend field names to backend field names
-    // Map frontend membership types to backend expected values
+    // Map frontend membership types to backend values
     const membershipTypeMap: Record<string, string> = {
       'silver': 'individual',
       'bronze': 'individual', 
@@ -70,11 +64,12 @@ export const submitMembershipForm = async (formData: MembershipFormData): Promis
       'executive': 'corporate'
     };
     form.append('membership_type', membershipTypeMap[formData.membershipType] || 'individual');
-    form.append('first_name', firstName);                      // nameEnglish → first_name, last_name
+    form.append('first_name', firstName);
     form.append('last_name', lastName);
-    form.append('date_of_birth', formData.dob);               // dob → date_of_birth
+    form.append('date_of_birth', formData.dob);
     form.append('gender', formData.gender);
-    // Map frontend marital status to backend expected values
+    
+    // Map marital status to backend values
     const maritalStatusMap: Record<string, string> = {
       'unmarried': 'single',
       'married': 'married',
@@ -82,43 +77,38 @@ export const submitMembershipForm = async (formData: MembershipFormData): Promis
       'others': 'widowed'
     };
     form.append('marital_status', maritalStatusMap[formData.maritalStatus] || 'single');
-    form.append('mobile_number', formData.mobile);            // mobile → mobile_number
-    form.append('father_name', formData.fatherName);          // fatherName → father_name
-    form.append('mother_name', formData.motherName);          // motherName → mother_name
+    form.append('mobile_number', formData.mobile);
+    form.append('father_name', formData.fatherName);
+    form.append('mother_name', formData.motherName);
     form.append('occupation', formData.occupation);
-    form.append('terms_accepted', 'true');                    // acceptTerms → terms_accepted
+    form.append('terms_accepted', 'true');
 
-    // MISSING REQUIRED FIELDS - Generate from available data
-    // Email: Generate from mobile
+    // Generate required fields
     const email = `user${formData.mobile.replace(/[^0-9]/g, '')}@brightlife.com`;
     form.append('email', email);
     
-    // NID: Generate temporary unique ID from mobile and timestamp
     const nidNumber = `TMP${formData.mobile.replace(/[^0-9]/g, '')}${Date.now().toString().slice(-4)}`;
     form.append('nid_number', nidNumber);
     
-    // Emergency contact: Use father's name and applicant's mobile
     form.append('emergency_contact_name', formData.fatherName);
     form.append('emergency_contact_number', formData.mobile);
 
-    // OPTIONAL FIELDS
     if (formData.spouseName) {
-      form.append('spouse_name', formData.spouseName);        // spouseName → spouse_name
+      form.append('spouse_name', formData.spouseName);
     }
     if (formData.organizationDetails) {
-      form.append('organization_name', formData.organizationDetails); // organizationDetails → organization_name
+      form.append('organization_name', formData.organizationDetails);
     }
     if (formData.annualIncome) {
-      // Convert annual to monthly income - ensure valid number
       const annualIncomeNum = parseFloat(formData.annualIncome.replace(/[^0-9.]/g, ''));
       if (!isNaN(annualIncomeNum) && annualIncomeNum > 0) {
         const monthlyIncome = (annualIncomeNum / 12).toFixed(2);
-        form.append('monthly_income', monthlyIncome);           // annualIncome → monthly_income (divided by 12)
+        form.append('monthly_income', monthlyIncome);
       } else {
-        form.append('monthly_income', '0.00'); // Default to 0 if invalid
+        form.append('monthly_income', '0.00');
       }
     } else {
-      form.append('monthly_income', '0.00'); // Required field - default to 0
+      form.append('monthly_income', '0.00');
     }
 
     // Map frontend relationship values to backend expected choices
@@ -168,31 +158,17 @@ export const submitMembershipForm = async (formData: MembershipFormData): Promis
       }
     });
 
-    // FILE UPLOADS - Map field names
     if (formData.photo) {
       form.append('photo', formData.photo);
     }
     if (formData.ageProofDoc) {
-      form.append('age_proof', formData.ageProofDoc);         // ageProofDoc → age_proof
+      form.append('age_proof', formData.ageProofDoc);
     }
     if (formData.licenseDoc) {
-      form.append('driving_license', formData.licenseDoc);    // licenseDoc → driving_license
+      form.append('driving_license', formData.licenseDoc);
     }
-    // Note: Nominee ID proofs are already handled in the nominees loop above
 
-    console.log('📤 Sending membership application to backend:', {
-      firstName,
-      lastName,
-      mobile: formData.mobile,
-      email,
-      nidNumber,
-      nomineesCount: validNominees.length,
-    });
-
-    // Make API call to Django backend
     const response = await apiClient.post('/membership/applications/', form);
-
-    console.log('✅ Application submitted successfully:', response.data);
 
     return {
       success: true,
@@ -240,9 +216,7 @@ export const submitMembershipForm = async (formData: MembershipFormData): Promis
 
 // Get membership types and pricing
 export const getMembershipTypes = async (): Promise<ApiResponse> => {
-  // Mock data when backend is not available
   if (USE_MOCK_API) {
-    console.log('🔧 Using Mock API for membership types');
     return {
       success: true,
       message: 'Membership types fetched successfully',

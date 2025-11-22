@@ -15,9 +15,43 @@ dist-ssr
 # Environment files
 .env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*.local
+*.env.local
+
+# AI-generated documentation (keep only README.md)
+*_COMPLETE.md
+*_GUIDE.md
+*_SUMMARY.md
+*_README.md
+*_CHECKLIST.md
+*_PLAN.md
+*_FIX.md
+*_ADDED.md
+*_REMOVED.md
+*_UPDATED.md
+*_RESOLVED.md
+*_OPTIMIZED.md
+*_ENHANCEMENT.md
+BACKEND_IMPLEMENTATION_GUIDE.md
+CALLBACK_OPTIMIZED.md
+CI-CD-README.md
+COMPLETION_SUMMARY.md
+COMPONENT_ARCHITECTURE*.md
+DJANGO_INTEGRATION_GUIDE.md
+HOMEPAGE_*.md
+INTEGRATION_CHECKLIST.md
+ISSUES_RESOLVED.md
+MEMBERSHIP_FORM_COMPLETE.md
+MODERN_*.md
+NEW_HOMEPAGE_README.md
+PDF_DOWNLOAD_GUIDE.md
+PERFORMANCE_OPTIMIZATION_GUIDE.md
+PROJECT_COMPLETE.md
+PROJECT_STRUCTURE*.md
+SUCCESS_MODAL_FIX.md
+TOP_BAR_CTA_ADDED.md
+TYPESCRIPT_ENHANCEMENT.md
+UI_UX_ENHANCEMENTS.md
 
 # CI/CD and deployment
 .vercel

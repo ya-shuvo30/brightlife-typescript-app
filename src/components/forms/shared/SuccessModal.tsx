@@ -11,18 +11,14 @@ interface SuccessModalProps {
 
 const SuccessModal: React.FC<SuccessModalProps> = ({ proposalNumber, formData, onClose }) => {
   const navigate = useNavigate();
-  
-  console.log('🎉 SuccessModal: Rendering with proposal:', proposalNumber);
 
   const handleGoHome = () => {
-    console.log('🏠 SuccessModal: Going home');
     onClose();
     navigate('/');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleDownloadReceipt = () => {
-    console.log('📄 SuccessModal: Downloading receipt');
     if (formData) {
       generateReceiptPDF(formData, proposalNumber);
     }
@@ -32,9 +28,7 @@ const SuccessModal: React.FC<SuccessModalProps> = ({ proposalNumber, formData, o
     <div 
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
       onClick={(e) => {
-        // Close modal when clicking backdrop
         if (e.target === e.currentTarget) {
-          console.log('🖱️ SuccessModal: Backdrop clicked');
           onClose();
         }
       }}
