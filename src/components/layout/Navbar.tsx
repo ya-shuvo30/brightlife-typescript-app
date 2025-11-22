@@ -49,14 +49,14 @@ const Navbar: React.FC<NavbarProps> = ({ navigateTo }) => {
         <header className={`fixed top-10 left-0 right-0 z-40 transition-colors duration-300 ${navClasses}`}>
             <nav className="container mx-auto px-6 py-4 flex items-center justify-between">
                 {/* Enhanced Logo Section with Image and Text */}
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2 sm:space-x-4">
                     <img 
                         src={logo} 
                         alt="Bright Life Bangladesh Logo" 
-                        className={`h-12 w-12 rounded-full shadow-lg p-1 transition-all duration-300 ${isScrolled ? 'bg-green-50 border-2 border-green-600' : 'bg-white border-2 border-white/80'}`}
+                        className={`h-10 w-10 sm:h-12 sm:w-12 rounded-full shadow-lg p-1 transition-all duration-300 ${isScrolled ? 'bg-green-50 border-2 border-green-600' : 'bg-white border-2 border-white/80'}`}
                     />
                     <div className="flex flex-col">
-                        <a href="#" onClick={() => handleNavigate('Home')} className="text-xl md:text-2xl font-extrabold tracking-tight font-heading">
+                        <a href="#" onClick={() => handleNavigate('Home')} className="text-lg sm:text-xl md:text-2xl font-extrabold tracking-tight font-heading">
                             <span className={logoColor1}>Bright</span>
                             <span className={logoColor2}>Life</span>
                         </a>

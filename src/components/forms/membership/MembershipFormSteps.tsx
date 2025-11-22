@@ -90,17 +90,17 @@ const MembershipFormSteps: React.FC = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-50 py-12">
-        <div className="max-w-4xl mx-auto px-4">
+      <div className="min-h-screen bg-gray-50 py-6 sm:py-8 md:py-12">
+        <div className="max-w-4xl mx-auto px-3 sm:px-4 md:px-6">
           {/* Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+          <div className="text-center mb-6 sm:mb-8">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 px-2">
               Membership Application Form
             </h1>
-            <p className="text-gray-600">
+            <p className="text-sm sm:text-base text-gray-600 px-2">
               Bright Life Bangladesh Ltd.
             </p>
-            <p className="text-sm text-gray-500">
+            <p className="text-xs sm:text-sm text-gray-500 px-2">
               Bikiran, Savar, Dhaka-1000
             </p>
           </div>
@@ -109,7 +109,7 @@ const MembershipFormSteps: React.FC = () => {
           <FormProgress steps={STEPS} currentStep={currentStep} />
 
           {/* Form Content */}
-          <div className="bg-white rounded-xl shadow-lg p-8 mt-8">
+          <div className="bg-white rounded-lg sm:rounded-xl shadow-lg p-4 sm:p-6 md:p-8 mt-6 sm:mt-8">
             <CurrentStepComponent
               formData={formData}
               updateFormData={updateFormData}

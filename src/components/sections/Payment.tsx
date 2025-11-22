@@ -234,31 +234,31 @@ const Payment: React.FC = () => {
   const selectedMethod = paymentMethods.find(m => m.id === formData.paymentMethod);
 
   return (
-    <section id="payment" className="py-16 bg-gradient-to-br from-gray-50 to-white">
-      <div className="container mx-auto px-4">
+    <section id="payment" className="py-8 sm:py-12 md:py-16 bg-gradient-to-br from-gray-50 to-white">
+      <div className="container mx-auto px-3 sm:px-4 md:px-6">
         {/* Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-full mb-4">
-            <CreditCard className="w-8 h-8 text-white" />
+        <div className="text-center mb-8 sm:mb-10 md:mb-12">
+          <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-full mb-3 sm:mb-4">
+            <CreditCard className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 px-4">
             Payment Information
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
             Complete your membership payment using any of our supported methods and submit your payment proof below
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 max-w-6xl mx-auto">
           {/* Left Column - Payment Methods */}
-          <div className="space-y-6">
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-              <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
-                <CreditCard className="w-6 h-6 mr-2 text-red-500" />
+          <div className="space-y-4 sm:space-y-6">
+            <div className="bg-white rounded-lg sm:rounded-xl shadow-lg p-4 sm:p-6 border border-gray-100">
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
+                <CreditCard className="w-5 h-5 sm:w-6 sm:h-6 mr-2 text-red-500" />
                 Payment Methods
               </h3>
 
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {paymentMethods.map((method) => {
                   const Icon = method.icon;
                   return (

@@ -94,7 +94,7 @@ function App(): React.ReactElement {
               <Navbar navigateTo={navigateTo} />
               
               {/* Main application content */}
-              <main className="relative pt-32">
+              <main className="relative pt-20 sm:pt-24 md:pt-32">
                 {/* New Hero Carousel - Natural image sizes without padding */}
                 <section id="home" className="relative">
                   <div className="w-full">

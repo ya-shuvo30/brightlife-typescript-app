@@ -18,6 +18,33 @@
         background-color: var(--neutral-bg);
         color: var(--neutral-text);
         scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Mobile-specific improvements */
+    @media (max-width: 640px) {
+        /* Better touch targets */
+        button, a {
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        /* Prevent text size adjustment on orientation change */
+        html {
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /* Improve input focus on mobile */
+        input, select, textarea {
+            font-size: 16px !important; /* Prevents zoom on iOS */
+        }
+
+        /* Better spacing for mobile */
+        .container {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
     }
 
     /* Base heading styles */
