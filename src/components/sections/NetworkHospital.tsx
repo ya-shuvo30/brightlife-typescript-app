@@ -49,7 +49,7 @@ const NetworkHospital: React.FC = () => {
     };
 
     return (
-        <section id="networkhospital" className="py-24 bg-gray-50">
+        <section id="networkhospital" className="hidden md:block py-24 bg-gray-50">
             <div className="container mx-auto px-6">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4 font-heading tracking-tight">Our Network Hospitals</h2>

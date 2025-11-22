@@ -100,7 +100,7 @@ const AboutUs: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <div id="ourteam" className="py-24 bg-gray-50">
+            <div id="ourteam" className="hidden md:block py-24 bg-gray-50">
                 <div className="container mx-auto px-6 text-center">
                     <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-16 font-heading tracking-tight">Meet Our Leadership</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
