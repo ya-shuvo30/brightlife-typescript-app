@@ -2,10 +2,11 @@
 
 ## Production Backend Server
 
-**VPS IP:** `162.0.233.161`  
-**Base URL:** `http://162.0.233.161/api` (HTTP - SSL to be configured)
+**Domain:** `api.brightlifebd.com`  
+**Base URL:** `https://api.brightlifebd.com/api`  
+**SSL/TLS:** ✅ Enabled (Let's Encrypt)
 
-⚠️ **Note:** Currently using HTTP. Browsers may show mixed content warnings when frontend (HTTPS) calls backend (HTTP). This is temporary until SSL is configured.
+✅ **Secure Connection:** HTTPS with valid SSL certificate configured
 
 ### Available API Endpoints
 
@@ -25,13 +26,13 @@
 
 **Production (.env.production):**
 ```env
-VITE_API_BASE_URL=http://162.0.233.161/api
+VITE_API_BASE_URL=https://api.brightlifebd.com/api
 VITE_USE_MOCK_API=false
 ```
 
 **Local Development (.env.local):**
 ```env
-VITE_API_BASE_URL=http://162.0.233.161/api
+VITE_API_BASE_URL=https://api.brightlifebd.com/api
 VITE_USE_MOCK_API=false
 ```
 
