@@ -1,8 +1,9 @@
 import axios from 'axios';
 import type { MembershipFormData, ApiResponse, MembershipSubmissionResponse } from '@/types/membership';
 
-// VPS Backend Server URL - will use production .env in build
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://162.0.233.161/api/v1';
+// VPS Backend Server URL - HTTP (SSL to be configured later)
+// Using /api instead of /api/v1 to match backend routing
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://162.0.233.161/api';
 // Use real backend API by default (set VITE_USE_MOCK_API=true to enable mock mode)
 const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API === 'true'; // Default to false
 

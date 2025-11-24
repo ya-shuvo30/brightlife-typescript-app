@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 
-// API Configuration - VPS Backend Server
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://162.0.233.161/api/v1';
+// API Configuration - VPS Backend Server (HTTP until SSL configured)
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://162.0.233.161/api';
 // Use real backend API by default (set VITE_USE_MOCK_API=true to enable mock mode)
 const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API === 'true'; // Default to false
 
