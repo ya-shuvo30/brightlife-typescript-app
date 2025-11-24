@@ -1,5 +1,6 @@
 // MilvikStyleHome.tsx - MILVIK-inspired homepage design for Bright Life Bangladesh
 import React from 'react';
+import logo from '../../assets/images/logo.png';
 
 const MilvikStyleHome: React.FC = () => {
   const scrollToSection = (sectionId: string) => {
@@ -136,7 +137,7 @@ const MilvikStyleHome: React.FC = () => {
               {/* Overlay for better text visibility if needed */}
               <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg p-2">
                 <img
-                  src="/src/assets/images/logo.png"
+                  src={logo}
                   alt="Bright Life Logo"
                   className="h-8 w-auto"
                 />

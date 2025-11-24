@@ -4,6 +4,7 @@ import NewNavbar from '../components/layout/NewNavbar';
 import SimpleCarousel from '../components/carousel/SimpleCarousel';
 import WhoWeAre from '../components/sections/WhoWeAre';
 import { carouselSlides } from '../data/newCarouselData';
+import logo from '../assets/images/logo.png';
 
 const HomePage: React.FC = () => {
   return (
@@ -99,7 +100,7 @@ const HomePage: React.FC = () => {
         <div className="container mx-auto px-4 text-center">
           <div className="flex items-center justify-center mb-4">
             <img
-              src="/src/assets/images/logo.png"
+              src={logo}
               alt="BrightLife Logo"
               className="h-8 w-auto mr-3"
             />

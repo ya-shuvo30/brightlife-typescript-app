@@ -3,6 +3,7 @@ import { useWindowSize, useIntersectionObserver } from '../../hooks/advanced';
 import { LazyWrapper, ProgressiveImage } from '../shared/Loading';
 import { withPerformanceMonitoring } from '../../utils/performance';
 import type { SectionProps } from '../../types/components';
+import logoImage from '../../assets/images/logo.png';
 
 /**
  * Enhanced Home section with modern React patterns
@@ -84,7 +85,7 @@ AnimatedBackground.displayName = 'AnimatedBackground';
 // Main enhanced home component
 export const EnhancedHome: React.FC<EnhancedHomeProps> = memo(({
   navigateTo,
-  logoSrc = '/src/assets/images/logo.png',
+  logoSrc = logoImage,
   title = 'Your Future, Brighter.',
   subtitle = 'Bright Life Bangladesh offers premier health coverage and exclusive discounts to ensure your peace of mind.',
   buttonText = 'Become a Member',

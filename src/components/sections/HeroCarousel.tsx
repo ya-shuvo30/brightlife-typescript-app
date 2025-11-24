@@ -1,6 +1,7 @@
 // HeroCarousel.tsx - Hero Section with Carousel for Homepage
 import React from 'react';
 import Carousel from '@/components/carousel/Carousel';
+import logo from '@/assets/images/logo.png';
 
 const HeroCarousel: React.FC = () => {
   const handleSlideChange = (slideIndex: number) => {
@@ -71,7 +72,7 @@ const HeroCarousel: React.FC = () => {
       <div className="absolute top-4 left-4 z-40">
         <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2">
           <img
-            src="/src/assets/images/logo.png"
+            src={logo}
             alt="Bright Life Bangladesh Logo"
             className="h-12 w-auto opacity-80"
             loading="eager"

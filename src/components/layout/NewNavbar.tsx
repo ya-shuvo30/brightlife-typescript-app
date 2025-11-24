@@ -1,5 +1,6 @@
 // Navbar.tsx - Navigation component with logo and menu
 import React, { useState } from 'react';
+import logo from '../../assets/images/logo.png';
 
 const Navbar: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -20,7 +21,7 @@ const Navbar: React.FC = () => {
           {/* Logo & Company Name */}
           <div className="flex items-center space-x-3">
             <img
-              src="/src/assets/images/logo.png"
+              src={logo}
               alt="BrightLife Logo"
               className="h-10 w-auto"
             />
