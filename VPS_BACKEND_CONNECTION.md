@@ -3,7 +3,9 @@
 ## Production Backend Server
 
 **VPS IP:** `162.0.233.161`  
-**Base URL:** `http://162.0.233.161/api/v1`
+**Base URL:** `http://162.0.233.161/api` (HTTP - SSL to be configured)
+
+⚠️ **Note:** Currently using HTTP. Browsers may show mixed content warnings when frontend (HTTPS) calls backend (HTTP). This is temporary until SSL is configured.
 
 ### Available API Endpoints
 
@@ -23,13 +25,13 @@
 
 **Production (.env.production):**
 ```env
-VITE_API_BASE_URL=http://162.0.233.161/api/v1
+VITE_API_BASE_URL=http://162.0.233.161/api
 VITE_USE_MOCK_API=false
 ```
 
 **Local Development (.env.local):**
 ```env
-VITE_API_BASE_URL=http://162.0.233.161/api/v1
+VITE_API_BASE_URL=http://162.0.233.161/api
 VITE_USE_MOCK_API=false
 ```
 
