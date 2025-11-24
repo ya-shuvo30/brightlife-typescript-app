@@ -1,9 +1,15 @@
 import axios, { AxiosError } from 'axios';
 
-// API Configuration
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
+// API Configuration - VPS Backend Server
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://162.0.233.161/api/v1';
 // Use real backend API by default (set VITE_USE_MOCK_API=true to enable mock mode)
 const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API === 'true'; // Default to false
+
+console.log('💳 Payment API Configuration:', {
+  baseURL: API_BASE_URL,
+  mockMode: USE_MOCK_API,
+  environment: import.meta.env.MODE,
+});
 
 // TypeScript interfaces
 export interface PaymentProofSubmission {
