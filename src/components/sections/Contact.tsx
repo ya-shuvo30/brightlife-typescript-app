@@ -91,7 +91,7 @@ const Contact: React.FC = () => {
     };
 
     const handleAddressClick = () => {
-        const address = 'Saiham Sky View Tower (14th Floor), 45 Bijoy Nagar, Ramna, Dhaka-1000';
+        const address = 'Bijoy Nagar, Ramna, Dhaka-1000';
         const encodedAddress = encodeURIComponent(address);
         window.open(`https://www.google.com/maps/search/?api=1&query=${encodedAddress}`, '_blank');
     };
@@ -151,8 +151,7 @@ const Contact: React.FC = () => {
                                 <div>
                                     <h4 className="text-lg font-bold text-gray-800 mb-1">Address</h4>
                                     <p className="text-gray-600 leading-relaxed">
-                                        Saiham Sky View Tower (14th Floor)<br />
-                                        45 Bijoy Nagar, Ramna<br />
+                                        Bijoy Nagar, Ramna<br />
                                         Dhaka-1000
                                     </p>
                                     <p className="text-sm text-gray-500 mt-1">Click to view on map</p>

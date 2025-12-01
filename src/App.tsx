@@ -42,22 +42,41 @@ interface CallbackFormData {
  * Features error boundaries, type-safe navigation, and demonstration components
  */
 function App(): React.ReactElement {
+  // State to track which hidden sections should be visible
+  const [visibleSections, setVisibleSections] = React.useState<Record<string, boolean>>({
+    networkhospital: false,
+    payment: false,
+    termsandconditions: false,
+    privacypolicy: false
+  });
+
   // Type-safe navigation function with error handling
   const navigateTo: NavigationFunction = React.useCallback((page: string) => {
     try {
       const sectionId = page.toLowerCase();
-      const section = document.getElementById(sectionId);
       
-      if (section) {
-        section.scrollIntoView({
-          behavior: 'smooth'
-        });
+      // Check if this is a hidden section that needs to be shown
+      const hiddenSections = ['networkhospital', 'payment', 'termsandconditions', 'privacypolicy'];
+      if (hiddenSections.includes(sectionId)) {
+        // Make the section visible first
+        setVisibleSections(prev => ({ ...prev, [sectionId]: true }));
+        
+        // Wait for state update and DOM render before scrolling
+        setTimeout(() => {
+          const section = document.getElementById(sectionId);
+          if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
       } else {
-        // Fallback for sections that might have different IDs
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
+        // For visible sections, scroll normally
+        const section = document.getElementById(sectionId);
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          // Fallback for sections that might have different IDs
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       }
     } catch (error) {
       console.error('Navigation error:', error);
@@ -112,25 +131,25 @@ function App(): React.ReactElement {
                 {/* All original sections below remain unchanged */}
                 <AboutUs />
                 <OurServices />
-                <div className="hidden">
+                {visibleSections.networkhospital && (
                   <NetworkHospital />
-                </div>
+                )}
                 <SuperShop />
                 <Transportation />
                 <ValuedMembers />
                 <Registration />
-                <div className="hidden">
+                {visibleSections.payment && (
                   <Payment />
-                </div>
+                )}
                 <Contact />
                 <InsurancePartner />
                 <CustomerSupport />
-                <div className="hidden">
+                {visibleSections.termsandconditions && (
                   <TermsAndConditions />
-                </div>
-                <div className="hidden">
+                )}
+                {visibleSections.privacypolicy && (
                   <PrivacyPolicy />
-                </div>
+                )}
                 <ReturnAndRefundPolicy />
               </main>
               
