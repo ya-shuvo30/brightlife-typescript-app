@@ -2,6 +2,31 @@ import jsPDF from 'jspdf';
 import type { MembershipFormData } from '@/types/membership';
 
 /**
+ * Calculate validity date based on membership type
+ */
+const calculateValidityDate = (membershipType: string): string => {
+  const today = new Date();
+  const validityDate = new Date(today);
+  
+  switch (membershipType.toLowerCase()) {
+    case 'silver':
+    case 'executive':
+      validityDate.setFullYear(today.getFullYear() + 1); // 1 year
+      break;
+    case 'bronze':
+      validityDate.setFullYear(today.getFullYear() + 2); // 2 years
+      break;
+    case 'gold':
+      validityDate.setFullYear(today.getFullYear() + 3); // 3 years
+      break;
+    default:
+      validityDate.setFullYear(today.getFullYear() + 1); // Default 1 year
+  }
+  
+  return validityDate.toLocaleDateString('en-GB'); // DD/MM/YYYY format
+};
+
+/**
  * Generate and download membership form as PDF
  */
 export const generateMembershipPDF = (formData: MembershipFormData): void => {
@@ -10,170 +35,279 @@ export const generateMembershipPDF = (formData: MembershipFormData): void => {
   const pageHeight = pdf.internal.pageSize.getHeight();
   const margin = 15;
   let yPosition = 20;
-  const lineHeight = 7;
 
-  // Helper function to add text with word wrap
-  const addText = (text: string, isBold = false, fontSize = 10) => {
-    pdf.setFontSize(fontSize);
-    pdf.setFont('helvetica', isBold ? 'bold' : 'normal');
-    
-    if (yPosition > pageHeight - 20) {
-      pdf.addPage();
-      yPosition = 20;
-    }
-    
-    const lines = pdf.splitTextToSize(text, pageWidth - 2 * margin);
-    pdf.text(lines, margin, yPosition);
-    yPosition += lineHeight * lines.length;
-  };
+  // Company Address
+  const COMPANY_ADDRESS = 'Bijoy Nagar, Ramna, Dhaka-1000';
+  
+  // Calculate validity date
+  const applicationDate = new Date().toLocaleDateString('en-GB');
+  const validityDate = calculateValidityDate(formData.membershipType);
 
-  // Header
-  pdf.setFillColor(220, 53, 69); // Red color
-  pdf.rect(0, 0, pageWidth, 30, 'F');
+  // Header with BrightLife branding
+  pdf.setFillColor(220, 53, 69);
+  pdf.rect(0, 0, pageWidth, 35, 'F');
   pdf.setTextColor(255, 255, 255);
-  pdf.setFontSize(20);
+  pdf.setFontSize(22);
   pdf.setFont('helvetica', 'bold');
   pdf.text('MEMBERSHIP APPLICATION FORM', pageWidth / 2, 12, { align: 'center' });
-  pdf.setFontSize(12);
-  pdf.text('Bright Life Bangladesh Ltd.', pageWidth / 2, 20, { align: 'center' });
+  pdf.setFontSize(13);
+  pdf.text('Bright Life Bangladesh Ltd.', pageWidth / 2, 21, { align: 'center' });
   pdf.setFontSize(10);
-  pdf.text('Bikiran, Savar, Dhaka-1000', pageWidth / 2, 26, { align: 'center' });
+  pdf.text(COMPANY_ADDRESS, pageWidth / 2, 28, { align: 'center' });
   
   pdf.setTextColor(0, 0, 0);
-  yPosition = 40;
+  yPosition = 45;
 
-  // Application Details
-  addText(`Application Date: ${new Date().toLocaleDateString()}`, false, 10);
-  addText(`Membership Type: ${String(formData.membershipType).toUpperCase()}`, true, 12);
-  yPosition += 3;
+  // Application Info Box
+  pdf.setFillColor(248, 249, 250);
+  pdf.rect(margin, yPosition - 5, pageWidth - 2 * margin, 20, 'F');
+  pdf.setDrawColor(220, 53, 69);
+  pdf.setLineWidth(0.5);
+  pdf.rect(margin, yPosition - 5, pageWidth - 2 * margin, 20);
+  
+  pdf.setFontSize(10);
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('Application Date:', margin + 5, yPosition + 3);
+  pdf.setFont('helvetica', 'normal');
+  pdf.text(applicationDate, margin + 50, yPosition + 3);
+  
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('Membership Type:', margin + 5, yPosition + 10);
+  pdf.setFont('helvetica', 'normal');
+  pdf.setTextColor(220, 53, 69);
+  pdf.text(String(formData.membershipType).toUpperCase(), margin + 50, yPosition + 10);
+  pdf.setTextColor(0, 0, 0);
+  
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('Valid Until:', pageWidth - margin - 60, yPosition + 3);
+  pdf.setFont('helvetica', 'normal');
+  pdf.setTextColor(0, 128, 0);
+  pdf.text(validityDate, pageWidth - margin - 25, yPosition + 3);
+  pdf.setTextColor(0, 0, 0);
+  
+  yPosition += 25;
+
+  // Helper for section headers
+  const addSectionHeader = (title: string) => {
+    yPosition += 3;
+    pdf.setFillColor(220, 53, 69);
+    pdf.rect(margin, yPosition - 4, pageWidth - 2 * margin, 8, 'F');
+    pdf.setTextColor(255, 255, 255);
+    pdf.setFontSize(12);
+    pdf.setFont('helvetica', 'bold');
+    pdf.text(title, margin + 3, yPosition + 2);
+    pdf.setTextColor(0, 0, 0);
+    yPosition += 8;
+  };
 
   // Section 1: Personal Information
-  addText('PERSONAL INFORMATION', true, 14);
-  yPosition += 2;
+  addSectionHeader('1. PERSONAL INFORMATION');
   
-  addText(`Name (Bangla): ${formData.nameBangla}`);
-  addText(`Name (English): ${formData.nameEnglish}`);
-  addText(`Father's Name: ${formData.fatherName}`);
-  addText(`Mother's Name: ${formData.motherName}`);
-  addText(`Spouse Name: ${formData.spouseName || 'N/A'}`);
-  addText(`Gender: ${formData.gender}`);
-  addText(`Date of Birth: ${formData.dob}`);
-  addText(`Age: ${formData.age} years`);
-  addText(`Nationality: ${formData.nationality}`);
-  addText(`Mobile Number: ${formData.mobile}`);
-  addText(`Marital Status: ${formData.maritalStatus}`);
-  yPosition += 3;
+  const personalInfo = [
+    ['Name (English)', formData.nameEnglish],
+    ['Name (Bangla)', formData.nameBangla || 'N/A'],
+    ['Father\'s Name', formData.fatherName],
+    ['Mother\'s Name', formData.motherName],
+    ['Spouse Name', formData.spouseName || 'N/A'],
+    ['Gender', formData.gender.charAt(0).toUpperCase() + formData.gender.slice(1)],
+    ['Date of Birth', formData.dob],
+    ['Age', `${formData.age} years`],
+    ['Nationality', formData.nationality || 'Bangladeshi'],
+    ['Mobile/Bkash', formData.mobile],
+    ['Email', formData.email || 'N/A'],
+    ['Marital Status', formData.maritalStatus.charAt(0).toUpperCase() + formData.maritalStatus.slice(1)],
+  ];
 
-  // Age Proof
-  addText(`Age Proof: ${formData.ageProof.join(', ') || 'N/A'}`);
-  addText(`Driving License: ${formData.drivingLicense === 'yes' ? 'Yes' : 'No'}`);
-  yPosition += 3;
+  personalInfo.forEach(([label, value]) => {
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(9);
+    pdf.text(label + ':', margin + 3, yPosition);
+    pdf.setFont('helvetica', 'normal');
+    pdf.text(String(value), margin + 50, yPosition);
+    yPosition += 6;
+  });
 
-  // Education & Occupation
-  addText('EDUCATION & OCCUPATION', true, 14);
   yPosition += 2;
-  
-  addText(`Educational Qualification: ${formData.education || 'N/A'}`);
-  addText(`Professional Qualifications: ${formData.professionalQualifications || 'N/A'}`);
-  addText(`Occupation: ${formData.occupation}`);
-  addText(`Organization Details: ${formData.organizationDetails || 'N/A'}`);
-  addText(`Daily Work: ${formData.dailyWork || 'N/A'}`);
-  addText(`Annual Income: ${formData.annualIncome || 'N/A'}`);
-  addText(`Source of Income: ${formData.incomeSource || 'N/A'}`);
-  yPosition += 3;
 
-  // Section 2: Address Information
-  addText('ADDRESS INFORMATION', true, 14);
-  yPosition += 2;
+  // Section 2: Education & Occupation
+  addSectionHeader('2. EDUCATION & OCCUPATION');
   
-  addText('Present Address:', true);
-  addText(formData.presentAddress);
-  yPosition += 2;
-  
-  addText('Permanent Address:', true);
-  addText(formData.permanentAddress);
-  yPosition += 3;
+  const eduOccupation = [
+    ['Education', formData.education || 'N/A'],
+    ['Professional Qualifications', formData.professionalQualifications || 'N/A'],
+    ['Occupation Type', formData.occupation.charAt(0).toUpperCase() + formData.occupation.slice(1)],
+    ['Organization/Business', formData.organizationDetails || 'N/A'],
+    ['Daily Work', formData.dailyWork || 'N/A'],
+    ['Annual Income', formData.annualIncome || 'N/A'],
+    ['Income Source', formData.incomeSource || 'N/A'],
+  ];
 
-  // Section 3: Nominee Details
-  addText('NOMINEE DETAILS', true, 14);
+  eduOccupation.forEach(([label, value]) => {
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(9);
+    pdf.text(label + ':', margin + 3, yPosition);
+    pdf.setFont('helvetica', 'normal');
+    const textLines = pdf.splitTextToSize(String(value), pageWidth - margin - 55);
+    pdf.text(textLines, margin + 50, yPosition);
+    yPosition += 6 * textLines.length;
+  });
+
   yPosition += 2;
+
+  // Section 3: Address Information
+  addSectionHeader('3. ADDRESS INFORMATION');
   
-  const filledNominees = formData.nominees.filter(n => n.name.trim());
+  pdf.setFont('helvetica', 'bold');
+  pdf.setFontSize(9);
+  pdf.text('Present Address:', margin + 3, yPosition);
+  yPosition += 5;
+  pdf.setFont('helvetica', 'normal');
+  const presentLines = pdf.splitTextToSize(formData.presentAddress, pageWidth - 2 * margin - 6);
+  pdf.text(presentLines, margin + 3, yPosition);
+  yPosition += 6 * presentLines.length + 3;
+  
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('Permanent Address:', margin + 3, yPosition);
+  yPosition += 5;
+  pdf.setFont('helvetica', 'normal');
+  const permanentLines = pdf.splitTextToSize(formData.permanentAddress, pageWidth - 2 * margin - 6);
+  pdf.text(permanentLines, margin + 3, yPosition);
+  yPosition += 6 * permanentLines.length + 2;
+
+  // Section 4: Nominee Details
+  if (yPosition > pageHeight - 80) {
+    pdf.addPage();
+    yPosition = 20;
+  }
+  
+  addSectionHeader('4. NOMINEE DETAILS');
+  
+  const filledNominees = formData.nominees.filter(n => n.name && n.name.trim());
   
   filledNominees.forEach((nominee, index) => {
-    addText(`Nominee ${index + 1}:`, true);
-    addText(`  Name: ${nominee.name}`);
-    addText(`  Relation: ${nominee.relation}`);
-    addText(`  Share: ${nominee.share}%`);
-    addText(`  Age: ${nominee.age} years`);
-    yPosition += 2;
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(9);
+    pdf.setTextColor(108, 117, 125);
+    pdf.text(`Nominee ${index + 1}:`, margin + 3, yPosition);
+    pdf.setTextColor(0, 0, 0);
+    yPosition += 5;
+    
+    pdf.setFont('helvetica', 'normal');
+    pdf.text(`Name: ${nominee.name}`, margin + 8, yPosition);
+    yPosition += 5;
+    pdf.text(`Relation: ${nominee.relation}     |     Share: ${nominee.share}%     |     Age: ${nominee.age || 'N/A'} years`, margin + 8, yPosition);
+    yPosition += 7;
   });
 
   const totalShare = formData.nominees.reduce((sum, n) => sum + n.share, 0);
-  addText(`Total Share: ${totalShare}%`, true);
-  yPosition += 3;
-
-  // Section 4: Physical Measurements
-  addText('PHYSICAL MEASUREMENTS', true, 14);
-  yPosition += 2;
-  
-  addText(`Weight: ${formData.weight} kg`);
-  addText(`Height: ${formData.height} ft`);
-  addText(`Blood Group: ${formData.bloodGroup}`);
-  addText(`Chest Measurement: ${formData.chest || 'N/A'}`);
-  
-  if (formData.surgeryDetails) {
-    yPosition += 2;
-    addText('Surgery/Medical History:', true);
-    addText(formData.surgeryDetails);
-  }
-  yPosition += 3;
-
-  // Uploaded Documents
-  addText('UPLOADED DOCUMENTS', true, 14);
-  yPosition += 2;
-  
-  const documents = [];
-  if (formData.photo) documents.push('Member Photo');
-  if (formData.ageProofDoc) documents.push('Age Proof Document');
-  if (formData.licenseDoc) documents.push('Driving License Document');
-  if (formData.nomineeIdProof.length > 0) documents.push(`Nominee ID Proofs (${formData.nomineeIdProof.length} files)`);
-  if (formData.medicalRecords.length > 0) documents.push(`Medical Records (${formData.medicalRecords.length} files)`);
-  
-  documents.forEach(doc => {
-    addText(`✓ ${doc}`);
-  });
+  pdf.setFont('helvetica', 'bold');
+  pdf.setFontSize(9);
+  pdf.text(`Total Share Distribution: ${totalShare}%`, margin + 3, yPosition);
   yPosition += 5;
 
-  // Declaration
+  // Section 5: Physical Measurements
   if (yPosition > pageHeight - 60) {
     pdf.addPage();
     yPosition = 20;
   }
-
-  addText('DECLARATION', true, 14);
-  yPosition += 2;
   
-  const declaration = 'I hereby declare that all the information provided above is true and correct to the best of my knowledge. I understand that any false information may result in the cancellation of my membership.';
-  addText(declaration);
+  addSectionHeader('5. PHYSICAL MEASUREMENTS');
+  
+  const physicalInfo = [
+    ['Weight', `${formData.weight || 'N/A'} kg`],
+    ['Height', formData.height || 'N/A'],
+    ['Blood Group', formData.bloodGroup || 'N/A'],
+    ['Chest Measurement', formData.chest ? `${formData.chest} inches` : 'N/A'],
+  ];
+
+  physicalInfo.forEach(([label, value]) => {
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(9);
+    pdf.text(label + ':', margin + 3, yPosition);
+    pdf.setFont('helvetica', 'normal');
+    pdf.text(String(value), margin + 50, yPosition);
+    yPosition += 6;
+  });
+  
+  if (formData.surgeryDetails && formData.surgeryDetails.trim()) {
+    yPosition += 2;
+    pdf.setFont('helvetica', 'bold');
+    pdf.text('Medical/Surgery History:', margin + 3, yPosition);
+    yPosition += 5;
+    pdf.setFont('helvetica', 'normal');
+    const surgeryLines = pdf.splitTextToSize(formData.surgeryDetails, pageWidth - 2 * margin - 6);
+    pdf.text(surgeryLines, margin + 3, yPosition);
+    yPosition += 6 * surgeryLines.length;
+  }
+  yPosition += 3;
+
+  // Section 6: Uploaded Documents
+  addSectionHeader('6. SUBMITTED DOCUMENTS');
+  
+  const documents = [];
+  if (formData.photo) documents.push('✓ Member Passport Photo');
+  if (formData.ageProofDoc) documents.push('✓ Age Proof Document');
+  if (formData.licenseDoc) documents.push('✓ Driving License');
+  if (formData.nomineeIdProof.length > 0) documents.push(`✓ Nominee ID Proofs (${formData.nomineeIdProof.length} file${formData.nomineeIdProof.length > 1 ? 's' : ''})`);
+  if (formData.medicalRecords.length > 0) documents.push(`✓ Medical Records (${formData.medicalRecords.length} file${formData.medicalRecords.length > 1 ? 's' : ''})`);
+  
+  pdf.setFontSize(9);
+  pdf.setFont('helvetica', 'normal');
+  documents.forEach(doc => {
+    pdf.text(doc, margin + 3, yPosition);
+    yPosition += 6;
+  });
   yPosition += 5;
 
-  addText(`Terms Accepted: ${formData.acceptTerms ? 'YES' : 'NO'}`, true);
-  yPosition += 10;
+  // Declaration Section
+  if (yPosition > pageHeight - 70) {
+    pdf.addPage();
+    yPosition = 20;
+  }
 
-  // Signature line
-  pdf.line(margin, yPosition, margin + 60, yPosition);
+  addSectionHeader('7. DECLARATION');
+  
+  pdf.setFontSize(9);
+  pdf.setFont('helvetica', 'normal');
+  const declaration = 'I hereby declare that all the information provided above is true, accurate, and complete to the best of my knowledge. I understand that any false or misleading information may result in the rejection of my application or immediate termination of my membership without any refund. I agree to abide by all terms, conditions, policies, and regulations of Bright Life Bangladesh Ltd.';
+  const declLines = pdf.splitTextToSize(declaration, pageWidth - 2 * margin - 6);
+  pdf.text(declLines, margin + 3, yPosition);
+  yPosition += 6 * declLines.length + 5;
+
+  pdf.setFont('helvetica', 'bold');
+  pdf.text(`Terms & Conditions Accepted: ${formData.acceptTerms ? 'YES ✓' : 'NO ✗'}`, margin + 3, yPosition);
+  yPosition += 15;
+
+  // Signature Section
+  pdf.setLineWidth(0.3);
+  pdf.line(margin + 5, yPosition, margin + 70, yPosition);
+  pdf.line(pageWidth - margin - 70, yPosition, pageWidth - margin - 5, yPosition);
   yPosition += 5;
-  addText('Applicant Signature', false, 9);
-
-  // Footer on last page
+  
   pdf.setFontSize(8);
-  pdf.setTextColor(128, 128, 128);
-  pdf.text('This is a computer-generated document.', pageWidth / 2, pageHeight - 10, { align: 'center' });
-  pdf.text(`Generated on ${new Date().toLocaleString()}`, pageWidth / 2, pageHeight - 6, { align: 'center' });
+  pdf.setFont('helvetica', 'normal');
+  pdf.text('Applicant Signature', margin + 20, yPosition);
+  pdf.text('Date', pageWidth - margin - 40, yPosition);
+  
+  yPosition += 10;
+  pdf.setFontSize(7);
+  pdf.setTextColor(100, 100, 100);
+  pdf.text(`Proposal No: ${formData.proposalNo || 'To be assigned'}`, margin + 5, yPosition);
+
+  // Footer on all pages
+  const totalPages = (pdf as any).internal.getNumberOfPages();
+  for (let i = 1; i <= totalPages; i++) {
+    pdf.setPage(i);
+    pdf.setFillColor(248, 249, 250);
+    pdf.rect(0, pageHeight - 12, pageWidth, 12, 'F');
+    pdf.setFontSize(7);
+    pdf.setTextColor(108, 117, 125);
+    pdf.text('Bright Life Bangladesh Ltd. | ' + COMPANY_ADDRESS, pageWidth / 2, pageHeight - 7, { align: 'center' });
+    pdf.text(`Generated: ${new Date().toLocaleString('en-GB')} | Page ${i} of ${totalPages}`, pageWidth / 2, pageHeight - 3, { align: 'center' });
+  }
 
   // Save PDF
-  const fileName = `BrightLife_Membership_${formData.nameEnglish.replace(/\s+/g, '_')}_${Date.now()}.pdf`;
+  const fileName = `BrightLife_Application_${formData.nameEnglish.replace(/\s+/g, '_')}_${Date.now()}.pdf`;
   pdf.save(fileName);
 };
 
@@ -195,7 +329,7 @@ export const generateReceiptPDF = (formData: MembershipFormData, proposalNumber:
   pdf.setFontSize(14);
   pdf.text('Bright Life Bangladesh Ltd.', pageWidth / 2, 23, { align: 'center' });
   pdf.setFontSize(10);
-  pdf.text('Bikiran, Savar, Dhaka-1000', pageWidth / 2, 30, { align: 'center' });
+  pdf.text('Bijoy Nagar, Ramna, Dhaka-1000', pageWidth / 2, 30, { align: 'center' });
   
   pdf.setTextColor(0, 0, 0);
   yPosition = 50;
@@ -222,12 +356,15 @@ export const generateReceiptPDF = (formData: MembershipFormData, proposalNumber:
   pdf.setFontSize(11);
   pdf.setFont('helvetica', 'normal');
   
+  const validityDate = calculateValidityDate(formData.membershipType);
+  
   const summaryData = [
     ['Applicant Name:', formData.nameEnglish],
     ['Membership Type:', String(formData.membershipType).toUpperCase()],
     ['Mobile Number:', formData.mobile],
     ['Date of Birth:', formData.dob],
-    ['Application Date:', new Date().toLocaleDateString()],
+    ['Application Date:', new Date().toLocaleDateString('en-GB')],
+    ['Valid Until:', validityDate],
   ];
 
   summaryData.forEach(([label, value]) => {
@@ -276,18 +413,18 @@ export const generateReceiptPDF = (formData: MembershipFormData, proposalNumber:
 
   pdf.setFontSize(10);
   pdf.setFont('helvetica', 'normal');
-  pdf.text('Phone: +880 1XXX-XXXXXX', 20, yPosition);
+  pdf.text('Phone: +880 1806 672338', 20, yPosition);
   yPosition += 6;
-  pdf.text('Email: info@brightlifebangladesh.com', 20, yPosition);
+  pdf.text('Email: info@brightlifebd.com', 20, yPosition);
   yPosition += 6;
-  pdf.text('Address: Bikiran, Savar, Dhaka-1000', 20, yPosition);
+  pdf.text('Address: Bijoy Nagar, Ramna, Dhaka-1000', 20, yPosition);
 
   // Footer
   const footerY = pdf.internal.pageSize.getHeight() - 15;
   pdf.setFontSize(8);
   pdf.setTextColor(128, 128, 128);
   pdf.text('Thank you for choosing Bright Life Bangladesh Ltd.', pageWidth / 2, footerY, { align: 'center' });
-  pdf.text(`Generated on ${new Date().toLocaleString()}`, pageWidth / 2, footerY + 4, { align: 'center' });
+  pdf.text(`Generated on ${new Date().toLocaleString('en-GB')}`, pageWidth / 2, footerY + 4, { align: 'center' });
 
   // Save
   const fileName = `BrightLife_Receipt_${proposalNumber}.pdf`;
