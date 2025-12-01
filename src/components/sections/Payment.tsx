@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CreditCard, Building2, Smartphone, Upload, CheckCircle, AlertCircle } from 'lucide-react';
+import { CreditCard, Smartphone, Upload, CheckCircle, AlertCircle } from 'lucide-react';
 import { submitPaymentProof } from '../../services/api/paymentAPI';
 import type { PaymentProofSubmission } from '../../services/api/paymentAPI';
 import PaymentReceiptModal from './PaymentReceiptModal';
@@ -55,10 +55,9 @@ const Payment: React.FC = () => {
 
   // Payment account details
   const paymentAccounts = {
-    accountName: 'MUHAMMAD MAIN UDDIN',
     bankAccount: '112063615083',
     bankName: 'Touch \'n Go eWallet',
-    bkash: '01851-257710'
+    bkash: '01871186297'
   };
 
   const paymentMethods = [
@@ -75,13 +74,6 @@ const Payment: React.FC = () => {
       icon: Smartphone,
       account: paymentAccounts.bkash,
       color: 'from-pink-500 to-pink-600'
-    },
-    {
-      id: 'bank-transfer' as const,
-      name: 'Bank Transfer',
-      icon: Building2,
-      account: paymentAccounts.bankAccount,
-      color: 'from-green-500 to-green-600'
     }
   ];
 
@@ -298,20 +290,12 @@ const Payment: React.FC = () => {
               <div className="mt-6 p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
                 <h4 className="font-semibold text-gray-900 mb-3">Account Details</h4>
                 <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Account Name:</span>
-                    <span className="font-semibold text-gray-900">{paymentAccounts.accountName}</span>
-                  </div>
                   {selectedMethod && (
                     <div className="flex justify-between">
                       <span className="text-gray-600">Account Number:</span>
                       <span className="font-semibold text-gray-900 font-mono">{selectedMethod.account}</span>
                     </div>
                   )}
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Bank:</span>
-                    <span className="font-semibold text-gray-900">{paymentAccounts.bankName}</span>
-                  </div>
                 </div>
               </div>
 
