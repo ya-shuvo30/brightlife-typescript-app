@@ -2,11 +2,11 @@ import React from 'react';
 import type { FormStepProps, MembershipType, Gender, MaritalStatus, OccupationType } from '@/types/membership';
 import FileUpload from '../shared/FileUpload';
 
-const membershipTypes: { value: MembershipType; label: string; color: string }[] = [
-  { value: 'silver', label: 'Silver', color: 'bg-gray-100 border-gray-300 hover:border-gray-500' },
-  { value: 'bronze', label: 'Bronze', color: 'bg-amber-50 border-amber-300 hover:border-amber-500' },
-  { value: 'gold', label: 'Gold', color: 'bg-yellow-50 border-yellow-400 hover:border-yellow-600' },
-  { value: 'executive', label: 'Executive', color: 'bg-purple-50 border-purple-300 hover:border-purple-500' },
+const membershipTypes: { value: MembershipType; label: string; duration: string; color: string }[] = [
+  { value: 'silver', label: 'Silver', duration: '1Y', color: 'bg-gray-100 border-gray-300 hover:border-gray-500' },
+  { value: 'bronze', label: 'Bronze', duration: '2Y', color: 'bg-amber-50 border-amber-300 hover:border-amber-500' },
+  { value: 'gold', label: 'Gold', duration: '3Y', color: 'bg-yellow-50 border-yellow-400 hover:border-yellow-600' },
+  { value: 'executive', label: 'Executive', duration: '1Y', color: 'bg-purple-50 border-purple-300 hover:border-purple-500' },
 ];
 
 const ageProofOptions = ['NID (National ID)', 'SSC Certificate', 'Birth Certificate'];
@@ -109,6 +109,7 @@ const PersonalInfoStep: React.FC<FormStepProps> = ({ formData, updateFormData, e
       <div>
         <div className="block text-sm font-medium text-gray-700 mb-3">
           Select Membership Type <span className="text-red-600">*</span>
+          <span className="ml-2 text-xs text-gray-500">Silver (1Y), Bronze (2Y), Gold (3Y), Executive (1Y)</span>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {membershipTypes.map((type) => (
@@ -120,7 +121,8 @@ const PersonalInfoStep: React.FC<FormStepProps> = ({ formData, updateFormData, e
                 ${formData.membershipType === type.value ? 'ring-2 ring-red-500' : ''}
                 ${type.color}`}
             >
-              {type.label}
+              <div>{type.label}</div>
+              <div className="text-xs mt-1 opacity-75">({type.duration})</div>
             </button>
           ))}
         </div>
