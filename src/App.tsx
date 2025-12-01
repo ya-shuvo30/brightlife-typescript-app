@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import TopBar from './components/layout/TopBar.tsx';
 import Navbar from './components/layout/Navbar.tsx';
 import SimpleCarousel from './components/carousel/SimpleCarousel.tsx';
@@ -38,10 +38,11 @@ interface CallbackFormData {
 }
 
 /**
- * Enhanced App component with TypeScript best practices
- * Features error boundaries, type-safe navigation, and demonstration components
+ * Main content component that handles navigation state
  */
-function App(): React.ReactElement {
+function MainContent(): React.ReactElement {
+  const location = useLocation();
+  
   // State to track which hidden sections should be visible
   const [visibleSections, setVisibleSections] = React.useState<Record<string, boolean>>({
     networkhospital: false,
@@ -49,6 +50,28 @@ function App(): React.ReactElement {
     termsandconditions: false,
     privacypolicy: false
   });
+
+  // Handle navigation from form submission
+  React.useEffect(() => {
+    const state = location.state as { scrollTo?: string } | null;
+    if (state?.scrollTo) {
+      const sectionId = state.scrollTo.toLowerCase();
+      const hiddenSections = ['networkhospital', 'payment', 'termsandconditions', 'privacypolicy'];
+      
+      if (hiddenSections.includes(sectionId)) {
+        // Make the section visible first
+        setVisibleSections(prev => ({ ...prev, [sectionId]: true }));
+        
+        // Wait for state update and DOM render before scrolling
+        setTimeout(() => {
+          const section = document.getElementById(sectionId);
+          if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 200);
+      }
+    }
+  }, [location]);
 
   // Type-safe navigation function with error handling
   const navigateTo: NavigationFunction = React.useCallback((page: string) => {
@@ -93,6 +116,64 @@ function App(): React.ReactElement {
   }, []);
 
   return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Top Bar/Announcement Bar */}
+      <TopBar />
+      
+      <Navbar navigateTo={navigateTo} />
+      
+      {/* Main application content */}
+      <main className="relative pt-20 sm:pt-24 md:pt-32">
+        {/* New Hero Carousel - Natural image sizes without padding */}
+        <section id="home" className="relative">
+          <div className="w-full">
+            <SimpleCarousel
+              slides={carouselSlides}
+              autoplay={true}
+              autoplayDelay={6000}
+            />
+          </div>
+        </section>
+        
+        {/* Call-to-Action Section for Callback - Positioned after hero */}
+        <CallbackCTA onCallbackRequest={handleCallbackRequest} />
+        
+        {/* All original sections below remain unchanged */}
+        <AboutUs />
+        <OurServices />
+        {visibleSections.networkhospital && (
+          <NetworkHospital />
+        )}
+        <SuperShop />
+        <Transportation />
+        <ValuedMembers />
+        <Registration />
+        {visibleSections.payment && (
+          <Payment />
+        )}
+        <Contact />
+        <InsurancePartner />
+        <CustomerSupport />
+        {visibleSections.termsandconditions && (
+          <TermsAndConditions />
+        )}
+        {visibleSections.privacypolicy && (
+          <PrivacyPolicy />
+        )}
+        <ReturnAndRefundPolicy />
+      </main>
+      
+      <Footer navigateTo={navigateTo} />
+    </div>
+  );
+}
+
+/**
+ * Enhanced App component with TypeScript best practices
+ * Features error boundaries, type-safe navigation, and demonstration components
+ */
+function App(): React.ReactElement {
+  return (
     <BrowserRouter>
       <ErrorBoundary
         onError={(error, errorInfo) => {
@@ -105,57 +186,7 @@ function App(): React.ReactElement {
           <Route path="/membership-form" element={<MembershipFormSteps />} />
           
           {/* Main Application Route */}
-          <Route path="/" element={
-            <div className="min-h-screen bg-gray-50">
-              {/* Top Bar/Announcement Bar */}
-              <TopBar />
-              
-              <Navbar navigateTo={navigateTo} />
-              
-              {/* Main application content */}
-              <main className="relative pt-20 sm:pt-24 md:pt-32">
-                {/* New Hero Carousel - Natural image sizes without padding */}
-                <section id="home" className="relative">
-                  <div className="w-full">
-                    <SimpleCarousel
-                      slides={carouselSlides}
-                      autoplay={true}
-                      autoplayDelay={6000}
-                    />
-                  </div>
-                </section>
-                
-                {/* Call-to-Action Section for Callback - Positioned after hero */}
-                <CallbackCTA onCallbackRequest={handleCallbackRequest} />
-                
-                {/* All original sections below remain unchanged */}
-                <AboutUs />
-                <OurServices />
-                {visibleSections.networkhospital && (
-                  <NetworkHospital />
-                )}
-                <SuperShop />
-                <Transportation />
-                <ValuedMembers />
-                <Registration />
-                {visibleSections.payment && (
-                  <Payment />
-                )}
-                <Contact />
-                <InsurancePartner />
-                <CustomerSupport />
-                {visibleSections.termsandconditions && (
-                  <TermsAndConditions />
-                )}
-                {visibleSections.privacypolicy && (
-                  <PrivacyPolicy />
-                )}
-                <ReturnAndRefundPolicy />
-              </main>
-              
-              <Footer navigateTo={navigateTo} />
-            </div>
-          } />
+          <Route path="/" element={<MainContent />} />
         </Routes>
       </ErrorBoundary>
     </BrowserRouter>

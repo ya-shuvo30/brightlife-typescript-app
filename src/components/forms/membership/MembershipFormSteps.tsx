@@ -68,17 +68,11 @@ const MembershipFormSteps: React.FC = () => {
       console.log('🎉 Showing success modal');
       setShowSuccess(true);
       
-      // Navigate to payment section after 2 seconds
+      // Navigate to payment section after showing success modal for 2 seconds
       setTimeout(() => {
         setShowSuccess(false);
-        navigate('/', { replace: true });
-        // Wait for navigation then scroll to payment section
-        setTimeout(() => {
-          const paymentSection = document.getElementById('payment');
-          if (paymentSection) {
-            paymentSection.scrollIntoView({ behavior: 'smooth' });
-          }
-        }, 100);
+        // Navigate to home page with state to trigger payment section
+        navigate('/', { state: { scrollTo: 'payment' }, replace: true });
       }, 2000);
     } else {
       console.error('❌ Submission failed:', result.message);
@@ -101,7 +95,7 @@ const MembershipFormSteps: React.FC = () => {
               Bright Life Bangladesh Ltd.
             </p>
             <p className="text-xs sm:text-sm text-gray-500 px-2">
-              Bikiran, Savar, Dhaka-1000
+              Bijoynagar, Ramna, Dhaka-1000
             </p>
           </div>
 
