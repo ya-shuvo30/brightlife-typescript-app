@@ -11,6 +11,7 @@ const Navbar: React.FC<NavbarProps> = ({ navigateTo }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isAboutDropdownOpen, setIsAboutDropdownOpen] = useState(false);
     const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
+    const [isMediaDropdownOpen, setIsMediaDropdownOpen] = useState(false);
     const [isMoreDropdownOpen, setIsMoreDropdownOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
 
@@ -28,6 +29,7 @@ const Navbar: React.FC<NavbarProps> = ({ navigateTo }) => {
         navigateTo(section);
         setIsAboutDropdownOpen(false);
         setIsServicesDropdownOpen(false);
+        setIsMediaDropdownOpen(false);
         setIsMoreDropdownOpen(false);
         setIsMenuOpen(false);
     };
@@ -71,6 +73,7 @@ const Navbar: React.FC<NavbarProps> = ({ navigateTo }) => {
                         <button onClick={() => {
                             setIsAboutDropdownOpen(!isAboutDropdownOpen);
                             setIsServicesDropdownOpen(false);
+                            setIsMediaDropdownOpen(false);
                             setIsMoreDropdownOpen(false);
                         }} className={`flex items-center ${hoverTextClasses} transition-colors`}>
                             About Us <Icon path="M19.5 8.25l-7.5 7.5-7.5-7.5" className="w-4 h-4 ml-1" solid />
@@ -87,6 +90,7 @@ const Navbar: React.FC<NavbarProps> = ({ navigateTo }) => {
                         <button onClick={() => {
                             setIsServicesDropdownOpen(!isServicesDropdownOpen);
                             setIsAboutDropdownOpen(false);
+                            setIsMediaDropdownOpen(false);
                             setIsMoreDropdownOpen(false);
                         }} className={`flex items-center ${hoverTextClasses} transition-colors`}>
                             Services <Icon path="M19.5 8.25l-7.5 7.5-7.5-7.5" className="w-4 h-4 ml-1" solid />
@@ -100,12 +104,29 @@ const Navbar: React.FC<NavbarProps> = ({ navigateTo }) => {
                             </div>
                         )}
                     </div>
+                    <div className="relative">
+                        <button onClick={() => {
+                            setIsMediaDropdownOpen(!isMediaDropdownOpen);
+                            setIsAboutDropdownOpen(false);
+                            setIsServicesDropdownOpen(false);
+                            setIsMoreDropdownOpen(false);
+                        }} className={`flex items-center ${hoverTextClasses} transition-colors`}>
+                            Media <Icon path="M19.5 8.25l-7.5 7.5-7.5-7.5" className="w-4 h-4 ml-1" solid />
+                        </button>
+                        {isMediaDropdownOpen && (
+                            <div className="absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-xl z-20">
+                                <a href="#" onClick={() => handleNavigate('NewsAndEvents')} className="block px-4 py-2 text-gray-700 hover:bg-gray-100">News & Events</a>
+                                <a href="#" onClick={() => handleNavigate('PhotosAndVideos')} className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Photos & Videos</a>
+                            </div>
+                        )}
+                    </div>
                     <a href="#" onClick={() => handleNavigate('Contact')} className={`${hoverTextClasses} transition-colors`}>Contact</a>
                     <div className="relative">
                         <button onClick={() => {
                             setIsMoreDropdownOpen(!isMoreDropdownOpen);
                             setIsAboutDropdownOpen(false);
                             setIsServicesDropdownOpen(false);
+                            setIsMediaDropdownOpen(false);
                         }} className={`flex items-center ${hoverTextClasses} transition-colors`}>
                             More <Icon path="M19.5 8.25l-7.5 7.5-7.5-7.5" className="w-4 h-4 ml-1" solid />
                         </button>
@@ -141,6 +162,8 @@ const Navbar: React.FC<NavbarProps> = ({ navigateTo }) => {
                             <a href="#" onClick={() => handleNavigate('AboutUs')} className="block text-lg text-gray-700 hover:text-green-600 transition-colors">About Us</a>
                             <a href="#" onClick={() => handleNavigate('OurServices')} className="block text-lg text-gray-700 hover:text-green-600 transition-colors">Services</a>
                             <a href="#" onClick={() => handleNavigate('Contact')} className="block text-lg text-gray-700 hover:text-green-600 transition-colors">Contact</a>
+                            <a href="#" onClick={() => handleNavigate('NewsAndEvents')} className="block text-lg text-gray-700 hover:text-green-600 transition-colors">News & Events</a>
+                            <a href="#" onClick={() => handleNavigate('PhotosAndVideos')} className="block text-lg text-gray-700 hover:text-green-600 transition-colors">Photos & Videos</a>
                             <div className="pt-4 border-t border-gray-200 space-y-2">
                                 <a href="#" onClick={() => handleNavigate('ValuedMembers')} className="block text-base text-gray-600 hover:text-green-600 transition-colors">Valued Members</a>
                                 <a href="#" onClick={() => handleNavigate('Registration')} className="block text-base text-gray-600 hover:text-green-600 transition-colors">Registration</a>
