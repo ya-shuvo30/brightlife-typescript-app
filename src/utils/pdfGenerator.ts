@@ -295,7 +295,7 @@ export const generateMembershipPDF = (formData: MembershipFormData): void => {
   pdf.text(`Proposal No: ${formData.proposalNo || 'To be assigned'}`, margin + 5, yPosition);
 
   // Footer on all pages
-  const totalPages = (pdf as any).internal.getNumberOfPages();
+  const totalPages = (pdf as unknown as { internal: { getNumberOfPages(): number } }).internal.getNumberOfPages();
   for (let i = 1; i <= totalPages; i++) {
     pdf.setPage(i);
     pdf.setFillColor(248, 249, 250);
