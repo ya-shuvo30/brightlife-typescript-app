@@ -112,17 +112,25 @@ function App(): React.ReactElement {
                 {/* All original sections below remain unchanged */}
                 <AboutUs />
                 <OurServices />
-                <NetworkHospital />
+                <div className="hidden">
+                  <NetworkHospital />
+                </div>
                 <SuperShop />
                 <Transportation />
                 <ValuedMembers />
                 <Registration />
-                <Payment />
+                <div className="hidden">
+                  <Payment />
+                </div>
                 <Contact />
                 <InsurancePartner />
                 <CustomerSupport />
-                <TermsAndConditions />
-                <PrivacyPolicy />
+                <div className="hidden">
+                  <TermsAndConditions />
+                </div>
+                <div className="hidden">
+                  <PrivacyPolicy />
+                </div>
                 <ReturnAndRefundPolicy />
               </main>
               
