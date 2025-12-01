@@ -68,7 +68,11 @@ const Navbar: React.FC<NavbarProps> = ({ navigateTo }) => {
                 <div className={`hidden md:flex items-center space-x-6 font-medium ${textClasses}`}>
                     <a href="#" onClick={() => handleNavigate('Home')} className={`${hoverTextClasses} transition-colors`}>Home</a>
                     <div className="relative">
-                        <button onClick={() => setIsAboutDropdownOpen(!isAboutDropdownOpen)} className={`flex items-center ${hoverTextClasses} transition-colors`}>
+                        <button onClick={() => {
+                            setIsAboutDropdownOpen(!isAboutDropdownOpen);
+                            setIsServicesDropdownOpen(false);
+                            setIsMoreDropdownOpen(false);
+                        }} className={`flex items-center ${hoverTextClasses} transition-colors`}>
                             About Us <Icon path="M19.5 8.25l-7.5 7.5-7.5-7.5" className="w-4 h-4 ml-1" solid />
                         </button>
                         {isAboutDropdownOpen && (
@@ -80,7 +84,11 @@ const Navbar: React.FC<NavbarProps> = ({ navigateTo }) => {
                         )}
                     </div>
                     <div className="relative">
-                        <button onClick={() => setIsServicesDropdownOpen(!isServicesDropdownOpen)} className={`flex items-center ${hoverTextClasses} transition-colors`}>
+                        <button onClick={() => {
+                            setIsServicesDropdownOpen(!isServicesDropdownOpen);
+                            setIsAboutDropdownOpen(false);
+                            setIsMoreDropdownOpen(false);
+                        }} className={`flex items-center ${hoverTextClasses} transition-colors`}>
                             Services <Icon path="M19.5 8.25l-7.5 7.5-7.5-7.5" className="w-4 h-4 ml-1" solid />
                         </button>
                         {isServicesDropdownOpen && (
@@ -94,7 +102,11 @@ const Navbar: React.FC<NavbarProps> = ({ navigateTo }) => {
                     </div>
                     <a href="#" onClick={() => handleNavigate('Contact')} className={`${hoverTextClasses} transition-colors`}>Contact</a>
                     <div className="relative">
-                        <button onClick={() => setIsMoreDropdownOpen(!isMoreDropdownOpen)} className={`flex items-center ${hoverTextClasses} transition-colors`}>
+                        <button onClick={() => {
+                            setIsMoreDropdownOpen(!isMoreDropdownOpen);
+                            setIsAboutDropdownOpen(false);
+                            setIsServicesDropdownOpen(false);
+                        }} className={`flex items-center ${hoverTextClasses} transition-colors`}>
                             More <Icon path="M19.5 8.25l-7.5 7.5-7.5-7.5" className="w-4 h-4 ml-1" solid />
                         </button>
                         {isMoreDropdownOpen && (
