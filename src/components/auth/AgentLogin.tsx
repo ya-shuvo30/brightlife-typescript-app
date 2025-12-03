@@ -68,7 +68,7 @@ const AgentLogin: React.FC = () => {
       // For demo, show success message
       alert('Login successful! (Demo mode)');
       navigate('/');
-    } catch (error) {
+    } catch {
       setErrors({ general: 'Invalid credentials. Please try again.' });
     } finally {
       setIsLoading(false);

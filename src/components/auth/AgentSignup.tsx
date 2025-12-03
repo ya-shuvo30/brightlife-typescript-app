@@ -120,7 +120,7 @@ const AgentSignup: React.FC = () => {
       console.log('Agent signup:', formData);
       
       setIsSuccess(true);
-    } catch (error) {
+    } catch {
       setErrors({ general: 'Registration failed. Please try again.' });
     } finally {
       setIsLoading(false);
