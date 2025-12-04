@@ -57,9 +57,13 @@ const MemberLogin: React.FC = () => {
     // Validate Proposal No (Membership ID)
     if (!formData.proposalNo.trim()) {
       newErrors.proposalNo = 'Proposal No / Membership ID is required';
-    } else if (!formData.proposalNo.match(/^BLBD-\d+$/i) && !formData.proposalNo.match(/^\d+$/)) {
-      // Accept formats like "BLBD-123456" or numeric ID
-      newErrors.proposalNo = 'Invalid Membership ID format';
+    } else if (
+      !formData.proposalNo.match(/^BLBD-\d+$/i) &&      // BLBD-1234567890
+      !formData.proposalNo.match(/^BL-\d{6}-\d{4}$/i) && // BL-202512-0010
+      !formData.proposalNo.match(/^\d+$/)                // Pure numeric
+    ) {
+      // Accept formats: "BLBD-123456", "BL-202512-0010", or numeric ID
+      newErrors.proposalNo = 'Invalid Membership ID format (e.g., BL-202512-0001)';
     }
 
     // Validate Birth Year (Password)
@@ -117,8 +121,8 @@ const MemberLogin: React.FC = () => {
   const apiMemberLogin = async (proposalNo: string, birthYear: string): Promise<{ success: boolean; data?: MemberData; message?: string }> => {
     try {
       const response = await axios.post(`${API_BASE_URL}/v1/membership/login/`, {
-        proposal_no: proposalNo,
-        birth_year: birthYear
+        proposalNo: proposalNo,
+        birthYear: parseInt(birthYear)
       });
 
       if (response.data.success) {
@@ -226,7 +230,7 @@ const MemberLogin: React.FC = () => {
               <div className="text-sm text-blue-800">
                 <p className="font-medium mb-1">Login Credentials:</p>
                 <ul className="list-disc list-inside space-y-1 text-blue-700">
-                  <li><strong>Membership ID:</strong> Your Proposal Number (e.g., BLBD-1234567890)</li>
+                  <li><strong>Membership ID:</strong> Your Proposal Number (e.g., BL-202512-0001)</li>
                   <li><strong>Password:</strong> Your Birth Year (4 digits, e.g., 1990)</li>
                 </ul>
               </div>
@@ -250,7 +254,7 @@ const MemberLogin: React.FC = () => {
                   className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${
                     errors.proposalNo ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="e.g., BLBD-1234567890"
+                  placeholder="e.g., BL-202512-0001"
                 />
               </div>
               {errors.proposalNo && (
