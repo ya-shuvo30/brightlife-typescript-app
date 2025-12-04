@@ -48,18 +48,18 @@ const Navbar: React.FC<NavbarProps> = ({ navigateTo }) => {
         setIsMenuOpen(false);
     };
 
-    // Dynamic classes based on scroll state with custom green theme
-    const navClasses = isScrolled 
-        ? 'bg-white shadow-lg' 
-        : 'bg-[#B0CE88] backdrop-blur-sm';
+    // Dynamic classes based on scroll state with custom blue theme
+    const navClasses = isScrolled
+        ? 'bg-white/95 backdrop-blur-lg shadow-md border-b border-gray-200/80'
+        : 'bg-[#3d82c5]/85 backdrop-blur-lg border-b border-white/30 shadow-lg';
     const textClasses = isScrolled 
-        ? 'text-gray-700' 
+        ? 'text-gray-800' 
         : 'text-white font-semibold';
     const hoverTextClasses = isScrolled 
-        ? 'hover:text-green-600' 
+        ? 'hover:text-blue-600' 
         : 'hover:text-white/80';
-    const logoColor1 = isScrolled ? 'text-green-700' : 'text-white';
-    const logoColor2 = isScrolled ? 'text-green-500' : 'text-green-100';
+    const logoColor1 = isScrolled ? 'text-blue-700' : 'text-white';
+    const logoColor2 = isScrolled ? 'text-blue-500' : 'text-blue-100';
 
     return (
         <header className={`fixed top-10 left-0 right-0 z-40 transition-colors duration-300 ${navClasses}`}>

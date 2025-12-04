@@ -108,14 +108,47 @@ const AboutUs: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <div id="ourpartners" className="py-24 bg-white">
-                <div className="container mx-auto px-6 text-center">
-                    <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-16 font-heading tracking-tight">Our Valued Partners</h2>
+            <div id="ourpartners" className="py-16 md:py-24 bg-gradient-to-br from-blue-50 via-white to-emerald-50 overflow-hidden">
+                <div className="mx-auto px-2 sm:px-4 text-center">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-800 mb-8 md:mb-16 font-heading tracking-tight">Our Valued Partners</h2>
+                    
+                    {/* Infinite scrolling carousel */}
                     <div className="relative w-full overflow-hidden partner-carousel">
-                        <div className="carousel-track">
+                        <div className="carousel-track flex">
+                            {/* First set of partners */}
                             {allPartners.map((partner, index) => (
-                                <div key={index} className="flex-shrink-0 w-1/3 md:w-1/6 p-4">
-                                    <img src={partner.logo} alt={partner.name} className="h-16 mx-auto partner-logo"/>
+                                <div 
+                                    key={`first-${index}`} 
+                                    className="flex-shrink-0 w-56 sm:w-64 md:w-80 lg:w-96 xl:w-[420px] p-2"
+                                >
+                                    <div className="bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 p-4 sm:p-5 md:p-6 border border-gray-100 hover:border-blue-400 hover:-translate-y-2 h-full flex flex-col items-center justify-center">
+                                        <div className="w-full aspect-[3/2] flex items-center justify-center mb-3">
+                                            <img 
+                                                src={partner.logo} 
+                                                alt={partner.name} 
+                                                className="max-h-28 sm:max-h-36 md:max-h-44 lg:max-h-52 xl:max-h-60 w-auto max-w-full object-contain hover:scale-110 transition-transform duration-300"
+                                            />
+                                        </div>
+                                        <p className="text-sm sm:text-base md:text-lg font-semibold text-gray-700 hover:text-blue-600 transition-colors duration-300 text-center leading-tight">{partner.name}</p>
+                                    </div>
+                                </div>
+                            ))}
+                            {/* Duplicate set for seamless infinite scroll */}
+                            {allPartners.map((partner, index) => (
+                                <div 
+                                    key={`second-${index}`} 
+                                    className="flex-shrink-0 w-56 sm:w-64 md:w-80 lg:w-96 xl:w-[420px] p-2"
+                                >
+                                    <div className="bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 p-4 sm:p-5 md:p-6 border border-gray-100 hover:border-blue-400 hover:-translate-y-2 h-full flex flex-col items-center justify-center">
+                                        <div className="w-full aspect-[3/2] flex items-center justify-center mb-3">
+                                            <img 
+                                                src={partner.logo} 
+                                                alt={partner.name} 
+                                                className="max-h-28 sm:max-h-36 md:max-h-44 lg:max-h-52 xl:max-h-60 w-auto max-w-full object-contain hover:scale-110 transition-transform duration-300"
+                                            />
+                                        </div>
+                                        <p className="text-sm sm:text-base md:text-lg font-semibold text-gray-700 hover:text-blue-600 transition-colors duration-300 text-center leading-tight">{partner.name}</p>
+                                    </div>
                                 </div>
                             ))}
                         </div>

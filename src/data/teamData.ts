@@ -64,10 +64,9 @@ export const teamMembers: TeamMember[] = [
 ];
 
 export const partners: Partner[] = [
-    { name: "Partner A", logo: "https://placehold.co/200x100/f3f4f6/9ca3af?text=Partner+A" },
-    { name: "Partner B", logo: "https://placehold.co/200x100/f3f4f6/9ca3af?text=Partner+B" },
-    { name: "Partner C", logo: "https://placehold.co/200x100/f3f4f6/9ca3af?text=Partner+C" },
-    { name: "Partner D", logo: "https://placehold.co/200x100/f3f4f6/9ca3af?text=Partner+D" },
-    { name: "Partner E", logo: "https://placehold.co/200x100/f3f4f6/9ca3af?text=Partner+E" },
-    { name: "Partner F", logo: "https://placehold.co/200x100/f3f4f6/9ca3af?text=Partner+F" },
+    { name: "Holy Family Hospital", logo: "/holy-family-hospital.png" },
+    { name: "Islami Bank Hospital", logo: "/Islamibank-hospital.png" },
+    { name: "Labaid Hospital", logo: "/Labaid-hospital.png" },
+    { name: "Square Hospital", logo: "/square_hospital.png" },
+    { name: "Protective Life Ins. Ltd.", logo: "/protective-lifeIns. Ltd..png" },
 ];
