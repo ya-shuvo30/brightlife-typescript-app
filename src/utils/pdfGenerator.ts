@@ -45,18 +45,58 @@ export const generateMembershipPDF = (formData: MembershipFormData): void => {
 
   // Header with BrightLife branding
   pdf.setFillColor(220, 53, 69);
-  pdf.rect(0, 0, pageWidth, 35, 'F');
+  pdf.rect(0, 0, pageWidth, 45, 'F');
   pdf.setTextColor(255, 255, 255);
+  
+  // Membership ID as prominent header
+  pdf.setFontSize(12);
+  pdf.setFont('helvetica', 'bold');
+  pdf.text(`Proposal No: ${formData.proposalNo || 'N/A'}`, pageWidth / 2, 10, { align: 'center' });
+  
   pdf.setFontSize(22);
   pdf.setFont('helvetica', 'bold');
-  pdf.text('MEMBERSHIP APPLICATION FORM', pageWidth / 2, 12, { align: 'center' });
+  pdf.text('MEMBERSHIP APPLICATION FORM', pageWidth / 2, 22, { align: 'center' });
   pdf.setFontSize(13);
-  pdf.text('Bright Life Bangladesh Ltd.', pageWidth / 2, 21, { align: 'center' });
+  pdf.text('Bright Life Bangladesh Ltd.', pageWidth / 2, 31, { align: 'center' });
   pdf.setFontSize(10);
-  pdf.text(COMPANY_ADDRESS, pageWidth / 2, 28, { align: 'center' });
+  pdf.text(COMPANY_ADDRESS, pageWidth / 2, 38, { align: 'center' });
   
   pdf.setTextColor(0, 0, 0);
-  yPosition = 45;
+  yPosition = 55;
+
+  // Proposal Information Box (NEW SECTION)
+  pdf.setFillColor(255, 248, 220);
+  pdf.rect(margin, yPosition - 5, pageWidth - 2 * margin, 25, 'F');
+  pdf.setDrawColor(220, 180, 50);
+  pdf.setLineWidth(0.5);
+  pdf.rect(margin, yPosition - 5, pageWidth - 2 * margin, 25);
+  
+  pdf.setFontSize(11);
+  pdf.setFont('helvetica', 'bold');
+  pdf.setTextColor(139, 69, 19);
+  pdf.text('PROPOSAL INFORMATION', margin + 5, yPosition + 2);
+  pdf.setTextColor(0, 0, 0);
+  yPosition += 8;
+  
+  pdf.setFontSize(9);
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('Proposal No:', margin + 5, yPosition);
+  pdf.setFont('helvetica', 'normal');
+  pdf.setTextColor(220, 53, 69);
+  pdf.text(formData.proposalNo || 'N/A', margin + 35, yPosition);
+  pdf.setTextColor(0, 0, 0);
+  
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('FO Code:', pageWidth / 2 - 10, yPosition);
+  pdf.setFont('helvetica', 'normal');
+  pdf.text(formData.foCode || 'N/A', pageWidth / 2 + 15, yPosition);
+  
+  pdf.setFont('helvetica', 'bold');
+  pdf.text('FO Name:', pageWidth - margin - 55, yPosition);
+  pdf.setFont('helvetica', 'normal');
+  pdf.text(formData.foName || 'N/A', pageWidth - margin - 30, yPosition);
+  
+  yPosition += 12;
 
   // Application Info Box
   pdf.setFillColor(248, 249, 250);
@@ -292,7 +332,7 @@ export const generateMembershipPDF = (formData: MembershipFormData): void => {
   yPosition += 10;
   pdf.setFontSize(7);
   pdf.setTextColor(100, 100, 100);
-  pdf.text(`Proposal No: ${formData.proposalNo || 'To be assigned'}`, margin + 5, yPosition);
+  pdf.text(`Proposal No: ${formData.proposalNo || 'N/A'} | FO Code: ${formData.foCode || 'N/A'} | FO Name: ${formData.foName || 'N/A'}`, margin + 5, yPosition);
 
   // Footer on all pages
   const totalPages = (pdf as unknown as { internal: { getNumberOfPages(): number } }).internal.getNumberOfPages();
