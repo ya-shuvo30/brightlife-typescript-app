@@ -23,6 +23,7 @@ import { ErrorBoundary } from './components/shared/ErrorBoundary.tsx';
 import { carouselSlides } from './data/newCarouselData.ts';
 import MembershipFormSteps from './components/forms/membership/MembershipFormSteps.tsx';
 import MemberLogin from './components/auth/MemberLogin.tsx';
+import MemberDashboard from './components/auth/MemberDashboard.tsx';
 import AgentLogin from './components/auth/AgentLogin.tsx';
 import AgentSignup from './components/auth/AgentSignup.tsx';
 
@@ -187,6 +188,7 @@ function App(): React.ReactElement {
         <Routes>
           {/* Auth Routes */}
           <Route path="/member-login" element={<MemberLogin />} />
+          <Route path="/member-dashboard" element={<MemberDashboard />} />
           <Route path="/agent-login" element={<AgentLogin />} />
           <Route path="/agent-signup" element={<AgentSignup />} />
           

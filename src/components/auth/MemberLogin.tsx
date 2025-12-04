@@ -1,25 +1,38 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, Lock, Eye, EyeOff, ArrowLeft } from 'lucide-react';
+import { User, Eye, EyeOff, ArrowLeft, Calendar, Info } from 'lucide-react';
+import axios from 'axios';
 import logo from '../../assets/images/logo.png';
 
+// API Configuration
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://api.brightlifebd.com/api';
+const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API === 'true';
+
 interface LoginFormData {
-  membershipId: string;
-  password: string;
+  proposalNo: string;  // Membership ID = Proposal No
+  birthYear: string;   // Password = Birth Year (4 digits)
   rememberMe: boolean;
 }
 
 interface FormErrors {
-  membershipId?: string;
-  password?: string;
+  proposalNo?: string;
+  birthYear?: string;
   general?: string;
+}
+
+interface MemberData {
+  proposalNo: string;
+  name: string;
+  membershipType: string;
+  status: string;
+  validUntil: string;
 }
 
 const MemberLogin: React.FC = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<LoginFormData>({
-    membershipId: '',
-    password: '',
+    proposalNo: '',
+    birthYear: '',
     rememberMe: false
   });
   const [errors, setErrors] = useState<FormErrors>({});
@@ -27,6 +40,11 @@ const MemberLogin: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (field: keyof LoginFormData, value: string | boolean) => {
+    // For birthYear, only allow numeric input (4 digits max)
+    if (field === 'birthYear' && typeof value === 'string') {
+      value = value.replace(/\D/g, '').slice(0, 4);
+    }
+    
     setFormData(prev => ({ ...prev, [field]: value }));
     if (errors[field as keyof FormErrors]) {
       setErrors(prev => ({ ...prev, [field]: undefined }));
@@ -36,18 +54,96 @@ const MemberLogin: React.FC = () => {
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
 
-    if (!formData.membershipId.trim()) {
-      newErrors.membershipId = 'Membership ID is required';
+    // Validate Proposal No (Membership ID)
+    if (!formData.proposalNo.trim()) {
+      newErrors.proposalNo = 'Proposal No / Membership ID is required';
+    } else if (!formData.proposalNo.match(/^BLBD-\d+$/i) && !formData.proposalNo.match(/^\d+$/)) {
+      // Accept formats like "BLBD-123456" or numeric ID
+      newErrors.proposalNo = 'Invalid Membership ID format';
     }
 
-    if (!formData.password) {
-      newErrors.password = 'Password is required';
-    } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
+    // Validate Birth Year (Password)
+    if (!formData.birthYear) {
+      newErrors.birthYear = 'Birth Year is required';
+    } else if (formData.birthYear.length !== 4) {
+      newErrors.birthYear = 'Birth Year must be 4 digits (e.g., 1990)';
+    } else {
+      const year = parseInt(formData.birthYear);
+      const currentYear = new Date().getFullYear();
+      if (year < 1900 || year > currentYear) {
+        newErrors.birthYear = `Birth Year must be between 1900 and ${currentYear}`;
+      }
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+
+  /**
+   * Mock login verification - validates against stored member data
+   */
+  const mockMemberLogin = async (proposalNo: string, birthYear: string): Promise<{ success: boolean; data?: MemberData; message?: string }> => {
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // Demo member data - In production, this comes from backend
+    const demoMembers: Record<string, { birthYear: string; data: MemberData }> = {
+      'BLBD-1234567890': {
+        birthYear: '1990',
+        data: {
+          proposalNo: 'BLBD-1234567890',
+          name: 'Demo Member',
+          membershipType: 'Gold',
+          status: 'Active',
+          validUntil: '31/12/2028'
+        }
+      }
+    };
+
+    const member = demoMembers[proposalNo.toUpperCase()];
+    
+    if (member && member.birthYear === birthYear) {
+      return { success: true, data: member.data };
+    }
+    
+    return { 
+      success: false, 
+      message: 'Invalid Membership ID or Birth Year. Please check your credentials.' 
+    };
+  };
+
+  /**
+   * Real API login - connects to Django backend
+   */
+  const apiMemberLogin = async (proposalNo: string, birthYear: string): Promise<{ success: boolean; data?: MemberData; message?: string }> => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/v1/membership/login/`, {
+        proposal_no: proposalNo,
+        birth_year: birthYear
+      });
+
+      if (response.data.success) {
+        return {
+          success: true,
+          data: {
+            proposalNo: response.data.data.proposal_no,
+            name: response.data.data.name,
+            membershipType: response.data.data.membership_type,
+            status: response.data.data.status,
+            validUntil: response.data.data.valid_until
+          }
+        };
+      }
+      
+      return { success: false, message: response.data.message };
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        return { 
+          success: false, 
+          message: error.response.data.message || 'Invalid credentials' 
+        };
+      }
+      return { success: false, message: 'Network error. Please try again.' };
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -59,17 +155,37 @@ const MemberLogin: React.FC = () => {
     setErrors({});
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // TODO: Implement actual login API call
-      console.log('Member login:', formData);
-      
-      // For demo, show success message
-      alert('Login successful! (Demo mode)');
-      navigate('/');
+      // Use mock or real API based on configuration
+      const result = USE_MOCK_API 
+        ? await mockMemberLogin(formData.proposalNo, formData.birthYear)
+        : await apiMemberLogin(formData.proposalNo, formData.birthYear);
+
+      if (result.success && result.data) {
+        // Store member session
+        const sessionData = {
+          proposalNo: result.data.proposalNo,
+          name: result.data.name,
+          membershipType: result.data.membershipType,
+          status: result.data.status,
+          validUntil: result.data.validUntil,
+          loggedInAt: new Date().toISOString()
+        };
+
+        if (formData.rememberMe) {
+          localStorage.setItem('memberSession', JSON.stringify(sessionData));
+        } else {
+          sessionStorage.setItem('memberSession', JSON.stringify(sessionData));
+        }
+
+        console.log('✅ Member login successful:', result.data);
+        
+        // Navigate to member dashboard (or home for now)
+        navigate('/member-dashboard');
+      } else {
+        setErrors({ general: result.message || 'Invalid credentials. Please try again.' });
+      }
     } catch {
-      setErrors({ general: 'Invalid credentials. Please try again.' });
+      setErrors({ general: 'Login failed. Please try again.' });
     } finally {
       setIsLoading(false);
     }
@@ -103,47 +219,63 @@ const MemberLogin: React.FC = () => {
             </div>
           )}
 
+          {/* Login Instructions */}
+          <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <div className="flex items-start gap-2">
+              <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+              <div className="text-sm text-blue-800">
+                <p className="font-medium mb-1">Login Credentials:</p>
+                <ul className="list-disc list-inside space-y-1 text-blue-700">
+                  <li><strong>Membership ID:</strong> Your Proposal Number (e.g., BLBD-1234567890)</li>
+                  <li><strong>Password:</strong> Your Birth Year (4 digits, e.g., 1990)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Membership ID */}
+            {/* Proposal No / Membership ID */}
             <div>
-              <label htmlFor="membershipId" className="block text-sm font-medium text-gray-700 mb-2">
-                Membership ID
+              <label htmlFor="proposalNo" className="block text-sm font-medium text-gray-700 mb-2">
+                Membership ID (Proposal No)
               </label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
-                  id="membershipId"
+                  id="proposalNo"
                   type="text"
-                  value={formData.membershipId}
-                  onChange={(e) => handleInputChange('membershipId', e.target.value)}
+                  value={formData.proposalNo}
+                  onChange={(e) => handleInputChange('proposalNo', e.target.value.toUpperCase())}
                   className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${
-                    errors.membershipId ? 'border-red-500' : 'border-gray-300'
+                    errors.proposalNo ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="Enter your Membership ID"
+                  placeholder="e.g., BLBD-1234567890"
                 />
               </div>
-              {errors.membershipId && (
-                <p className="mt-1 text-sm text-red-600">{errors.membershipId}</p>
+              {errors.proposalNo && (
+                <p className="mt-1 text-sm text-red-600">{errors.proposalNo}</p>
               )}
             </div>
 
-            {/* Password */}
+            {/* Birth Year (Password) */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                Password
+              <label htmlFor="birthYear" className="block text-sm font-medium text-gray-700 mb-2">
+                Password (Birth Year)
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
-                  id="password"
+                  id="birthYear"
                   type={showPassword ? 'text' : 'password'}
-                  value={formData.password}
-                  onChange={(e) => handleInputChange('password', e.target.value)}
+                  value={formData.birthYear}
+                  onChange={(e) => handleInputChange('birthYear', e.target.value)}
                   className={`w-full pl-10 pr-12 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all ${
-                    errors.password ? 'border-red-500' : 'border-gray-300'
+                    errors.birthYear ? 'border-red-500' : 'border-gray-300'
                   }`}
-                  placeholder="Enter your password"
+                  placeholder="e.g., 1990"
+                  maxLength={4}
+                  inputMode="numeric"
                 />
                 <button
                   type="button"
@@ -153,12 +285,12 @@ const MemberLogin: React.FC = () => {
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
-              {errors.password && (
-                <p className="mt-1 text-sm text-red-600">{errors.password}</p>
+              {errors.birthYear && (
+                <p className="mt-1 text-sm text-red-600">{errors.birthYear}</p>
               )}
             </div>
 
-            {/* Remember Me & Forgot Password */}
+            {/* Remember Me */}
             <div className="flex items-center justify-between">
               <label className="flex items-center">
                 <input
@@ -169,8 +301,8 @@ const MemberLogin: React.FC = () => {
                 />
                 <span className="ml-2 text-sm text-gray-600">Remember me</span>
               </label>
-              <a href="#" className="text-sm text-green-600 hover:text-green-700 font-medium">
-                Forgot Password?
+              <a href="#contact" className="text-sm text-green-600 hover:text-green-700 font-medium">
+                Need Help?
               </a>
             </div>
 
