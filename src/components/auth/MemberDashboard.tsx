@@ -54,21 +54,30 @@ const MemberDashboard: React.FC = () => {
     navigate('/member-login');
   };
 
-  const getMembershipColor = (type: string) => {
-    switch (type.toLowerCase()) {
+  const getMembershipColor = (type: string | undefined) => {
+    switch (type?.toLowerCase()) {
       case 'gold': return 'from-yellow-400 to-yellow-600';
       case 'silver': return 'from-gray-300 to-gray-500';
       case 'bronze': return 'from-orange-400 to-orange-600';
       case 'executive': return 'from-purple-400 to-purple-600';
+      case 'individual': return 'from-blue-400 to-blue-600';
+      case 'family': return 'from-yellow-400 to-yellow-600';
+      case 'corporate': return 'from-purple-400 to-purple-600';
       default: return 'from-green-400 to-green-600';
     }
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status.toLowerCase()) {
-      case 'active': return 'bg-green-100 text-green-800';
-      case 'pending': return 'bg-yellow-100 text-yellow-800';
-      case 'expired': return 'bg-red-100 text-red-800';
+  const getStatusColor = (status: string | undefined) => {
+    switch (status?.toLowerCase()) {
+      case 'active': 
+      case 'approved': 
+        return 'bg-green-100 text-green-800';
+      case 'pending': 
+      case 'under_review': 
+        return 'bg-yellow-100 text-yellow-800';
+      case 'expired': 
+      case 'rejected': 
+        return 'bg-red-100 text-red-800';
       default: return 'bg-gray-100 text-gray-800';
     }
   };
@@ -120,26 +129,24 @@ const MemberDashboard: React.FC = () => {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Membership Card */}
-        <div className={`bg-gradient-to-r ${getMembershipColor(memberData.membershipType)} rounded-2xl shadow-xl p-6 mb-8 text-white`}>
+          <div className={`bg-gradient-to-r ${getMembershipColor(memberData.membershipType)} rounded-2xl shadow-xl p-6 mb-8 text-white`}>
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
             <div>
               <div className="flex items-center space-x-2 mb-2">
                 <Award className="w-6 h-6" />
-                <span className="text-lg font-semibold">{memberData.membershipType.toUpperCase()} MEMBER</span>
+                <span className="text-lg font-semibold">{(memberData.membershipType || 'STANDARD').toUpperCase()} MEMBER</span>
               </div>
-              <h2 className="text-3xl font-bold mb-2">{memberData.name}</h2>
-              <p className="text-white/80">Member ID: {memberData.proposalNo}</p>
+              <h2 className="text-3xl font-bold mb-2">{memberData.name || 'Member'}</h2>
+              <p className="text-white/80">Member ID: {memberData.proposalNo || 'N/A'}</p>
             </div>
             <div className="mt-4 md:mt-0 text-right">
               <span className={`inline-block px-4 py-2 rounded-full text-sm font-medium ${getStatusColor(memberData.status)}`}>
-                {memberData.status.toUpperCase()}
+                {(memberData.status || 'PENDING').toUpperCase()}
               </span>
-              <p className="text-white/80 mt-2">Valid Until: {memberData.validUntil}</p>
+              <p className="text-white/80 mt-2">Valid Until: {memberData.validUntil || 'N/A'}</p>
             </div>
           </div>
-        </div>
-
-        {/* Quick Stats */}
+        </div>        {/* Quick Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div className="bg-white rounded-xl shadow-md p-6">
             <div className="flex items-center space-x-3">
@@ -220,27 +227,27 @@ const MemberDashboard: React.FC = () => {
             <div className="space-y-4">
               <div className="flex justify-between py-3 border-b border-gray-100">
                 <span className="text-gray-500">Member ID</span>
-                <span className="font-medium text-gray-900">{memberData.proposalNo}</span>
+                <span className="font-medium text-gray-900">{memberData.proposalNo || 'N/A'}</span>
               </div>
               <div className="flex justify-between py-3 border-b border-gray-100">
                 <span className="text-gray-500">Full Name</span>
-                <span className="font-medium text-gray-900">{memberData.name}</span>
+                <span className="font-medium text-gray-900">{memberData.name || 'N/A'}</span>
               </div>
               <div className="flex justify-between py-3 border-b border-gray-100">
                 <span className="text-gray-500">Membership Type</span>
-                <span className="font-medium text-gray-900">{memberData.membershipType}</span>
+                <span className="font-medium text-gray-900">{memberData.membershipType || 'N/A'}</span>
               </div>
             </div>
             <div className="space-y-4">
               <div className="flex justify-between py-3 border-b border-gray-100">
                 <span className="text-gray-500">Status</span>
                 <span className={`px-3 py-1 rounded-full text-sm ${getStatusColor(memberData.status)}`}>
-                  {memberData.status}
+                  {memberData.status || 'N/A'}
                 </span>
               </div>
               <div className="flex justify-between py-3 border-b border-gray-100">
                 <span className="text-gray-500">Valid Until</span>
-                <span className="font-medium text-gray-900">{memberData.validUntil}</span>
+                <span className="font-medium text-gray-900">{memberData.validUntil || 'N/A'}</span>
               </div>
               <div className="flex justify-between py-3 border-b border-gray-100">
                 <span className="text-gray-500">Last Login</span>

@@ -126,14 +126,15 @@ const MemberLogin: React.FC = () => {
       });
 
       if (response.data.success) {
+        const member = response.data.data.member;
         return {
           success: true,
           data: {
-            proposalNo: response.data.data.proposal_no,
-            name: response.data.data.name,
-            membershipType: response.data.data.membership_type,
-            status: response.data.data.status,
-            validUntil: response.data.data.valid_until
+            proposalNo: member.proposal_no || member.proposal_number || '',
+            name: member.name_english || member.name || 'Member',
+            membershipType: member.membership_type || 'Standard',
+            status: member.status || 'pending',
+            validUntil: member.valid_until || 'N/A'
           }
         };
       }
