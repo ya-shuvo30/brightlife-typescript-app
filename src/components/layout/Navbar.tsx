@@ -192,14 +192,52 @@ const Navbar: React.FC<NavbarProps> = ({ navigateTo }) => {
                     </div>
                 </div>
                 
-                {/* Mobile menu button */}
-                <button 
-                    onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    className={`md:hidden ${textClasses}`}
-                    aria-label="Toggle mobile menu"
-                >
-                    <Icon path="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" className="w-6 h-6" />
-                </button>
+                {/* Mobile: Login button + Menu button */}
+                <div className="flex items-center space-x-2 md:hidden">
+                    {/* Mobile Login Button with Dropdown */}
+                    <div className="relative">
+                        <button 
+                            onClick={() => {
+                                setIsLoginDropdownOpen(!isLoginDropdownOpen);
+                                setIsMenuOpen(false);
+                            }}
+                            className={`flex items-center px-3 py-2 rounded-lg ${isScrolled ? 'bg-green-600 text-white' : 'bg-white text-green-700'} font-semibold text-sm shadow-md`}
+                        >
+                            <Icon path="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" className="w-4 h-4 mr-1" />
+                            Login
+                            <Icon path="M19.5 8.25l-7.5 7.5-7.5-7.5" className="w-3 h-3 ml-1" solid />
+                        </button>
+                        {/* Mobile Login Dropdown */}
+                        {isLoginDropdownOpen && (
+                            <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl z-50 border border-gray-100">
+                                <button onClick={() => handleAuthNavigate('/member-login')} className="w-full text-left px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-700 flex items-center transition-colors rounded-t-lg">
+                                    <Icon path="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" className="w-5 h-5 mr-2 text-green-600" />
+                                    Member Login
+                                </button>
+                                <button onClick={() => handleAuthNavigate('/agent-login')} className="w-full text-left px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-700 flex items-center transition-colors border-t border-gray-100">
+                                    <Icon path="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" className="w-5 h-5 mr-2 text-blue-600" />
+                                    Agent Login
+                                </button>
+                                <button onClick={() => handleAuthNavigate('/agent-signup')} className="w-full text-left px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-700 flex items-center transition-colors border-t border-gray-100 rounded-b-lg">
+                                    <Icon path="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" className="w-5 h-5 mr-2 text-purple-600" />
+                                    Agent Signup
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                    
+                    {/* Mobile menu button */}
+                    <button 
+                        onClick={() => {
+                            setIsMenuOpen(!isMenuOpen);
+                            setIsLoginDropdownOpen(false);
+                        }}
+                        className={`${textClasses} p-2`}
+                        aria-label="Toggle mobile menu"
+                    >
+                        <Icon path="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" className="w-6 h-6" />
+                    </button>
+                </div>
 
                 {/* Mobile menu */}
                 {isMenuOpen && (
