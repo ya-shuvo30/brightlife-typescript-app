@@ -80,8 +80,8 @@ Add these in GitHub Repository Settings → Secrets and variables → Actions:
 Add these to your README.md:
 
 ```markdown
-![CI/CD](https://github.com/ya-shuvo30/brightlife-typescript-app/workflows/CI/CD%20Pipeline/badge.svg)
-![Build Status](https://github.com/ya-shuvo30/brightlife-typescript-app/workflows/CI/CD%20Pipeline/badge.svg?branch=main)
+![CI/CD](https://github.com/yeasin-dev-me/brightlife-typescript-app/workflows/CI/CD%20Pipeline/badge.svg)
+![Build Status](https://github.com/yeasin-dev-me/brightlife-typescript-app/workflows/CI/CD%20Pipeline/badge.svg?branch=main)
 ```
 
 ## Next Steps

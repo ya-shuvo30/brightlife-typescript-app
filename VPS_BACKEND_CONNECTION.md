@@ -43,7 +43,7 @@ Your Django backend must allow requests from GitHub Pages:
 **In Django `settings.py`:**
 ```python
 CORS_ALLOWED_ORIGINS = [
-    "https://ya-shuvo30.github.io",
+    "https://yeasin-dev-me.github.io",
     "http://localhost:5173",  # Vite dev server
 ]
 
@@ -72,7 +72,7 @@ git push origin main
 
 ### 4. Verify Deployment
 - GitHub Actions will automatically build and deploy
-- Check: https://ya-shuvo30.github.io/brightlife-typescript-app/
+- Check: https://yeasin-dev-me.github.io/brightlife-typescript-app/
 - Monitor GitHub Actions tab for deployment status
 
 ## Testing Backend Connection
@@ -156,5 +156,5 @@ curl -w "\nTime: %{time_total}s\n" http://162.0.233.161/api/v1/
 ---
 
 **Last Updated:** November 25, 2025  
-**Frontend:** https://ya-shuvo30.github.io/brightlife-typescript-app/  
+**Frontend:** https://yeasin-dev-me.github.io/brightlife-typescript-app/  
 **Backend:** http://162.0.233.161/api/v1/

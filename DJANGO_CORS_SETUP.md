@@ -35,7 +35,7 @@ MIDDLEWARE = [
 **Option A: Specific Origins (Recommended for Production)**
 ```python
 CORS_ALLOWED_ORIGINS = [
-    "https://ya-shuvo30.github.io",  # GitHub Pages
+    "https://yeasin-dev-me.github.io",  # GitHub Pages
     "http://localhost:5173",          # Vite dev server (local testing)
     "http://localhost:3000",          # Alternative dev port
 ]
@@ -84,14 +84,14 @@ CORS_ALLOW_HEADERS = [
 Invoke-WebRequest -Uri "http://162.0.233.161/api/v1/membership/applications/" `
   -Method OPTIONS `
   -Headers @{
-    "Origin" = "https://ya-shuvo30.github.io"
+    "Origin" = "https://yeasin-dev-me.github.io"
     "Access-Control-Request-Method" = "POST"
   }
 ```
 
 **Expected Response Headers:**
 ```
-Access-Control-Allow-Origin: https://ya-shuvo30.github.io
+Access-Control-Allow-Origin: https://yeasin-dev-me.github.io
 Access-Control-Allow-Methods: POST, OPTIONS
 Access-Control-Allow-Headers: content-type, authorization
 ```
@@ -131,7 +131,7 @@ print("CORS_ALLOW_ALL_ORIGINS:", CORS_ALLOW_ALL_ORIGINS)
 **Check Response Headers:**
 ```bash
 curl -I -X OPTIONS http://162.0.233.161/api/v1/membership/applications/ \
-  -H "Origin: https://ya-shuvo30.github.io" \
+  -H "Origin: https://yeasin-dev-me.github.io" \
   -H "Access-Control-Request-Method: POST"
 ```
 

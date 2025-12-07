@@ -502,7 +502,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Vite dev server
     "http://localhost:3000",
-    "https://ya-shuvo30.github.io",  # GitHub Pages (if deployed)
+    "https://yeasin-dev-me.github.io",  # GitHub Pages (if deployed)
 ]
 
 CORS_ALLOW_CREDENTIALS = True

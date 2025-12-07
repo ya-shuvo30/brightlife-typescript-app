@@ -335,8 +335,8 @@ const apiClient = axios.create({
 ### GitHub Repository Management
 
 #### Current Setup:
-- **Frontend repo**: `ya-shuvo30/brightlife-typescript-app` (public, GitHub Pages enabled)
-- **Backend repo**: `ya-shuvo30/Brightlife-Django-Backend` (initialized ✅)
+- **Frontend repo**: `yeasin-dev-me/brightlife-typescript-app` (public, GitHub Pages enabled)
+- **Backend repo**: `yeasin-dev-me/Brightlife-Django-Backend` (initialized ✅)
 
 #### Recommended Structure:
 **Option 1: Monorepo** (recommended for coordinated development)
@@ -387,7 +387,7 @@ SECRET_KEY=production-secret-key-here
 DEBUG=False
 ALLOWED_HOSTS=api.brightlife-bd.com
 DATABASE_URL=postgres://user:pass@db-host:5432/brightlife_db
-CORS_ALLOWED_ORIGINS=https://ya-shuvo30.github.io
+CORS_ALLOWED_ORIGINS=https://yeasin-dev-me.github.io
 ```
 
 ### Integration Checklist

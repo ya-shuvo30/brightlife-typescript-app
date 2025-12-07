@@ -235,7 +235,7 @@ src/
 │   ├── index.ts               # Barrel export
 │   ├── membership.ts
 │   ├── navigation.ts
-│   ├── ui.ts
+│   ├── ui.ts  
 │   └── utils.ts
 ├── utils/
 │   ├── api.ts
