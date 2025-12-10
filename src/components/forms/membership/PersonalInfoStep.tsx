@@ -242,10 +242,7 @@ const PersonalInfoStep: React.FC<FormStepProps> = ({ formData, updateFormData, e
             type="tel"
             inputMode="tel"
             autoComplete="tel"
-            // Accept Bangladesh local formats (01XXXXXXXXX / +8801XXXXXXXXX etc.)
-            // OR general international E.164 numbers (e.g. +12025550123, +971501234567)
-            pattern="^(?:(?:\\+?88)?0?1[3-9]\\d{8}|(?:\\+?[1-9]\\d{1,14}))$"
-            title="Accepts Bangladesh numbers (e.g. +8801XXXXXXXXX or 01XXXXXXXXX) or international E.164 numbers (e.g. +12025550123, +971501234567, +60123456789)"
+            title="Accepts international phone numbers: Bangladesh (+8801XXXXXXXXX or 01XXXXXXXXX), USA (+1XXXXXXXXXX), UAE (+971XXXXXXXXX), Malaysia (+60XXXXXXXXX), Canada (+1XXXXXXXXXX), etc."
             value={formData.mobile}
             onChange={(e) => {
               const raw = e.target.value || '';
@@ -255,7 +252,7 @@ const PersonalInfoStep: React.FC<FormStepProps> = ({ formData, updateFormData, e
             }}
             className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-500
               ${errors?.mobile ? 'border-red-500' : 'border-gray-300'}`}
-            placeholder="e.g. +8801XXXXXXXXX, 01XXXXXXXXX or +1XXXXXXXXXX (US)"
+            placeholder="e.g. +8801XXXXXXXXX, +1XXXXXXXXXX, +971XXXXXXXXX"
           />
           {errors?.mobile && <p className="mt-1 text-sm text-red-600">{errors.mobile}</p>}
         </div>
