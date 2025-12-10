@@ -21,8 +21,8 @@ export const validateStep = (formData: MembershipFormData, step: number): Valida
 
       if (!formData.mobile.trim()) {
         errors.mobile = 'Mobile number is required';
-      } else if (!/^(\+880|880)?1[3-9]\d{8}$/.test(formData.mobile.replace(/\s/g, ''))) {
-        errors.mobile = 'Invalid Bangladesh mobile number';
+      } else if (formData.mobile.length < 8) {
+        errors.mobile = 'Mobile number must be at least 8 digits';
       }
 
       if (!formData.photo) {
