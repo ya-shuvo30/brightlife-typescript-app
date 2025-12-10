@@ -250,7 +250,7 @@ const PersonalInfoStep: React.FC<FormStepProps> = ({ formData, updateFormData, e
             onChange={(e) => {
               const raw = e.target.value || '';
               // Keep digits and leading + only; remove spaces, dashes, parentheses
-              const sanitized = raw.replace(/[^\\d+]/g, '');
+              const sanitized = raw.replace(/[^\d+]/g, '');
               updateFormData({ mobile: sanitized });
             }}
             className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-500
